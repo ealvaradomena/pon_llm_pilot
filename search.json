@@ -1,0 +1,471 @@
+[
+  {
+    "objectID": "reports/results.html",
+    "href": "reports/results.html",
+    "title": "2024 Zero-Shot Results",
+    "section": "",
+    "text": "This archival report retains only the five zero-shot response files from the final Dec. 24, 2024 pipeline for which a recovered human-reference vector is available. Historical step-by-step files remain preserved on disk but are no longer part of the analytical design.\nBEREC is retained only as archival provenance and is excluded from the comparative experiment. All results on this page therefore use IRG, EUHC, COAS, CAN, and CEER."
+  },
+  {
+    "objectID": "reports/results.html#scope",
+    "href": "reports/results.html#scope",
+    "title": "2024 Zero-Shot Results",
+    "section": "",
+    "text": "This archival report retains only the five zero-shot response files from the final Dec. 24, 2024 pipeline for which a recovered human-reference vector is available. Historical step-by-step files remain preserved on disk but are no longer part of the analytical design.\nBEREC is retained only as archival provenance and is excluded from the comparative experiment. All results on this page therefore use IRG, EUHC, COAS, CAN, and CEER."
+  },
+  {
+    "objectID": "reports/results.html#performance-by-pon",
+    "href": "reports/results.html#performance-by-pon",
+    "title": "2024 Zero-Shot Results",
+    "section": "Performance by PON",
+    "text": "Performance by PON\n\n\n\n\nTable 1: Performance of the preserved 2024 zero-shot outputs against the recovered human reference\n\n\n\n\n\n\nPON\nAccuracy\nPrecision\nRecall\nSpecificity\nF1\nTP\nFP\nFN\nTN\n\n\n\n\nCAN\n74.7%\n81.5%\n88.3%\n20.0%\n84.8%\n53\n12\n7\n3\n\n\nCEER\n74.7%\n81.5%\n88.3%\n20.0%\n84.8%\n53\n12\n7\n3\n\n\nCOAS\n77.3%\n83.1%\n90.0%\n26.7%\n86.4%\n54\n11\n6\n4\n\n\nEUHC\n70.7%\n88.0%\n73.3%\n60.0%\n80.0%\n44\n6\n16\n9\n\n\nIRG\n81.3%\n88.3%\n88.3%\n53.3%\n88.3%\n53\n7\n7\n8\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestion: What share of each PON’s 15 classifications disagreed with the recovered human reference?\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Relative weight of disagreements with the recovered human reference in the preserved 2024 zero-shot outputs. Each bar represents the share of 15 decisions that disagreed."
+  },
+  {
+    "objectID": "reports/results.html#question-level-discrepancies",
+    "href": "reports/results.html#question-level-discrepancies",
+    "title": "2024 Zero-Shot Results",
+    "section": "Question-level discrepancies",
+    "text": "Question-level discrepancies\n\n\n\n\nTable 2: Question-level disagreements in the preserved 2024 zero-shot outputs\n\n\n\n\n\n\nQuestion\nPON\nLLM\nHuman\nType\n\n\n\n\n2\nCAN\nFALSE\nTRUE\nFN\n\n\n2\nCAN\nFALSE\nTRUE\nFN\n\n\n2\nCAN\nFALSE\nTRUE\nFN\n\n\n2\nCAN\nFALSE\nTRUE\nFN\n\n\n2\nCAN\nFALSE\nTRUE\nFN\n\n\n3\nCAN\nFALSE\nTRUE\nFN\n\n\n3\nCAN\nFALSE\nTRUE\nFN\n\n\n3\nCEER\nFALSE\nTRUE\nFN\n\n\n3\nCEER\nFALSE\nTRUE\nFN\n\n\n3\nCOAS\nTRUE\nFALSE\nFP\n\n\n3\nCOAS\nTRUE\nFALSE\nFP\n\n\n3\nCOAS\nTRUE\nFALSE\nFP\n\n\n3\nEUHC\nFALSE\nTRUE\nFN\n\n\n3\nEUHC\nFALSE\nTRUE\nFN\n\n\n3\nIRG\nFALSE\nTRUE\nFN\n\n\n3\nIRG\nFALSE\nTRUE\nFN\n\n\n4\nCEER\nFALSE\nTRUE\nFN\n\n\n4\nCEER\nFALSE\nTRUE\nFN\n\n\n4\nCEER\nFALSE\nTRUE\nFN\n\n\n4\nCEER\nFALSE\nTRUE\nFN\n\n\n4\nCEER\nFALSE\nTRUE\nFN\n\n\n5\nCAN\nTRUE\nFALSE\nFP\n\n\n5\nCAN\nTRUE\nFALSE\nFP\n\n\n5\nCEER\nTRUE\nFALSE\nFP\n\n\n5\nCEER\nTRUE\nFALSE\nFP\n\n\n5\nCOAS\nFALSE\nTRUE\nFN\n\n\n5\nCOAS\nFALSE\nTRUE\nFN\n\n\n5\nCOAS\nFALSE\nTRUE\nFN\n\n\n5\nEUHC\nFALSE\nTRUE\nFN\n\n\n5\nEUHC\nFALSE\nTRUE\nFN\n\n\n5\nEUHC\nFALSE\nTRUE\nFN\n\n\n5\nIRG\nTRUE\nFALSE\nFP\n\n\n5\nIRG\nTRUE\nFALSE\nFP\n\n\n6\nCAN\nTRUE\nFALSE\nFP\n\n\n6\nCAN\nTRUE\nFALSE\nFP\n\n\n6\nCAN\nTRUE\nFALSE\nFP\n\n\n6\nCEER\nTRUE\nFALSE\nFP\n\n\n6\nCEER\nTRUE\nFALSE\nFP\n\n\n6\nCEER\nTRUE\nFALSE\nFP\n\n\n6\nCOAS\nTRUE\nFALSE\nFP\n\n\n6\nCOAS\nTRUE\nFALSE\nFP\n\n\n6\nCOAS\nTRUE\nFALSE\nFP\n\n\n6\nEUHC\nTRUE\nFALSE\nFP\n\n\n6\nEUHC\nTRUE\nFALSE\nFP\n\n\n6\nEUHC\nTRUE\nFALSE\nFP\n\n\n6\nIRG\nFALSE\nTRUE\nFN\n\n\n6\nIRG\nFALSE\nTRUE\nFN\n\n\n7\nCAN\nTRUE\nFALSE\nFP\n\n\n7\nCEER\nTRUE\nFALSE\nFP\n\n\n7\nCOAS\nTRUE\nFALSE\nFP\n\n\n7\nEUHC\nFALSE\nTRUE\nFN\n\n\n7\nEUHC\nFALSE\nTRUE\nFN\n\n\n7\nEUHC\nFALSE\nTRUE\nFN\n\n\n7\nEUHC\nFALSE\nTRUE\nFN\n\n\n7\nIRG\nTRUE\nFALSE\nFP\n\n\n9\nCAN\nTRUE\nFALSE\nFP\n\n\n9\nCEER\nTRUE\nFALSE\nFP\n\n\n9\nCOAS\nTRUE\nFALSE\nFP\n\n\n9\nEUHC\nFALSE\nTRUE\nFN\n\n\n9\nEUHC\nFALSE\nTRUE\nFN\n\n\n9\nEUHC\nFALSE\nTRUE\nFN\n\n\n9\nEUHC\nFALSE\nTRUE\nFN\n\n\n9\nIRG\nTRUE\nFALSE\nFP\n\n\n11\nCAN\nTRUE\nFALSE\nFP\n\n\n11\nCEER\nTRUE\nFALSE\nFP\n\n\n11\nCOAS\nTRUE\nFALSE\nFP\n\n\n11\nEUHC\nTRUE\nFALSE\nFP\n\n\n11\nIRG\nTRUE\nFALSE\nFP\n\n\n14\nCAN\nTRUE\nFALSE\nFP\n\n\n14\nCAN\nTRUE\nFALSE\nFP\n\n\n14\nCEER\nTRUE\nFALSE\nFP\n\n\n14\nCEER\nTRUE\nFALSE\nFP\n\n\n14\nCOAS\nTRUE\nFALSE\nFP\n\n\n14\nCOAS\nTRUE\nFALSE\nFP\n\n\n14\nEUHC\nTRUE\nFALSE\nFP\n\n\n14\nEUHC\nTRUE\nFALSE\nFP\n\n\n14\nIRG\nTRUE\nFALSE\nFP\n\n\n14\nIRG\nTRUE\nFALSE\nFP\n\n\n15\nCAN\nTRUE\nFALSE\nFP\n\n\n15\nCAN\nTRUE\nFALSE\nFP\n\n\n15\nCEER\nTRUE\nFALSE\nFP\n\n\n15\nCEER\nTRUE\nFALSE\nFP\n\n\n15\nCOAS\nFALSE\nTRUE\nFN\n\n\n15\nCOAS\nFALSE\nTRUE\nFN\n\n\n15\nCOAS\nFALSE\nTRUE\nFN\n\n\n15\nEUHC\nFALSE\nTRUE\nFN\n\n\n15\nEUHC\nFALSE\nTRUE\nFN\n\n\n15\nEUHC\nFALSE\nTRUE\nFN\n\n\n15\nIRG\nFALSE\nTRUE\nFN\n\n\n15\nIRG\nFALSE\nTRUE\nFN\n\n\n15\nIRG\nFALSE\nTRUE\nFN\n\n\n\n\n\n\n\n\nThe purpose of this page is archival. The six-scenario report evaluates how classifications vary across model choice, protocol, and their combination."
+  },
+  {
+    "objectID": "reports/old/model-comparison.html",
+    "href": "reports/old/model-comparison.html",
+    "title": "Model Comparison",
+    "section": "",
+    "text": "This report is designed to answer a constrained model-generation question:\n\nHow does a new model perform under the old protocol?\n\nThe experiment holds the final 2024 computational protocol fixed and changes only the requested model ID. It is not a comparison between an old pipeline and a modernized pipeline.\nCurrent model: gpt-5.4-nano-2026-03-17"
+  },
+  {
+    "objectID": "reports/old/model-comparison.html#comparison-question",
+    "href": "reports/old/model-comparison.html#comparison-question",
+    "title": "Model Comparison",
+    "section": "",
+    "text": "This report is designed to answer a constrained model-generation question:\n\nHow does a new model perform under the old protocol?\n\nThe experiment holds the final 2024 computational protocol fixed and changes only the requested model ID. It is not a comparison between an old pipeline and a modernized pipeline.\nCurrent model: gpt-5.4-nano-2026-03-17"
+  },
+  {
+    "objectID": "reports/old/model-comparison.html#strict-same-protocol-comparison",
+    "href": "reports/old/model-comparison.html#strict-same-protocol-comparison",
+    "title": "Model Comparison",
+    "section": "Strict same-protocol comparison",
+    "text": "Strict same-protocol comparison\nAcross 150 binary decisions with documented protocol equivalence, the new model agrees with the preserved 2024 classification in 79.3% of cases (119/150).\n\n\n\n\nTable 1: Agreement between the new model and preserved 2024 outputs\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPON\nCondition\nSame\nChanged\nAgreement\nComparison status\n\n\n\n\nBody of European Regulators for Electronic Communications\nZero-shot\n10\n5\n66.7%\nDescriptive provenance caveat\n\n\nClimate Action Network\nStep by step\n10\n5\n66.7%\nStrict same-protocol\n\n\nClimate Action Network\nZero-shot\n13\n2\n86.7%\nStrict same-protocol\n\n\nCouncil of European Energy Regulators\nStep by step\n14\n1\n93.3%\nStrict same-protocol\n\n\nCouncil of European Energy Regulators\nZero-shot\n12\n3\n80.0%\nStrict same-protocol\n\n\nEU Health Coalition\nStep by step\n14\n1\n93.3%\nStrict same-protocol\n\n\nEU Health Coalition\nZero-shot\n14\n1\n93.3%\nStrict same-protocol\n\n\nIndependent Regulators Group\nStep by step\n12\n3\n80.0%\nStrict same-protocol\n\n\nIndependent Regulators Group\nZero-shot\n12\n3\n80.0%\nStrict same-protocol\n\n\ncOAlition S\nStep by step\n9\n6\n60.0%\nStrict same-protocol\n\n\ncOAlition S\nZero-shot\n9\n6\n60.0%\nStrict same-protocol\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Agreement with preserved 2024 classifications by PON and prompt condition. BEREC is excluded because its surviving Dec. 23 output does not have documented protocol equivalence with the final Dec. 24 implementation."
+  },
+  {
+    "objectID": "reports/old/model-comparison.html#classification-changes",
+    "href": "reports/old/model-comparison.html#classification-changes",
+    "title": "Model Comparison",
+    "section": "Classification changes",
+    "text": "Classification changes\n\n\n\n\n\n\n\n\nFigure 2: Question-level classification stability for strict same-protocol legacy/current pairs\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Direction of classifications that changed between 2024 and the new model"
+  },
+  {
+    "objectID": "reports/old/model-comparison.html#questions-most-sensitive-to-model-generation",
+    "href": "reports/old/model-comparison.html#questions-most-sensitive-to-model-generation",
+    "title": "Model Comparison",
+    "section": "Questions most sensitive to model generation",
+    "text": "Questions most sensitive to model generation\n\n\n\n\nTable 2: Question-level stability across strict same-protocol comparisons\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestion\nCondition\nPairs\nChanges\nAgreement\nPrompt\n\n\n\n\n2\nStep by step\n5\n0\n100.0%\nAre voting rules (such as simple majority) explicitly established?\n\n\n2\nZero-shot\n5\n0\n100.0%\nAre voting rules (such as simple majority) explicitly established?\n\n\n6\nZero-shot\n5\n0\n100.0%\nAre there expert committees in the PON?\n\n\n7\nStep by step\n5\n0\n100.0%\nDoes the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?\n\n\n7\nZero-shot\n5\n0\n100.0%\nDoes the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?\n\n\n9\nZero-shot\n5\n0\n100.0%\nDoes the organization have an executive board where a subset of members participate and which make strategic decisions?\n\n\n10\nStep by step\n5\n0\n100.0%\nDoes the PON have working groups where member organizations can participate in?\n\n\n10\nZero-shot\n5\n0\n100.0%\nDoes the PON have working groups where member organizations can participate in?\n\n\n11\nZero-shot\n5\n0\n100.0%\nDoes accession into the PON depend on a decision by the incumbent member organizations?\n\n\n12\nStep by step\n5\n0\n100.0%\nDoes the PON clearly specify which types of organisations can become members?\n\n\n12\nZero-shot\n5\n0\n100.0%\nDoes the PON clearly specify which types of organisations can become members?\n\n\n13\nStep by step\n5\n0\n100.0%\nDo potential member organizations have to fullful certain conditions to become members?\n\n\n13\nZero-shot\n5\n0\n100.0%\nDo potential member organizations have to fullful certain conditions to become members?\n\n\n1\nStep by step\n5\n4\n20.0%\nAre the procedures for decision-making in the PON specified?\n\n\n1\nZero-shot\n5\n3\n40.0%\nAre the procedures for decision-making in the PON specified?\n\n\n8\nZero-shot\n5\n3\n40.0%\nDoes the organization have a plenary assembly where all members participate and which makes the constitutional decisions?\n\n\n3\nStep by step\n5\n2\n60.0%\nAre decisions made by simple majority voting by member organizations?\n\n\n3\nZero-shot\n5\n2\n60.0%\nAre decisions made by simple majority voting by member organizations?\n\n\n5\nStep by step\n5\n2\n60.0%\nIf the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?\n\n\n5\nZero-shot\n5\n2\n60.0%\nIf the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?\n\n\n6\nStep by step\n5\n2\n60.0%\nAre there expert committees in the PON?\n\n\n14\nZero-shot\n5\n2\n60.0%\nIs there a process for membership suspension from the PON?\n\n\n15\nZero-shot\n5\n2\n60.0%\nAre there members which have no voting power, such as observer members?\n\n\n4\nStep by step\n5\n1\n80.0%\nAre decisions made by consensus or unanimity by member organizations?\n\n\n4\nZero-shot\n5\n1\n80.0%\nAre decisions made by consensus or unanimity by member organizations?\n\n\n8\nStep by step\n5\n1\n80.0%\nDoes the organization have a plenary assembly where all members participate and which makes the constitutional decisions?\n\n\n9\nStep by step\n5\n1\n80.0%\nDoes the organization have an executive board where a subset of members participate and which make strategic decisions?\n\n\n11\nStep by step\n5\n1\n80.0%\nDoes accession into the PON depend on a decision by the incumbent member organizations?\n\n\n14\nStep by step\n5\n1\n80.0%\nIs there a process for membership suspension from the PON?\n\n\n15\nStep by step\n5\n1\n80.0%\nAre there members which have no voting power, such as observer members?"
+  },
+  {
+    "objectID": "reports/old/model-comparison.html#berec",
+    "href": "reports/old/model-comparison.html#berec",
+    "title": "Model Comparison",
+    "section": "BEREC",
+    "text": "BEREC\nBEREC is intentionally present in both the source corpus and the current-model run. Its preserved BO1A-2024-12-23-55_cat.txt response is also retained. The comparison table above reports its classifications descriptively when a matching current zero-shot output exists.\nBEREC is not pooled into the strict aggregate because its Dec. 23 output predates the final Dec. 24 message-role implementation and the precise request state that generated it cannot be established from the surviving files. This avoids turning a provenance uncertainty into an apparent model-generation effect."
+  },
+  {
+    "objectID": "reports/old/model-comparison.html#interpretation-boundary",
+    "href": "reports/old/model-comparison.html#interpretation-boundary",
+    "title": "Model Comparison",
+    "section": "Interpretation boundary",
+    "text": "Interpretation boundary\nA changed binary classification is evidence of model-generation instability under the preserved protocol. It is not, by itself, evidence that the new or legacy classification is more substantively correct. Correctness requires comparison with human coding and, where necessary, examination of the boundary-object evidence and the institutional ambiguities discussed in the manuscript."
+  },
+  {
+    "objectID": "reports/model-comparison.html",
+    "href": "reports/model-comparison.html",
+    "title": "Six-Scenario Comparison",
+    "section": "",
+    "text": "The analysis is zero-shot only and uses a 3 × 2 model-by-protocol design: three model arms under the preserved 2024 protocol and the improved protocol. The same five PONs—IRG, EUHC, COAS, CAN, and CEER—and the same 15 questions are evaluated in every cell.\n\n\n\n\nTable 1: Six zero-shot scenarios in the model-by-protocol design\n\n\n\n\n\n\nModel\nProtocol\nSource\n\n\n\n\nGPT-4 Turbo\n2024 protocol\nPreserved Dec. 24, 2024 output\n\n\nGPT-5.4 nano\n2024 protocol\nRetained 2026 run\n\n\nGPT-5.4 mini\n2024 protocol\nNew 2026 run\n\n\nGPT-4 Turbo\nImproved protocol\nNew improved-protocol run\n\n\nGPT-5.4 nano\nImproved protocol\nNew improved-protocol run\n\n\nGPT-5.4 mini\nImproved protocol\nNew improved-protocol run\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe historical calls record the alias gpt-4-turbo, not the returned snapshot ID. The improved-protocol rerun uses the pinned gpt-4-turbo-2024-04-09 snapshot as the closest reproducible counterpart. This improves reproducibility but cannot prove byte-for-byte identity with the model that served the 2024 alias."
+  },
+  {
+    "objectID": "reports/model-comparison.html#design",
+    "href": "reports/model-comparison.html#design",
+    "title": "Six-Scenario Comparison",
+    "section": "",
+    "text": "The analysis is zero-shot only and uses a 3 × 2 model-by-protocol design: three model arms under the preserved 2024 protocol and the improved protocol. The same five PONs—IRG, EUHC, COAS, CAN, and CEER—and the same 15 questions are evaluated in every cell.\n\n\n\n\nTable 1: Six zero-shot scenarios in the model-by-protocol design\n\n\n\n\n\n\nModel\nProtocol\nSource\n\n\n\n\nGPT-4 Turbo\n2024 protocol\nPreserved Dec. 24, 2024 output\n\n\nGPT-5.4 nano\n2024 protocol\nRetained 2026 run\n\n\nGPT-5.4 mini\n2024 protocol\nNew 2026 run\n\n\nGPT-4 Turbo\nImproved protocol\nNew improved-protocol run\n\n\nGPT-5.4 nano\nImproved protocol\nNew improved-protocol run\n\n\nGPT-5.4 mini\nImproved protocol\nNew improved-protocol run\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe historical calls record the alias gpt-4-turbo, not the returned snapshot ID. The improved-protocol rerun uses the pinned gpt-4-turbo-2024-04-09 snapshot as the closest reproducible counterpart. This improves reproducibility but cannot prove byte-for-byte identity with the model that served the 2024 alias."
+  },
+  {
+    "objectID": "reports/model-comparison.html#why-the-improved-protocol-is-better",
+    "href": "reports/model-comparison.html#why-the-improved-protocol-is-better",
+    "title": "Six-Scenario Comparison",
+    "section": "Why the improved protocol is better",
+    "text": "Why the improved protocol is better\nThe improved prompt is intentionally short. It keeps the same documents, 15 questions, zero-shot design, Chat Completions endpoint, and system/user message roles. The substantive treatment is the instruction text; the improved runs also use the same documented 500-token operational output cap.\n\nEvidence boundary: use only the supplied document.\nDecision rule: return TRUE only when the document explicitly supports the proposition; otherwise FALSE.\nInference boundary: do not import outside knowledge or infer unstated rules.\nOutput contract: return exactly one ordered question_id,response row per question.\n\nThis makes the coding threshold and serialization contract explicit without adding examples, chain-of-thought instructions, or a structured-output API parameter."
+  },
+  {
+    "objectID": "reports/model-comparison.html#performance-against-the-human-reference",
+    "href": "reports/model-comparison.html#performance-against-the-human-reference",
+    "title": "Six-Scenario Comparison",
+    "section": "Performance against the human reference",
+    "text": "Performance against the human reference\n\n\n\n\nTable 2: Overall performance against the recovered human reference across six zero-shot scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel\nProtocol\nDecisions\nAccuracy\nPrecision\nRecall\nSpecificity\nF1\n\n\n\n\nGPT-4 Turbo\n2024 protocol\n375\n75.7%\n84.3%\n85.7%\n36.0%\n85.0%\n\n\nGPT-4 Turbo\nImproved protocol\n375\n66.4%\n86.2%\n69.0%\n56.0%\n76.7%\n\n\nGPT-5.4 mini\n2024 protocol\n375\n76.8%\n83.8%\n88.0%\n32.0%\n85.9%\n\n\nGPT-5.4 mini\nImproved protocol\n375\n75.5%\n83.5%\n86.3%\n32.0%\n84.9%\n\n\nGPT-5.4 nano\n2024 protocol\n375\n69.1%\n82.9%\n77.3%\n36.0%\n80.0%\n\n\nGPT-5.4 nano\nImproved protocol\n375\n61.9%\n83.4%\n65.3%\n48.0%\n73.3%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestion: Which combinations of model and protocol produce the smallest share of disagreements with the human reference, and are the gains consistent across PONs?\n\n\n\n\nThe disagreement rate is shown rather than a raw error count so each point conveys the relative weight of errors in the 15-question coding vector."
+  },
+  {
+    "objectID": "reports/model-comparison.html#protocol-and-model-effects",
+    "href": "reports/model-comparison.html#protocol-and-model-effects",
+    "title": "Six-Scenario Comparison",
+    "section": "Protocol and model effects",
+    "text": "Protocol and model effects\n\n\n\n\nTable 3: Change in human-reference accuracy after replacing the 2024 prompt with the improved protocol\n\n\n\n\n\n\nPON\nModel\n2024 protocol\nImproved protocol\nChange\n\n\n\n\nCAN\nGPT-4 Turbo\n74.7%\n66.7%\n-8.0%\n\n\nCAN\nGPT-5.4 mini\n74.7%\n76.0%\n1.3%\n\n\nCAN\nGPT-5.4 nano\n66.7%\n54.7%\n-12.0%\n\n\nCEER\nGPT-4 Turbo\n74.7%\n70.7%\n-4.0%\n\n\nCEER\nGPT-5.4 mini\n74.7%\n74.7%\n0.0%\n\n\nCEER\nGPT-5.4 nano\n73.3%\n62.7%\n-10.7%\n\n\nCOAS\nGPT-4 Turbo\n77.3%\n72.0%\n-5.3%\n\n\nCOAS\nGPT-5.4 mini\n78.7%\n72.0%\n-6.7%\n\n\nCOAS\nGPT-5.4 nano\n66.7%\n58.7%\n-8.0%\n\n\nEUHC\nGPT-4 Turbo\n70.7%\n48.0%\n-22.7%\n\n\nEUHC\nGPT-5.4 mini\n74.7%\n76.0%\n1.3%\n\n\nEUHC\nGPT-5.4 nano\n64.0%\n52.0%\n-12.0%\n\n\nIRG\nGPT-4 Turbo\n81.3%\n74.7%\n-6.7%\n\n\nIRG\nGPT-5.4 mini\n81.3%\n78.7%\n-2.7%\n\n\nIRG\nGPT-5.4 nano\n74.7%\n81.3%\n6.7%\n\n\n\n\n\n\n\n\n\n\n\n\nTable 4: Human-reference accuracy by model within each protocol, with pairwise changes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPON\nProtocol\nGPT-4 Turbo\nGPT-5.4 nano\nGPT-5.4 mini\nNano − Turbo\nMini − Turbo\nMini − Nano\n\n\n\n\nCAN\n2024 protocol\n74.7%\n66.7%\n74.7%\n-8.0%\n0.0%\n8.0%\n\n\nCAN\nImproved protocol\n66.7%\n54.7%\n76.0%\n-12.0%\n9.3%\n21.3%\n\n\nCEER\n2024 protocol\n74.7%\n73.3%\n74.7%\n-1.3%\n0.0%\n1.3%\n\n\nCEER\nImproved protocol\n70.7%\n62.7%\n74.7%\n-8.0%\n4.0%\n12.0%\n\n\nCOAS\n2024 protocol\n77.3%\n66.7%\n78.7%\n-10.7%\n1.3%\n12.0%\n\n\nCOAS\nImproved protocol\n72.0%\n58.7%\n72.0%\n-13.3%\n0.0%\n13.3%\n\n\nEUHC\n2024 protocol\n70.7%\n64.0%\n74.7%\n-6.7%\n4.0%\n10.7%\n\n\nEUHC\nImproved protocol\n48.0%\n52.0%\n76.0%\n4.0%\n28.0%\n24.0%\n\n\nIRG\n2024 protocol\n81.3%\n74.7%\n81.3%\n-6.7%\n0.0%\n6.7%\n\n\nIRG\nImproved protocol\n74.7%\n81.3%\n78.7%\n6.7%\n4.0%\n-2.7%"
+  },
+  {
+    "objectID": "reports/model-comparison.html#question-level-behavior",
+    "href": "reports/model-comparison.html#question-level-behavior",
+    "title": "Six-Scenario Comparison",
+    "section": "Question-level behavior",
+    "text": "Question-level behavior\n\n\n\n\n\n\nQuestion: Which governance questions remain difficult across models and protocols, and which problems appear to be prompt-sensitive?\n\n\n\n\n\n\n\n\nTable 5: TRUE-response prevalence across the six zero-shot scenarios\n\n\n\n\n\n\nModel\nProtocol\nTRUE\nFALSE\nTRUE share\n\n\n\n\nGPT-4 Turbo\n2024 protocol\n305\n70\n81.3%\n\n\nGPT-4 Turbo\nImproved protocol\n240\n135\n64.0%\n\n\nGPT-5.4 mini\n2024 protocol\n315\n60\n84.0%\n\n\nGPT-5.4 mini\nImproved protocol\n310\n65\n82.7%\n\n\nGPT-5.4 nano\n2024 protocol\n280\n95\n74.7%\n\n\nGPT-5.4 nano\nImproved protocol\n235\n140\n62.7%\n\n\n\n\n\n\n\n\nA large shift in TRUE prevalence is worth checking because it can indicate that a protocol or model changes the effective evidentiary threshold rather than merely reshuffling isolated classifications."
+  },
+  {
+    "objectID": "reports/model-comparison.html#model-generation-stability",
+    "href": "reports/model-comparison.html#model-generation-stability",
+    "title": "Six-Scenario Comparison",
+    "section": "Model-generation stability",
+    "text": "Model-generation stability\nWith three model arms, stability is reported pairwise within each protocol. This shows whether the improved protocol makes model choice less consequential and whether GPT-5.4 mini behaves more like GPT-5.4 nano or GPT-4 Turbo.\n\n\n\n\nTable 6: Pairwise agreement between model arms under each zero-shot protocol\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProtocol\nModel pair\nDecisions\nSame\nChanged\nAgreement\n\n\n\n\n2024 protocol\nGPT-4 Turbo vs GPT-5.4 mini\n75\n65\n10\n86.7%\n\n\n2024 protocol\nGPT-4 Turbo vs GPT-5.4 nano\n75\n60\n15\n80.0%\n\n\n2024 protocol\nGPT-5.4 nano vs GPT-5.4 mini\n75\n60\n15\n80.0%\n\n\nImproved protocol\nGPT-4 Turbo vs GPT-5.4 mini\n75\n57\n18\n76.0%\n\n\nImproved protocol\nGPT-4 Turbo vs GPT-5.4 nano\n75\n48\n27\n64.0%\n\n\nImproved protocol\nGPT-5.4 nano vs GPT-5.4 mini\n75\n50\n25\n66.7%"
+  },
+  {
+    "objectID": "reports/model-comparison.html#run-integrity-diagnostics",
+    "href": "reports/model-comparison.html#run-integrity-diagnostics",
+    "title": "Six-Scenario Comparison",
+    "section": "Run-integrity diagnostics",
+    "text": "Run-integrity diagnostics\n\n\n\n\n\n\nWarningOutput-format anomalies detected\n\n\n\n6 of 25 newly generated output files contain a flagged serialization irregularity. A file is scored only when exactly 15 binary responses are recoverable.\n\n\n\n\n\n\nTable 7: Newly generated output files with flagged formatting irregularities\n\n\n\n\n\n\n\n\n\n\n\n\n\nFile\nRecovered\nConcatenated boundaries\nStandard header\nFirst line\n\n\n\n\nBO2A_irg_z.txt\n15\n0\nTRUE\nquestion,TRUE_OR_FALSE\n\n\nBO6A_ceer_z.txt\n15\n0\nFALSE\nQuestion,CEER Statutes as of 25 October 2023: Articles of Association (Consolidated 25 Oct 2023)\n\n\nBO3A_euhc_z.txt\n15\n0\nFALSE\nheader\n\n\nBO4A_coas_z.txt\n15\n0\nFALSE\nheader\n\n\nBO5A_can_z.txt\n15\n0\nFALSE\nheader\n\n\nBO6A_ceer_z.txt\n15\n0\nFALSE\nheader"
+  },
+  {
+    "objectID": "reports/model-comparison.html#interpretation-boundary",
+    "href": "reports/model-comparison.html#interpretation-boundary",
+    "title": "Six-Scenario Comparison",
+    "section": "Interpretation boundary",
+    "text": "Interpretation boundary\nHuman-reference disagreement is disagreement with the recovered computational reference, not definitive evidence that a model is substantively wrong. Likewise, higher model-generation agreement is stability, not correctness. The design is most informative when both quantities are examined together."
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html",
+    "href": "provenance/RECONSTRUCTION.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html#recovered-source-corpus",
+    "href": "provenance/RECONSTRUCTION.html#recovered-source-corpus",
+    "title": "",
+    "section": "Recovered source corpus",
+    "text": "Recovered source corpus\nSix boundary objects were recovered and retained as BO1A.txt through BO6A.txt. BO1A.txt is BEREC. The remaining five map to IRG, EU Health Coalition, cOAlition S, CAN, and CEER."
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html#preserved-model-outputs",
+    "href": "provenance/RECONSTRUCTION.html#preserved-model-outputs",
+    "title": "",
+    "section": "Preserved model outputs",
+    "text": "Preserved model outputs\nEleven legacy response files are retained in output/:\n\none BEREC binary output from Dec. 23, 2024; and\nten Dec. 24, 2024 final-pipeline outputs covering five PONs under zero-shot and step-by-step prompting.\n\nThese files are historical artifacts and are not rewritten by the repository’s execution scripts."
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html#instrument",
+    "href": "provenance/RECONSTRUCTION.html#instrument",
+    "title": "",
+    "section": "Instrument",
+    "text": "Instrument\nThe legacy computational files contain 15 ordered binary questions. The manuscript later reports 14 prompts; the working-groups question is the additional computational item. The repository keeps all 15 for protocol fidelity."
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html#human-reference-data",
+    "href": "provenance/RECONSTRUCTION.html#human-reference-data",
+    "title": "",
+    "section": "Human-reference data",
+    "text": "Human-reference data\nThe recovered computational evaluation contains one human-reference vector per organization for the five PONs in the final Dec. 24 run. A manuscript-facing three-coder dataset was not recovered from the supplied computational workspace."
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html#berec-caveat",
+    "href": "provenance/RECONSTRUCTION.html#berec-caveat",
+    "title": "",
+    "section": "BEREC caveat",
+    "text": "BEREC caveat\nBEREC was an early development case and is part of the source corpus. Earlier Quarto versions show a different system/user message-role layout during this stage. Because the precise code state that generated BO1A-2024-12-23-55_cat.txt cannot be established with confidence, BEREC’s legacy/current comparison is preserved descriptively but is not pooled into strict same-protocol aggregate statistics."
+  },
+  {
+    "objectID": "provenance/RECONSTRUCTION.html#current-model-extension",
+    "href": "provenance/RECONSTRUCTION.html#current-model-extension",
+    "title": "",
+    "section": "Current-model extension",
+    "text": "Current-model extension\nThe new execution layer asks how a different model behaves under the final 2024 protocol. It does not rerun or replace 2024 outputs. New raw responses and metadata are written only under output/current/, and derived comparisons are written under derived/.\nSee LEGACY_API_CALLS.md for recovered API-call details and remaining provenance gaps."
+  },
+  {
+    "objectID": "old/index.html",
+    "href": "old/index.html",
+    "title": "PON Governance LLM Pilot",
+    "section": "",
+    "text": "This repository contains the computational materials associated with the manuscript Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks. The manuscript itself is not distributed here.\nThe project preserves the 2024 LLM outputs as historical evidence and provides a separate execution path for asking a narrowly defined follow-up question:\n\nHow does a new model perform under the old protocol?\n\nThe comparison changes the model identifier while retaining the final 2024 analytical protocol: the same boundary objects, ordered questions, binary classification task, message structure, and prompting conditions. No structured-output schema, few-shot examples, revised question wording, or other modernized prompting intervention is introduced."
+  },
+  {
+    "objectID": "old/index.html#repository-purpose",
+    "href": "old/index.html#repository-purpose",
+    "title": "PON Governance LLM Pilot",
+    "section": "",
+    "text": "This repository contains the computational materials associated with the manuscript Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks. The manuscript itself is not distributed here.\nThe project preserves the 2024 LLM outputs as historical evidence and provides a separate execution path for asking a narrowly defined follow-up question:\n\nHow does a new model perform under the old protocol?\n\nThe comparison changes the model identifier while retaining the final 2024 analytical protocol: the same boundary objects, ordered questions, binary classification task, message structure, and prompting conditions. No structured-output schema, few-shot examples, revised question wording, or other modernized prompting intervention is introduced."
+  },
+  {
+    "objectID": "old/index.html#corpus",
+    "href": "old/index.html#corpus",
+    "title": "PON Governance LLM Pilot",
+    "section": "Corpus",
+    "text": "Corpus\nSix purpose-oriented networks are represented in the source corpus:\n\nBody of European Regulators for Electronic Communications (BEREC)\nIndependent Regulators Group (IRG)\nEU Health Coalition\ncOAlition S\nClimate Action Network (CAN)\nCouncil of European Energy Regulators (CEER)\n\nThe recovered final Dec. 24 analysis contains paired zero-shot and step-by-step GPT-4-Turbo outputs for IRG through CEER. A Dec. 23 BEREC binary output is also preserved. Because surviving development reports show that BEREC predates the final message-role layout, its historical comparison is retained but flagged as non-equivalent for strict aggregate statistics."
+  },
+  {
+    "objectID": "old/index.html#reproducibility-architecture",
+    "href": "old/index.html#reproducibility-architecture",
+    "title": "PON Governance LLM Pilot",
+    "section": "Reproducibility architecture",
+    "text": "Reproducibility architecture\nThe repository deliberately separates three layers:\n\npreserved evidence in output/;\nnew API executions in timestamped directories under output/current/; and\nderived comparisons in derived/.\n\nThis separation makes it impossible for the normal new-model workflow to overwrite the 2024 response files."
+  },
+  {
+    "objectID": "old/index.html#reports",
+    "href": "old/index.html#reports",
+    "title": "PON Governance LLM Pilot",
+    "section": "Reports",
+    "text": "Reports\nMethods documents the corpus, instrument, and recovered API protocol. Legacy Results evaluates the preserved Dec. 24 outputs against the recovered human-reference vectors. Model Comparison becomes the main report after a new-model run is completed and compared with the legacy outputs.\nFor execution instructions, API-key setup, and provenance cautions, see README.md."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PON Governance LLM Pilot",
+    "section": "",
+    "text": "This repository contains the computational materials associated with the manuscript Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks. The manuscript itself is not distributed here.\nThe project preserves the December 2024 zero-shot outputs and adds a controlled 3 × 2 extension:\n\nHow much do governance classifications depend on model choice, protocol design, or both?\n\nThe six scenarios cross GPT-4 Turbo, GPT-5.4 nano, and GPT-5.4 mini with the recovered 2024 prompt and a concise improved prompt. The five study documents, 15 questions, binary outcome space, Chat Completions endpoint, and zero-shot design remain fixed."
+  },
+  {
+    "objectID": "index.html#repository-purpose",
+    "href": "index.html#repository-purpose",
+    "title": "PON Governance LLM Pilot",
+    "section": "",
+    "text": "This repository contains the computational materials associated with the manuscript Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks. The manuscript itself is not distributed here.\nThe project preserves the December 2024 zero-shot outputs and adds a controlled 3 × 2 extension:\n\nHow much do governance classifications depend on model choice, protocol design, or both?\n\nThe six scenarios cross GPT-4 Turbo, GPT-5.4 nano, and GPT-5.4 mini with the recovered 2024 prompt and a concise improved prompt. The five study documents, 15 questions, binary outcome space, Chat Completions endpoint, and zero-shot design remain fixed."
+  },
+  {
+    "objectID": "index.html#corpus",
+    "href": "index.html#corpus",
+    "title": "PON Governance LLM Pilot",
+    "section": "Corpus",
+    "text": "Corpus\nThe archival source corpus contains six PONs: BEREC, IRG, EUHC, COAS, CAN, and CEER. The comparative experiment uses IRG, EUHC, COAS, CAN, and CEER. BEREC remains preserved for provenance but is excluded because its surviving Dec. 23 output predates the final Dec. 24 request implementation and its boundary object is unusually large."
+  },
+  {
+    "objectID": "index.html#reproducibility-architecture",
+    "href": "index.html#reproducibility-architecture",
+    "title": "PON Governance LLM Pilot",
+    "section": "Reproducibility architecture",
+    "text": "Reproducibility architecture\nThe repository separates four layers:\n\npreserved 2024 evidence in output/;\ncurrent-model runs under the 2024 protocol in output/current/;\nimproved-protocol model runs in output/improved/; and\nderived comparisons in derived/.\n\nHistorical step-by-step outputs remain preserved but are not part of the analytical design."
+  },
+  {
+    "objectID": "index.html#reports",
+    "href": "index.html#reports",
+    "title": "PON Governance LLM Pilot",
+    "section": "Reports",
+    "text": "Reports\nMethods documents the zero-shot 3 × 2 design and both protocols. 2024 Zero-Shot Results reconstructs the archival 2024 evaluation. Six-Scenario Comparison evaluates model and protocol effects against the same recovered human reference.\nFor execution instructions, API-key setup, and provenance cautions, see README.md."
+  },
+  {
+    "objectID": "provenance/LEGACY_API_CALLS.html",
+    "href": "provenance/LEGACY_API_CALLS.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "provenance/LEGACY_API_CALLS.html#high-confidence-findings",
+    "href": "provenance/LEGACY_API_CALLS.html#high-confidence-findings",
+    "title": "",
+    "section": "High-confidence findings",
+    "text": "High-confidence findings\nThe late-2024 Quarto source uses the OpenAI Python client with the OpenAI() client class and the Chat Completions endpoint:\ncompletion = client.chat.completions.create(\n    model=models,\n    messages=[\n        {\"role\": \"system\", \"content\": prompt},\n        {\"role\": \"user\", \"content\": text},\n    ],\n)\nFor the December 24 final pipeline:\n\nrequested model alias: gpt-4-turbo;\nendpoint: Chat Completions (/v1/chat/completions);\nsystem message: the policy-analyst instruction plus the ordered binary questions;\nuser message: the full boundary-object text;\nprompting conditions: zero-shot and the same prompt with Let's think step by step appended;\nexplicit request arguments: model and messages only;\nno explicit temperature, top_p, max_tokens, seed, response_format, tool configuration, or other generation parameters;\nresponse text saved from completion.choices[0].message.content;\noutput filenames contain local datetimes generated with Python datetime.now(); timezone information was not recorded.\n\nThe preserved Dec. 24 output set covers IRG, EU Health Coalition, cOAlition S, CAN, and CEER under both prompting conditions."
+  },
+  {
+    "objectID": "provenance/LEGACY_API_CALLS.html#berec-provenance",
+    "href": "provenance/LEGACY_API_CALLS.html#berec-provenance",
+    "title": "",
+    "section": "BEREC provenance",
+    "text": "BEREC provenance\nBO1A.txt is BEREC’s boundary object, and output/BO1A-2024-12-23-55_cat.txt is a preserved BEREC binary-output file from December 23, 2024.\nHowever, BEREC predates the final Dec. 24 implementation. Earlier report versions around the BEREC development stage show a different message-role layout in which the boundary-object text was passed as the system message and the question prompt as the user message. The surviving materials do not establish with enough certainty which exact source-code state produced the Dec. 23 BEREC file. For that reason:\n\nthe BEREC file is retained as an authentic legacy output;\nthe current pipeline runs BEREC under the final manuscript-facing Dec. 24 protocol, alongside the other five PONs;\nBEREC’s legacy/current classification differences are reported descriptively;\nBEREC is excluded from aggregate statistics labeled as a strict same-protocol comparison."
+  },
+  {
+    "objectID": "provenance/LEGACY_API_CALLS.html#information-not-recoverable-from-the-preserved-files",
+    "href": "provenance/LEGACY_API_CALLS.html#information-not-recoverable-from-the-preserved-files",
+    "title": "",
+    "section": "Information not recoverable from the preserved files",
+    "text": "Information not recoverable from the preserved files\nThe following were not stored with the 2024 response text and therefore cannot be reconstructed reliably:\n\nexact resolved model snapshot behind the gpt-4-turbo alias at each request;\nOpenAI response ID and HTTP request ID;\nsystem_fingerprint;\ntoken usage and cost per request;\nserver-side defaults actually applied to unspecified generation parameters;\nexact OpenAI Python package version;\nrequest retry history;\nlocal timezone associated with the timestamps in filenames.\n\nThe current-model runner records these fields whenever the contemporary API returns them so that future comparisons have stronger provenance."
+  },
+  {
+    "objectID": "provenance/LEGACY_API_CALLS.html#credential-note",
+    "href": "provenance/LEGACY_API_CALLS.html#credential-note",
+    "title": "",
+    "section": "Credential note",
+    "text": "Credential note\nOne legacy Quarto source contained an API key directly in source code. That credential is intentionally not copied into this repository or this provenance note. If the historical credential has not already been revoked, it should be rotated. The reconstructed project reads credentials only from OPENAI_API_KEY and ignores .env in version control."
+  },
+  {
+    "objectID": "reports/methods.html",
+    "href": "reports/methods.html",
+    "title": "Methods",
+    "section": "",
+    "text": "The pilot asks whether LLMs can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). Each document is coded against 15 ordered yes/no governance questions.\nThe extension uses a zero-shot 3 × 2 design that separates two sources of variation:\n\nModel: GPT-4 Turbo, GPT-5.4 nano, or GPT-5.4 mini.\nProtocol: the recovered 2024 prompt or a concise improved prompt.\n\nThis yields six scenarios while keeping the five study documents, 15 questions, endpoint, message roles, and binary task fixed."
+  },
+  {
+    "objectID": "reports/methods.html#study-objective",
+    "href": "reports/methods.html#study-objective",
+    "title": "Methods",
+    "section": "",
+    "text": "The pilot asks whether LLMs can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). Each document is coded against 15 ordered yes/no governance questions.\nThe extension uses a zero-shot 3 × 2 design that separates two sources of variation:\n\nModel: GPT-4 Turbo, GPT-5.4 nano, or GPT-5.4 mini.\nProtocol: the recovered 2024 prompt or a concise improved prompt.\n\nThis yields six scenarios while keeping the five study documents, 15 questions, endpoint, message roles, and binary task fixed."
+  },
+  {
+    "objectID": "reports/methods.html#cases-and-source-documents",
+    "href": "reports/methods.html#cases-and-source-documents",
+    "title": "Methods",
+    "section": "Cases and source documents",
+    "text": "Cases and source documents\n\n\n\n\nTable 1: PONs and boundary-object files retained in the reconstructed project\n\n\n\n\n\n\nPON\nFile\n\n\n\n\nIRG\nBO2A.txt\n\n\nEUHC\nBO3A.txt\n\n\nCOAS\nBO4A.txt\n\n\nCAN\nBO5A.txt\n\n\nCEER\nBO6A.txt\n\n\n\n\n\n\n\n\nThe comparative experiment uses IRG, EUHC, COAS, CAN, and CEER. These five cases have recovered human-reference vectors tied to the final Dec. 24 computational protocol."
+  },
+  {
+    "objectID": "reports/methods.html#binary-coding-instrument",
+    "href": "reports/methods.html#binary-coding-instrument",
+    "title": "Methods",
+    "section": "Binary coding instrument",
+    "text": "Binary coding instrument\n\n\n\n\nTable 2: Binary governance questions in the preserved computational instrument\n\n\n\n\n\n\n\n\n\n\nID\nQuestion\n\n\n\n\n1\nAre the procedures for decision-making in the PON specified?\n\n\n2\nAre voting rules (such as simple majority) explicitly established?\n\n\n3\nAre decisions made by simple majority voting by member organizations?\n\n\n4\nAre decisions made by consensus or unanimity by member organizations?\n\n\n5\nIf the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?\n\n\n6\nAre there expert committees in the PON?\n\n\n7\nDoes the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?\n\n\n8\nDoes the organization have a plenary assembly where all members participate and which makes the constitutional decisions?\n\n\n9\nDoes the organization have an executive board where a subset of members participate and which make strategic decisions?\n\n\n10\nDoes the PON have working groups where member organizations can participate in?\n\n\n11\nDoes accession into the PON depend on a decision by the incumbent member organizations?\n\n\n12\nDoes the PON clearly specify which types of organisations can become members?\n\n\n13\nDo potential member organizations have to fullful certain conditions to become members?\n\n\n14\nIs there a process for membership suspension from the PON?\n\n\n15\nAre there members which have no voting power, such as observer members?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe manuscript later reports 14 prompts. The preserved computational instrument contains one additional working-groups item. It remains in all six scenarios so the comparison does not change the outcome space retrospectively."
+  },
+  {
+    "objectID": "reports/methods.html#zero-shot-only",
+    "href": "reports/methods.html#zero-shot-only",
+    "title": "Methods",
+    "section": "Zero-shot only",
+    "text": "Zero-shot only\nThe analytical design no longer uses the historical Let's think step by step condition. Those files remain preserved as archival evidence, but they are excluded from evaluation, plots, tables, and new API runs. Removing that condition makes the comparison easier to interpret: each model/protocol cell differs on one intended dimension rather than mixing model generation with a weakly motivated prompting intervention."
+  },
+  {
+    "objectID": "reports/methods.html#protocol",
+    "href": "reports/methods.html#protocol",
+    "title": "Methods",
+    "section": "2024 protocol",
+    "text": "2024 protocol\nThe final Dec. 24 implementation used Chat Completions with two messages:\n\na system message containing the policy-analyst instruction and ordered questions;\na user message containing the complete boundary-object text.\n\nThe request supplied only model and messages explicitly. No explicit temperature, top-p, token limit, seed, response format, or tools were supplied.\nThe preserved instruction is:\n\nYou are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.\n\nThe historical string concatenation, including its whitespace quirks, is retained for all three 2024-protocol cells."
+  },
+  {
+    "objectID": "reports/methods.html#improved-protocol",
+    "href": "reports/methods.html#improved-protocol",
+    "title": "Methods",
+    "section": "Improved protocol",
+    "text": "Improved protocol\nThe improved protocol keeps the same zero-shot task, documents, questions, Chat Completions endpoint, and message roles. The substantive treatment is the instruction text:\n\nUse only the supplied document. For each question, answer TRUE only if the text explicitly supports it; otherwise FALSE. Do not infer unstated rules or use outside knowledge. Return exactly 15 rows as question_id,response, preceded by that header. No other text.\n\nThe improvement is deliberately concise. It adds four things the old prompt left underspecified: a source boundary, an explicit TRUE/FALSE decision threshold, a prohibition on unstated inference, and an exact row-level output contract. These changes target both classification ambiguity and the serialization anomalies observed in the contemporary baseline run without introducing examples, chain-of-thought instructions, or a structured-output API parameter. The shorter wording also reduces prompt overhead while leaving the source document and questions unchanged.\nAll three improved-protocol model arms use the same 500-token maximum output allowance. The client expresses that ceiling with the model-appropriate Chat Completions parameter (max_tokens for GPT-4 Turbo and max_completion_tokens for GPT-5.4 nano and GPT-5.4 mini). The ceiling is an operational execution constraint rather than part of the classification prompt, is held constant across the three improved-protocol arms, and is recorded in the run metadata.\nBefore execution, the runner uses tiktoken to estimate the two-message request size for every PON. For the GPT-4 Turbo arm, estimated input plus the output cap must remain below 29,750 tokens: the observed 30,000-token account TPM ceiling less a 250-token safety margin. This local preflight was added after the API rejected the largest request at 30,012 requested tokens. Because Chat Completions framing can vary by serving implementation, the local count is treated as a conservative guardrail rather than an exact reconstruction of server-side accounting. A failed preflight creates no batch directory and makes no API call."
+  },
+  {
+    "objectID": "reports/methods.html#six-scenarios",
+    "href": "reports/methods.html#six-scenarios",
+    "title": "Methods",
+    "section": "Six scenarios",
+    "text": "Six scenarios\n\n\n\n\nTable 3: Model-by-protocol scenarios\n\n\n\n\n\n\nModel\nProtocol\nStatus\n\n\n\n\nGPT-4 Turbo\n2024 protocol\nPreserved 2024 zero-shot output\n\n\nGPT-5.4 nano\n2024 protocol\nRetained 2026 zero-shot run\n\n\nGPT-5.4 mini\n2024 protocol\nRetained 2026 zero-shot run\n\n\nGPT-4 Turbo\nImproved protocol\n2026 API run\n\n\nGPT-5.4 nano\nImproved protocol\n2026 API run\n\n\nGPT-5.4 mini\nImproved protocol\n2026 API run\n\n\n\n\n\n\n\n\nThe 2024 historical calls recorded the alias gpt-4-turbo, not a returned snapshot identifier. The improved-protocol arm therefore uses the pinned gpt-4-turbo-2024-04-09 snapshot as the closest reproducible counterpart. The contemporary arms use pinned gpt-5.4-nano-2026-03-17 and gpt-5.4-mini-2026-03-17 snapshots under both protocols."
+  },
+  {
+    "objectID": "reports/methods.html#berec-exclusion",
+    "href": "reports/methods.html#berec-exclusion",
+    "title": "Methods",
+    "section": "BEREC exclusion",
+    "text": "BEREC exclusion\nBEREC is retained only as archival provenance. Its preserved output predates the final Dec. 24 message-role implementation, and its boundary object is substantially larger than the other study documents. It is excluded from new default runs and from every comparative table, figure, aggregate statistic, and analytical denominator."
+  },
+  {
+    "objectID": "reports/methods.html#human-reference-evaluation",
+    "href": "reports/methods.html#human-reference-evaluation",
+    "title": "Methods",
+    "section": "Human-reference evaluation",
+    "text": "Human-reference evaluation\nThe recovered computational workspace contains one human-reference vector per PON for IRG, EUHC, COAS, CAN, and CEER. All six scenarios are evaluated against these same 75 binary decisions. They should not be conflated with the later three-human-coder validation described in the manuscript."
+  },
+  {
+    "objectID": "reports/methods.html#new-run-provenance",
+    "href": "reports/methods.html#new-run-provenance",
+    "title": "Methods",
+    "section": "New-run provenance",
+    "text": "New-run provenance\nEvery new request saves the raw model output plus a JSON sidecar containing the requested and returned model IDs, completion ID, UTC request time, prompt and document hashes, usage data, system fingerprint when available, selected response headers, the explicit output-token limit when used, and the parameters deliberately left unspecified. Failed improved-protocol batches receive batch_failed.json; only fully completed batches receive batch_manifest.json. Single-model improved runs receive their own run_manifest.json only after completion."
+  },
+  {
+    "objectID": "reports/old/methods.html",
+    "href": "reports/old/methods.html",
+    "title": "Methods",
+    "section": "",
+    "text": "The computational pilot examines whether a large language model can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). Each boundary object is presented as a document-level input, and the model returns one binary classification for each governance question.\nThe contemporary extension implemented in this repository asks a single comparative question: how does a new model perform when the 2024 protocol is held fixed? The model is therefore the intended treatment; the instrument and prompting design are not modernized."
+  },
+  {
+    "objectID": "reports/old/methods.html#study-objective",
+    "href": "reports/old/methods.html#study-objective",
+    "title": "Methods",
+    "section": "",
+    "text": "The computational pilot examines whether a large language model can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). Each boundary object is presented as a document-level input, and the model returns one binary classification for each governance question.\nThe contemporary extension implemented in this repository asks a single comparative question: how does a new model perform when the 2024 protocol is held fixed? The model is therefore the intended treatment; the instrument and prompting design are not modernized."
+  },
+  {
+    "objectID": "reports/old/methods.html#cases-and-source-documents",
+    "href": "reports/old/methods.html#cases-and-source-documents",
+    "title": "Methods",
+    "section": "Cases and source documents",
+    "text": "Cases and source documents\nThe recovered source corpus contains six PONs.\n\n\n\n\nTable 1: Boundary objects retained in the reconstructed project\n\n\n\n\n\n\n\n\n\n\n\nPON\nOrganization\nFile\n\n\n\n\nBEREC\nBody of European Regulators for Electronic Communications\nBO1A.txt\n\n\nIRG\nIndependent Regulators Group\nBO2A.txt\n\n\nEU Health Coalition\nEU Health Coalition\nBO3A.txt\n\n\ncOAlition S\ncOAlition S\nBO4A.txt\n\n\nCAN\nClimate Action Network\nBO5A.txt\n\n\nCEER\nCouncil of European Energy Regulators\nBO6A.txt\n\n\n\n\n\n\n\n\nThe source texts are stored locally in input/boundary_objects/, eliminating the original runtime dependency on a Google Drive directory while preserving the supplied documents."
+  },
+  {
+    "objectID": "reports/old/methods.html#binary-coding-instrument",
+    "href": "reports/old/methods.html#binary-coding-instrument",
+    "title": "Methods",
+    "section": "Binary coding instrument",
+    "text": "Binary coding instrument\nThe computational workflow contains 15 ordered yes/no questions.\n\n\n\n\nTable 2: Binary governance questions in the preserved computational instrument\n\n\n\n\n\n\n\n\n\n\nID\nQuestion\n\n\n\n\n1\nAre the procedures for decision-making in the PON specified?\n\n\n2\nAre voting rules (such as simple majority) explicitly established?\n\n\n3\nAre decisions made by simple majority voting by member organizations?\n\n\n4\nAre decisions made by consensus or unanimity by member organizations?\n\n\n5\nIf the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?\n\n\n6\nAre there expert committees in the PON?\n\n\n7\nDoes the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?\n\n\n8\nDoes the organization have a plenary assembly where all members participate and which makes the constitutional decisions?\n\n\n9\nDoes the organization have an executive board where a subset of members participate and which make strategic decisions?\n\n\n10\nDoes the PON have working groups where member organizations can participate in?\n\n\n11\nDoes accession into the PON depend on a decision by the incumbent member organizations?\n\n\n12\nDoes the PON clearly specify which types of organisations can become members?\n\n\n13\nDo potential member organizations have to fullful certain conditions to become members?\n\n\n14\nIs there a process for membership suspension from the PON?\n\n\n15\nAre there members which have no voting power, such as observer members?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe manuscript later reports 14 prompts. The preserved computational instrument contains one additional working-groups item. It is retained here because the new-model exercise reproduces the historical computational protocol rather than revising it retrospectively."
+  },
+  {
+    "objectID": "reports/old/methods.html#recovered-2024-api-protocol",
+    "href": "reports/old/methods.html#recovered-2024-api-protocol",
+    "title": "Methods",
+    "section": "Recovered 2024 API protocol",
+    "text": "Recovered 2024 API protocol\nThe final Dec. 24 Quarto implementation used the OpenAI Python client and Chat Completions. The request supplied only model and messages explicitly. The requested model alias was gpt-4-turbo.\nThe messages were constructed as follows:\n\nSystem message — the policy-analyst instruction followed by the ordered questions.\nUser message — the complete boundary-object text.\n\nNo explicit values were supplied for temperature, top-p, token limit, seed, structured response format, or tools. Consequently, those values were whatever defaults applied to the service at the time and should not be reconstructed retroactively.\nThe preserved policy-analyst instruction is:\n\nYou are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.\n\nThe historical code then concatenated The questions are: and the question list directly to this string. The new runner intentionally preserves that exact string construction rather than cleaning its whitespace."
+  },
+  {
+    "objectID": "reports/old/methods.html#prompting-conditions",
+    "href": "reports/old/methods.html#prompting-conditions",
+    "title": "Methods",
+    "section": "Prompting conditions",
+    "text": "Prompting conditions\nTwo conditions are retained:\n\nZero-shot — the baseline instruction and questions, with no examples.\nStep by step — the literal phrase Let's think step by step appended before the question list.\n\nThe contemporary runner does not introduce a schema, examples, revised role prompt, or other prompt engineering. Only the requested model ID changes."
+  },
+  {
+    "objectID": "reports/old/methods.html#berec-provenance-caveat",
+    "href": "reports/old/methods.html#berec-provenance-caveat",
+    "title": "Methods",
+    "section": "BEREC provenance caveat",
+    "text": "BEREC provenance caveat\nBEREC was part of the six-PON source corpus and was heavily used while the pipeline was being developed. Its preserved binary output, BO1A-2024-12-23-55_cat.txt, is retained in output/.\nThat file predates the Dec. 24 final run. Earlier Quarto versions around the BEREC development stage show a different message-role layout, with the boundary-object text used as the system message and the question prompt used as the user message. The surviving materials do not establish with sufficient certainty which exact code state produced the Dec. 23 BEREC file.\nAccordingly, current runs include BEREC under the final manuscript-facing protocol, but BEREC is excluded from statistics explicitly labeled as a strict same-protocol legacy comparison. Its legacy/current differences remain available descriptively."
+  },
+  {
+    "objectID": "reports/old/methods.html#legacy-human-reference-evaluation",
+    "href": "reports/old/methods.html#legacy-human-reference-evaluation",
+    "title": "Methods",
+    "section": "Legacy human-reference evaluation",
+    "text": "Legacy human-reference evaluation\nThe recovered Dec. 24 analysis compares each model output with one human-reference vector per organization for IRG, EU Health Coalition, cOAlition S, CAN, and CEER. Those labels are stored in input/reference/legacy_human_responses.csv.\nThey are the single reference vectors used by the recovered computational code. They should not be conflated with the later three-human-coder validation described in the manuscript."
+  },
+  {
+    "objectID": "reports/old/methods.html#new-model-provenance",
+    "href": "reports/old/methods.html#new-model-provenance",
+    "title": "Methods",
+    "section": "New-model provenance",
+    "text": "New-model provenance\nEvery new request stores the raw model output without normalization, plus a JSON sidecar containing the requested and returned model IDs, completion ID, UTC request time, prompt and input hashes, usage data, system fingerprint when available, selected HTTP headers, and the list of parameters that were deliberately left unspecified.\nThese additional records improve provenance without altering what is sent to the model."
+  },
+  {
+    "objectID": "reports/old/results.html",
+    "href": "reports/old/results.html",
+    "title": "Legacy Results",
+    "section": "",
+    "text": "This report evaluates the ten response files preserved from the Dec. 24, 2024 final pipeline. It does not call OpenAI and does not modify any historical output.\nBEREC is not inserted into this human-reference evaluation because its surviving Dec. 23 file comes from an earlier development stage and there is no recovered 15-question BEREC human-reference vector tied unambiguously to that output. BEREC remains part of the source corpus and is handled explicitly in the model-generation comparison."
+  },
+  {
+    "objectID": "reports/old/results.html#scope",
+    "href": "reports/old/results.html#scope",
+    "title": "Legacy Results",
+    "section": "",
+    "text": "This report evaluates the ten response files preserved from the Dec. 24, 2024 final pipeline. It does not call OpenAI and does not modify any historical output.\nBEREC is not inserted into this human-reference evaluation because its surviving Dec. 23 file comes from an earlier development stage and there is no recovered 15-question BEREC human-reference vector tied unambiguously to that output. BEREC remains part of the source corpus and is handled explicitly in the model-generation comparison."
+  },
+  {
+    "objectID": "reports/old/results.html#performance-by-pon-and-prompt-condition",
+    "href": "reports/old/results.html#performance-by-pon-and-prompt-condition",
+    "title": "Legacy Results",
+    "section": "Performance by PON and prompt condition",
+    "text": "Performance by PON and prompt condition\n\n\n\n\nTable 1: Precision, recall, and F1 against the recovered legacy human-reference labels\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOrganization\nPrompting\nPrecision\nRecall\nF1\nTP\nFP\nFN\nTN\n\n\n\n\nClimate Action Network\nStep by step\n0.85\n0.85\n0.85\n51\n9\n9\n6\n\n\nClimate Action Network\nZero-shot\n0.82\n0.88\n0.85\n53\n12\n7\n3\n\n\nCouncil of European Energy Regulators\nStep by step\n0.83\n0.97\n0.89\n58\n12\n2\n3\n\n\nCouncil of European Energy Regulators\nZero-shot\n0.82\n0.88\n0.85\n53\n12\n7\n3\n\n\nEU Health Coalition\nStep by step\n0.84\n0.77\n0.80\n46\n9\n14\n6\n\n\nEU Health Coalition\nZero-shot\n0.88\n0.73\n0.80\n44\n6\n16\n9\n\n\nIndependent Regulators Group\nStep by step\n0.86\n0.93\n0.90\n56\n9\n4\n6\n\n\nIndependent Regulators Group\nZero-shot\n0.88\n0.88\n0.88\n53\n7\n7\n8\n\n\ncOAlition S\nStep by step\n0.83\n0.90\n0.86\n54\n11\n6\n4\n\n\ncOAlition S\nZero-shot\n0.83\n0.90\n0.86\n54\n11\n6\n4"
+  },
+  {
+    "objectID": "reports/old/results.html#disagreements-with-the-human-reference",
+    "href": "reports/old/results.html#disagreements-with-the-human-reference",
+    "title": "Legacy Results",
+    "section": "Disagreements with the human reference",
+    "text": "Disagreements with the human reference\n\n\n\n\n\n\n\n\nFigure 1: Disagreements with the recovered human-reference labels"
+  },
+  {
+    "objectID": "reports/old/results.html#question-level-discrepancies",
+    "href": "reports/old/results.html#question-level-discrepancies",
+    "title": "Legacy Results",
+    "section": "Question-level discrepancies",
+    "text": "Question-level discrepancies\n\n\n\n\nTable 2: Question-level disagreements in the preserved Dec. 24 outputs\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuestion\nOrganization\nPrompting\nLLM\nHuman\nType\n\n\n\n\n2\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n2\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n3\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n3\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nClimate Action Network\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nCouncil of European Energy Regulators\nStep by step\nFALSE\nTRUE\nFN\n\n\n3\nCouncil of European Energy Regulators\nStep by step\nFALSE\nTRUE\nFN\n\n\n3\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n3\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n3\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n3\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nIndependent Regulators Group\nStep by step\nFALSE\nTRUE\nFN\n\n\n3\nIndependent Regulators Group\nStep by step\nFALSE\nTRUE\nFN\n\n\n3\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n3\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n3\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n3\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n3\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n3\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n3\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n4\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n4\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n4\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n4\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n4\nCouncil of European Energy Regulators\nZero-shot\nFALSE\nTRUE\nFN\n\n\n5\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n5\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n5\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n5\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n5\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n5\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n5\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n5\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n5\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n5\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n5\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n5\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n5\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n5\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n5\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n5\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n5\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n5\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n5\ncOAlition S\nStep by step\nFALSE\nTRUE\nFN\n\n\n5\ncOAlition S\nStep by step\nFALSE\nTRUE\nFN\n\n\n5\ncOAlition S\nStep by step\nFALSE\nTRUE\nFN\n\n\n5\ncOAlition S\nZero-shot\nFALSE\nTRUE\nFN\n\n\n5\ncOAlition S\nZero-shot\nFALSE\nTRUE\nFN\n\n\n5\ncOAlition S\nZero-shot\nFALSE\nTRUE\nFN\n\n\n6\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n6\nClimate Action Network\nStep by step\nFALSE\nTRUE\nFN\n\n\n6\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\nEU Health Coalition\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nEU Health Coalition\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nEU Health Coalition\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\nIndependent Regulators Group\nStep by step\nFALSE\nTRUE\nFN\n\n\n6\nIndependent Regulators Group\nStep by step\nFALSE\nTRUE\nFN\n\n\n6\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n6\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n6\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n6\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n6\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n7\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n7\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n7\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n7\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n7\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n7\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n7\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n7\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n7\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n7\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n9\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n9\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n9\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n9\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n9\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n9\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n9\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n9\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n9\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n9\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n11\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n11\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n11\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n11\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n11\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n11\nEU Health Coalition\nZero-shot\nTRUE\nFALSE\nFP\n\n\n11\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n11\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n11\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n11\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nEU Health Coalition\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nEU Health Coalition\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nEU Health Coalition\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\nIndependent Regulators Group\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\ncOAlition S\nStep by step\nTRUE\nFALSE\nFP\n\n\n14\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n14\ncOAlition S\nZero-shot\nTRUE\nFALSE\nFP\n\n\n15\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n15\nClimate Action Network\nStep by step\nTRUE\nFALSE\nFP\n\n\n15\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n15\nClimate Action Network\nZero-shot\nTRUE\nFALSE\nFP\n\n\n15\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n15\nCouncil of European Energy Regulators\nStep by step\nTRUE\nFALSE\nFP\n\n\n15\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n15\nCouncil of European Energy Regulators\nZero-shot\nTRUE\nFALSE\nFP\n\n\n15\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n15\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n15\nEU Health Coalition\nStep by step\nFALSE\nTRUE\nFN\n\n\n15\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\nEU Health Coalition\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n15\nIndependent Regulators Group\nStep by step\nTRUE\nFALSE\nFP\n\n\n15\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\nIndependent Regulators Group\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\ncOAlition S\nStep by step\nFALSE\nTRUE\nFN\n\n\n15\ncOAlition S\nStep by step\nFALSE\nTRUE\nFN\n\n\n15\ncOAlition S\nStep by step\nFALSE\nTRUE\nFN\n\n\n15\ncOAlition S\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\ncOAlition S\nZero-shot\nFALSE\nTRUE\nFN\n\n\n15\ncOAlition S\nZero-shot\nFALSE\nTRUE\nFN\n\n\n\n\n\n\n\n\nThe purpose of this report is archival: it makes the recovered 2024 evaluation legible without generating new classifications. Substantive interpretation of individual ambiguities belongs to the manuscript and the model-comparison report rather than being inferred from the binary table alone."
+  }
+]
