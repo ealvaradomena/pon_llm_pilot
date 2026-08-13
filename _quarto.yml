@@ -1,0 +1,46 @@
+project:
+  type: website
+  output-dir: _site
+  execute-dir: project
+  resources:
+    - derived/figures/**
+
+website:
+  title: "PON Governance LLM Pilot"
+  site-url: "https://ealvaradomena.github.io/pon_llm_pilot/"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: reports/methods.qmd
+        text: Methods
+      - href: reports/results.qmd
+        text: 2024 Results
+      - href: reports/model-comparison.qmd
+        text: Six-Scenario Comparison
+    right:
+      - icon: github
+        href: https://github.com/ealvaradomena/pon_llm_pilot
+        aria-label: GitHub repository
+  page-footer:
+    center: "Computational materials for the PON governance LLM pilot"
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    code-fold: true
+    code-tools: true
+    smooth-scroll: true
+    theme: cosmo
+    df-print: paged
+
+crossref:
+  fig-title: "Figure"
+  tbl-title: "Table"
+
+execute:
+  echo: false
+  warning: false
+  message: false

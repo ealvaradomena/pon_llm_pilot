@@ -1,0 +1,80 @@
+project:
+  boundary_object_dir: input/boundary_objects
+  questions_file: input/reference/questions.csv
+  human_responses_file: input/reference/legacy_human_responses.csv
+  legacy_runs_file: input/reference/legacy_runs.csv
+  current_output_dir: output/current
+  improved_output_dir: output/improved
+  derived_dir: derived
+
+# Historical request protocol recovered from the 2024 project.
+# The contemporary baseline keeps only the zero-shot condition.
+legacy_protocol:
+  endpoint: chat.completions
+  model_alias: gpt-4-turbo
+  temperature: null
+  max_tokens: null
+  top_p: null
+  seed: null
+  response_format: null
+  starter: >-
+    You are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.
+  techniques:
+    zero_shot:
+      suffix: ""
+      code: z
+
+# Concise protocol designed to reduce ambiguity while preserving the same task,
+# documents, questions, message roles, endpoint, and zero-shot design.
+improved_protocol:
+  name: improved-v1
+  endpoint: chat.completions
+  # Operational cap applied equally to both improved-protocol model arms.
+  max_output_tokens: 500
+  # Observed GPT-4 Turbo TPM ceiling for this replication account.
+  legacy_tpm_limit: 30000
+  # Keep a conservative margin because local chat-token counts are estimates.
+  preflight_headroom_tokens: 250
+  starter: >-
+    Use only the supplied document. For each question, answer TRUE only if the text explicitly supports it; otherwise FALSE. Do not infer unstated rules or use outside knowledge. Return exactly 15 rows as question_id,response, preceded by that header. No other text.
+
+comparison:
+  # BEREC remains in the archival entity registry below but is excluded from
+  # the comparative experiment and all future default study runs.
+  study_entities:
+    - irg
+    - euhc
+    - coas
+    - can
+    - ceer
+  # Historical 2024 calls recorded the moving alias gpt-4-turbo. The pinned
+  # snapshot below is the closest reproducible counterpart available today.
+  legacy_model: gpt-4-turbo-2024-04-09
+  current_model: gpt-5.4-nano-2026-03-17
+  mini_model: gpt-5.4-mini-2026-03-17
+
+entities:
+  - name: Body of European Regulators for Electronic Communications
+    short_name: BEREC
+    slug: berec
+    boundary_object: BO1A.txt
+  - name: Independent Regulators Group
+    short_name: IRG
+    slug: irg
+    boundary_object: BO2A.txt
+  - name: EU Health Coalition
+    short_name: EUHC
+    slug: euhc
+    boundary_object: BO3A.txt
+  - name: cOAlition S
+    short_name: COAS
+    slug: coas
+    boundary_object: BO4A.txt
+  - name: Climate Action Network
+    short_name: CAN
+    slug: can
+    boundary_object: BO5A.txt
+  - name: Council of European Energy Regulators
+    short_name: CEER
+    slug: ceer
+    boundary_object: BO6A.txt

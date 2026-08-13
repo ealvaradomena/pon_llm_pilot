@@ -1,0 +1,33 @@
+# Environment and secrets
+.env
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# R / RStudio
+.Rhistory
+.Rproj.user/
+
+# Quarto
+.quarto/
+_site/
+**/*.quarto_ipynb
+
+# PatchMyMess backups
+**/old/
+
+# Generated analysis artifacts
+derived/*
+!derived/.gitkeep
+!derived/figures/
+derived/figures/*
+!derived/figures/.gitkeep
+
+# Local ZipMyMess archive
+zipmymess.zip
+
+# Failed API runs
+output/**/batch_failed.json
+output/**/run_failed.json

@@ -1,0 +1,162 @@
+---
+title: "2024 Zero-Shot Results"
+subtitle: "Evaluation of the preserved December 2024 outputs"
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(purrr)
+library(readr)
+library(tibble)
+
+source("R/analysis.R")
+questions <- readr::read_csv(
+  "input/reference/questions.csv",
+  show_col_types = FALSE
+)
+human <- readr::read_csv(
+  "input/reference/legacy_human_responses.csv",
+  show_col_types = FALSE
+)
+
+files <- tibble::tribble(
+  ~entity_slug, ~path,
+  "irg", "output/BO2A-2024-12-24-2-52-18_irg_z.txt",
+  "euhc", "output/BO3A-2024-12-24-2-53-29_euhc_z.txt",
+  "coas", "output/BO4A-2024-12-24-2-53-56_coas_z.txt",
+  "can", "output/BO5A-2024-12-24-2-54-17_can_z.txt",
+  "ceer", "output/BO6A-2024-12-24-2-54-38_ceer_z.txt"
+)
+
+evaluation <- purrr::pmap_dfr(
+  files,
+  function(entity_slug, path) {
+    evaluate_output(
+      path = path,
+      entity_slug = entity_slug,
+      technique = "Zero-shot",
+      questions = questions,
+      human = human
+    ) |>
+      dplyr::mutate(pon = pon_label(entity_slug))
+  }
+)
+
+metrics <- evaluation |>
+  dplyr::group_by(.data$entity_slug, .data$pon) |>
+  dplyr::group_modify(~ compute_metrics(.x)) |>
+  dplyr::ungroup()
+```
+
+## Scope
+
+This archival report retains only the five **zero-shot** response files from the final Dec. 24, 2024 pipeline for which a recovered human-reference vector is available. Historical step-by-step files remain preserved on disk but are no longer part of the analytical design.
+
+BEREC is retained only as archival provenance and is excluded from the comparative experiment. All results on this page therefore use IRG, EUHC, COAS, CAN, and CEER.
+
+## Performance by PON
+
+```{r}
+#| label: tbl-legacy-metrics
+#| tbl-cap: "Performance of the preserved 2024 zero-shot outputs against the recovered human reference"
+
+metrics |>
+  dplyr::mutate(
+    accuracy = scales::percent(.data$accuracy, accuracy = 0.1),
+    precision = scales::percent(.data$precision, accuracy = 0.1),
+    recall = scales::percent(.data$recall, accuracy = 0.1),
+    specificity = scales::percent(.data$specificity, accuracy = 0.1),
+    f1 = scales::percent(.data$f1, accuracy = 0.1)
+  ) |>
+  dplyr::select(
+    .data$pon,
+    .data$accuracy,
+    .data$precision,
+    .data$recall,
+    .data$specificity,
+    .data$f1,
+    .data$tp,
+    .data$fp,
+    .data$fn,
+    .data$tn
+  ) |>
+  knitr::kable(
+    col.names = c(
+      "PON", "Accuracy", "Precision", "Recall", "Specificity",
+      "F1", "TP", "FP", "FN", "TN"
+    )
+  )
+```
+
+::: {.callout-tip appearance="simple"}
+**Question:** What share of each PON's 15 classifications disagreed with the recovered human reference?
+:::
+
+```{r}
+#| label: fig-legacy-disagreement
+#| fig-cap: "Relative weight of disagreements with the recovered human reference in the preserved 2024 zero-shot outputs. Each bar represents the share of 15 decisions that disagreed."
+#| fig-height: 4.5
+
+plot_data <- metrics |>
+  dplyr::arrange(.data$disagreement_rate)
+
+ggplot2::ggplot(
+  plot_data,
+  ggplot2::aes(
+    x = stats::reorder(.data$pon, .data$disagreement_rate),
+    y = .data$disagreement_rate
+  )
+) +
+  ggplot2::geom_col(
+    width = 0.65,
+    fill = "#0072B2"
+  ) +
+  ggplot2::geom_text(
+    ggplot2::aes(
+      label = scales::percent(.data$disagreement_rate, accuracy = 0.1)
+    ),
+    hjust = -0.15,
+    size = 3.5
+  ) +
+  ggplot2::coord_flip() +
+  ggplot2::scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, by = 0.2),
+    labels = scales::label_percent(accuracy = 1),
+    expand = ggplot2::expansion(mult = c(0, 0.08))
+  ) +
+  ggplot2::labs(
+    x = NULL,
+    y = "Share disagreeing with human reference"
+  ) +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(panel.grid.minor = ggplot2::element_blank())
+```
+
+## Question-level discrepancies
+
+```{r}
+#| label: tbl-legacy-errors
+#| tbl-cap: "Question-level disagreements in the preserved 2024 zero-shot outputs"
+
+evaluation |>
+  dplyr::filter(!.data$agreement) |>
+  dplyr::select(
+    .data$question_id,
+    .data$pon,
+    .data$llm_response,
+    .data$human_response,
+    .data$eval
+  ) |>
+  dplyr::arrange(.data$question_id, .data$pon) |>
+  knitr::kable(
+    col.names = c("Question", "PON", "LLM", "Human", "Type")
+  )
+```
+
+The purpose of this page is archival. The six-scenario report evaluates how classifications vary across model choice, protocol, and their combination.

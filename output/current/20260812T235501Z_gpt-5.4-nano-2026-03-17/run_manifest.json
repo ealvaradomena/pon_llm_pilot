@@ -1,0 +1,81 @@
+{
+  "protocol": "2024-legacy",
+  "requested_model": "gpt-5.4-nano-2026-03-17",
+  "created_utc": "2026-08-12T23:55:36.958406+00:00",
+  "config_file": "C:\\Users\\ealva\\Documents\\GitHub\\pon_llm_pilot\\config\\config.yml",
+  "question_count": 15,
+  "generated": [
+    {
+      "entity_slug": "berec",
+      "technique_code": "z",
+      "raw_output": "BO1A_berec_z.txt",
+      "metadata": "BO1A_berec_z.json"
+    },
+    {
+      "entity_slug": "berec",
+      "technique_code": "sbs",
+      "raw_output": "BO1A_berec_sbs.txt",
+      "metadata": "BO1A_berec_sbs.json"
+    },
+    {
+      "entity_slug": "irg",
+      "technique_code": "z",
+      "raw_output": "BO2A_irg_z.txt",
+      "metadata": "BO2A_irg_z.json"
+    },
+    {
+      "entity_slug": "irg",
+      "technique_code": "sbs",
+      "raw_output": "BO2A_irg_sbs.txt",
+      "metadata": "BO2A_irg_sbs.json"
+    },
+    {
+      "entity_slug": "euhc",
+      "technique_code": "z",
+      "raw_output": "BO3A_euhc_z.txt",
+      "metadata": "BO3A_euhc_z.json"
+    },
+    {
+      "entity_slug": "euhc",
+      "technique_code": "sbs",
+      "raw_output": "BO3A_euhc_sbs.txt",
+      "metadata": "BO3A_euhc_sbs.json"
+    },
+    {
+      "entity_slug": "coas",
+      "technique_code": "z",
+      "raw_output": "BO4A_coas_z.txt",
+      "metadata": "BO4A_coas_z.json"
+    },
+    {
+      "entity_slug": "coas",
+      "technique_code": "sbs",
+      "raw_output": "BO4A_coas_sbs.txt",
+      "metadata": "BO4A_coas_sbs.json"
+    },
+    {
+      "entity_slug": "can",
+      "technique_code": "z",
+      "raw_output": "BO5A_can_z.txt",
+      "metadata": "BO5A_can_z.json"
+    },
+    {
+      "entity_slug": "can",
+      "technique_code": "sbs",
+      "raw_output": "BO5A_can_sbs.txt",
+      "metadata": "BO5A_can_sbs.json"
+    },
+    {
+      "entity_slug": "ceer",
+      "technique_code": "z",
+      "raw_output": "BO6A_ceer_z.txt",
+      "metadata": "BO6A_ceer_z.json"
+    },
+    {
+      "entity_slug": "ceer",
+      "technique_code": "sbs",
+      "raw_output": "BO6A_ceer_sbs.txt",
+      "metadata": "BO6A_ceer_sbs.json"
+    }
+  ]
+}

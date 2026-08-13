@@ -1,0 +1,115 @@
+{
+  "status": "complete",
+  "protocol": "improved-v1",
+  "created_utc": "2026-08-13T01:36:36.415238+00:00",
+  "models": [
+    {
+      "role": "legacy",
+      "requested_model": "gpt-4-turbo-2024-04-09",
+      "run_dir": "output\\improved\\20260813T013603Z\\gpt-4-turbo-2024-04-09"
+    },
+    {
+      "role": "current",
+      "requested_model": "gpt-5.4-nano-2026-03-17",
+      "run_dir": "output\\improved\\20260813T013603Z\\gpt-5.4-nano-2026-03-17"
+    }
+  ],
+  "question_count": 15,
+  "max_output_tokens": 500,
+  "preflight": {
+    "legacy_tpm_limit": 30000,
+    "headroom_tokens": 250,
+    "estimates": [
+      {
+        "model_role": "legacy",
+        "model": "gpt-4-turbo-2024-04-09",
+        "entity_slug": "irg",
+        "input_tokens_estimated": 7811,
+        "max_output_tokens": 500,
+        "projected_tokens": 8311,
+        "safe_tpm_ceiling": 29750
+      },
+      {
+        "model_role": "legacy",
+        "model": "gpt-4-turbo-2024-04-09",
+        "entity_slug": "euhc",
+        "input_tokens_estimated": 3098,
+        "max_output_tokens": 500,
+        "projected_tokens": 3598,
+        "safe_tpm_ceiling": 29750
+      },
+      {
+        "model_role": "legacy",
+        "model": "gpt-4-turbo-2024-04-09",
+        "entity_slug": "coas",
+        "input_tokens_estimated": 4621,
+        "max_output_tokens": 500,
+        "projected_tokens": 5121,
+        "safe_tpm_ceiling": 29750
+      },
+      {
+        "model_role": "legacy",
+        "model": "gpt-4-turbo-2024-04-09",
+        "entity_slug": "can",
+        "input_tokens_estimated": 6111,
+        "max_output_tokens": 500,
+        "projected_tokens": 6611,
+        "safe_tpm_ceiling": 29750
+      },
+      {
+        "model_role": "legacy",
+        "model": "gpt-4-turbo-2024-04-09",
+        "entity_slug": "ceer",
+        "input_tokens_estimated": 8989,
+        "max_output_tokens": 500,
+        "projected_tokens": 9489,
+        "safe_tpm_ceiling": 29750
+      },
+      {
+        "model_role": "current",
+        "model": "gpt-5.4-nano-2026-03-17",
+        "entity_slug": "irg",
+        "input_tokens_estimated": 7600,
+        "max_output_tokens": 500,
+        "projected_tokens": 8100,
+        "safe_tpm_ceiling": null
+      },
+      {
+        "model_role": "current",
+        "model": "gpt-5.4-nano-2026-03-17",
+        "entity_slug": "euhc",
+        "input_tokens_estimated": 3058,
+        "max_output_tokens": 500,
+        "projected_tokens": 3558,
+        "safe_tpm_ceiling": null
+      },
+      {
+        "model_role": "current",
+        "model": "gpt-5.4-nano-2026-03-17",
+        "entity_slug": "coas",
+        "input_tokens_estimated": 4576,
+        "max_output_tokens": 500,
+        "projected_tokens": 5076,
+        "safe_tpm_ceiling": null
+      },
+      {
+        "model_role": "current",
+        "model": "gpt-5.4-nano-2026-03-17",
+        "entity_slug": "can",
+        "input_tokens_estimated": 6097,
+        "max_output_tokens": 500,
+        "projected_tokens": 6597,
+        "safe_tpm_ceiling": null
+      },
+      {
+        "model_role": "current",
+        "model": "gpt-5.4-nano-2026-03-17",
+        "entity_slug": "ceer",
+        "input_tokens_estimated": 8956,
+        "max_output_tokens": 500,
+        "projected_tokens": 9456,
+        "safe_tpm_ceiling": null
+      }
+    ]
+  }
+}

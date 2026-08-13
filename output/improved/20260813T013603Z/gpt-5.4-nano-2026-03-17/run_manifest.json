@@ -1,0 +1,36 @@
+{
+  "status": "complete",
+  "protocol": "improved-v1",
+  "model_role": "current",
+  "requested_model": "gpt-5.4-nano-2026-03-17",
+  "created_utc": "2026-08-13T01:36:36.413349+00:00",
+  "question_count": 15,
+  "max_output_tokens": 500,
+  "generated": [
+    {
+      "entity_slug": "irg",
+      "raw_output": "BO2A_irg_z.txt",
+      "metadata": "BO2A_irg_z.json"
+    },
+    {
+      "entity_slug": "euhc",
+      "raw_output": "BO3A_euhc_z.txt",
+      "metadata": "BO3A_euhc_z.json"
+    },
+    {
+      "entity_slug": "coas",
+      "raw_output": "BO4A_coas_z.txt",
+      "metadata": "BO4A_coas_z.json"
+    },
+    {
+      "entity_slug": "can",
+      "raw_output": "BO5A_can_z.txt",
+      "metadata": "BO5A_can_z.json"
+    },
+    {
+      "entity_slug": "ceer",
+      "raw_output": "BO6A_ceer_z.txt",
+      "metadata": "BO6A_ceer_z.json"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "protocol": "improved-v1",
+  "endpoint": "chat.completions",
+  "requested_model": "gpt-4-turbo-2024-04-09",
+  "returned_model": "gpt-4-turbo-2024-04-09",
+  "completion_id": "chatcmpl-ECEeikolN2VpIX7Elvo1Uur4399eh",
+  "completion_created": 1786584980,
+  "system_fingerprint": "fp_f2f751a792",
+  "finish_reason": "stop",
+  "entity": "Climate Action Network",
+  "entity_slug": "can",
+  "boundary_object": "BO5A.txt",
+  "boundary_object_sha256": "c5a71c05330a9a3b2ac8f77d5f86a3e022c1730c1f6adbb1badcbb8865e84ed1",
+  "technique": "Zero-shot",
+  "technique_code": "z",
+  "question_count": 15,
+  "system_prompt_sha256": "0b73758c8a454b6a784d621d79b30ef57a6808bb45631511afe1357a8617189d",
+  "system_prompt": "Use only the supplied document. For each question, answer TRUE only if the text explicitly supports it; otherwise FALSE. Do not infer unstated rules or use outside knowledge. Return exactly 15 rows as question_id,response, preceded by that header. No other text.\n\nQuestions:\n1,Are the procedures for decision-making in the PON specified?\n2,Are voting rules (such as simple majority) explicitly established?\n3,Are decisions made by simple majority voting by member organizations?\n4,Are decisions made by consensus or unanimity by member organizations?\n5,If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?\n6,Are there expert committees in the PON?\n7,Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?\n8,Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?\n9,Does the organization have an executive board where a subset of members participate and which make strategic decisions?\n10,Does the PON have working groups where member organizations can participate in?\n11,Does accession into the PON depend on a decision by the incumbent member organizations?\n12,Does the PON clearly specify which types of organisations can become members?\n13,Do potential member organizations have to fullful certain conditions to become members?\n14,Is there a process for membership suspension from the PON?\n15,Are there members which have no voting power, such as observer members?",
+  "user_message_sha256": "996e24a508d9259621f7d56d5e1f7e39fdeea47d59070877745d35d0fa992205",
+  "request_parameters_explicitly_supplied": [
+    "model",
+    "messages",
+    "max_tokens"
+  ],
+  "output_token_limit": {
+    "parameter": "max_tokens",
+    "value": 500
+  },
+  "request_parameters_intentionally_unspecified": [
+    "temperature",
+    "max_completion_tokens",
+    "top_p",
+    "seed",
+    "response_format",
+    "tools"
+  ],
+  "request_timestamp_utc": "2026-08-13T01:36:24.936685+00:00",
+  "response_headers": {
+    "x-request-id": "req_ccbeb12cea1d4a7abd48efb84fbcf43e",
+    "openai-processing-ms": "4752",
+    "openai-version": "2020-10-01",
+    "date": "Thu, 13 Aug 2026 01:36:25 GMT"
+  },
+  "usage": {
+    "completion_tokens": 65,
+    "prompt_tokens": 6111,
+    "total_tokens": 6176,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": 0,
+      "audio_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "raw_output_file": "BO5A_can_z.txt",
+  "raw_output_sha256": "1feb1b236d8fd2f7abfe22f8097670d855436d56eecd78552216183bd15c2f06"
+}

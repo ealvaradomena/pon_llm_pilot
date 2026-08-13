@@ -1,0 +1,36 @@
+---
+title: "PON Governance LLM Pilot"
+subtitle: "Zero-shot model-generation and protocol comparison"
+editor: visual
+---
+
+## Repository purpose
+
+This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*. The manuscript itself is not distributed here.
+
+The project preserves the December 2024 zero-shot outputs and adds a controlled 3 × 2 extension:
+
+> **How much do governance classifications depend on model choice, protocol design, or both?**
+
+The six scenarios cross GPT-4 Turbo, GPT-5.4 nano, and GPT-5.4 mini with the recovered 2024 prompt and a concise improved prompt. The five study documents, 15 questions, binary outcome space, Chat Completions endpoint, and zero-shot design remain fixed.
+
+## Corpus
+
+The archival source corpus contains six PONs: **BEREC, IRG, EUHC, COAS, CAN, and CEER**. The comparative experiment uses **IRG, EUHC, COAS, CAN, and CEER**. BEREC remains preserved for provenance but is excluded because its surviving Dec. 23 output predates the final Dec. 24 request implementation and its boundary object is unusually large.
+
+## Reproducibility architecture
+
+The repository separates four layers:
+
+- **preserved 2024 evidence** in `output/`;
+- **current-model runs under the 2024 protocol** in `output/current/`;
+- **improved-protocol model runs** in `output/improved/`; and
+- **derived comparisons** in `derived/`.
+
+Historical step-by-step outputs remain preserved but are not part of the analytical design.
+
+## Reports
+
+[Methods](reports/methods.qmd) documents the zero-shot 3 × 2 design and both protocols. [2024 Zero-Shot Results](reports/results.qmd) reconstructs the archival 2024 evaluation. [Six-Scenario Comparison](reports/model-comparison.qmd) evaluates model and protocol effects against the same recovered human reference.
+
+For execution instructions, API-key setup, and provenance cautions, see `README.md`.

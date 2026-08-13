@@ -1,0 +1,12 @@
+entity_slug,entity,technique,technique_code,legacy_model,legacy_output,run_date,strict_protocol_match,protocol_note
+berec,Body of European Regulators for Electronic Communications,Zero-shot,z,gpt-4-turbo,output/BO1A-2024-12-23-55_cat.txt,2024-12-23,FALSE,"Preserved BEREC output predates the Dec. 24 final pipeline. Legacy reports around this stage show an earlier message-role layout, so this row is retained for descriptive comparison but excluded from strict same-protocol aggregate statistics."
+irg,Independent Regulators Group,Zero-shot,z,gpt-4-turbo,output/BO2A-2024-12-24-2-52-18_irg_z.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+questions; user=boundary object."
+irg,Independent Regulators Group,Step by step,sbs,gpt-4-turbo,output/BO2A-2024-12-24-2-55-3_irg_sbs.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+step-by-step+questions; user=boundary object."
+euhc,EU Health Coalition,Zero-shot,z,gpt-4-turbo,output/BO3A-2024-12-24-2-53-29_euhc_z.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+questions; user=boundary object."
+euhc,EU Health Coalition,Step by step,sbs,gpt-4-turbo,output/BO3A-2024-12-24-2-55-18_euhc_sbs.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+step-by-step+questions; user=boundary object."
+coas,cOAlition S,Zero-shot,z,gpt-4-turbo,output/BO4A-2024-12-24-2-53-56_coas_z.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+questions; user=boundary object."
+coas,cOAlition S,Step by step,sbs,gpt-4-turbo,output/BO4A-2024-12-24-2-55-51_coas_sbs.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+step-by-step+questions; user=boundary object."
+can,Climate Action Network,Zero-shot,z,gpt-4-turbo,output/BO5A-2024-12-24-2-54-17_can_z.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+questions; user=boundary object."
+can,Climate Action Network,Step by step,sbs,gpt-4-turbo,output/BO5A-2024-12-24-2-56-12_can_sbs.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+step-by-step+questions; user=boundary object."
+ceer,Council of European Energy Regulators,Zero-shot,z,gpt-4-turbo,output/BO6A-2024-12-24-2-54-38_ceer_z.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+questions; user=boundary object."
+ceer,Council of European Energy Regulators,Step by step,sbs,gpt-4-turbo,output/BO6A-2024-12-24-2-56-33_ceer_sbs.txt,2024-12-24,TRUE,"Final Dec. 24 protocol: system=instruction+step-by-step+questions; user=boundary object."

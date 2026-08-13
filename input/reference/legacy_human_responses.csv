@@ -1,0 +1,76 @@
+question_id,question,entity,entity_slug,boundary_object,human_response
+1,Are the procedures for decision-making in the PON specified?,Independent Regulators Group,irg,BO2A.txt,TRUE
+2,Are voting rules (such as simple majority) explicitly established?,Independent Regulators Group,irg,BO2A.txt,TRUE
+3,Are decisions made by simple majority voting by member organizations?,Independent Regulators Group,irg,BO2A.txt,TRUE
+4,Are decisions made by consensus or unanimity by member organizations?,Independent Regulators Group,irg,BO2A.txt,TRUE
+5,"If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?",Independent Regulators Group,irg,BO2A.txt,TRUE
+6,Are there expert committees in the PON?,Independent Regulators Group,irg,BO2A.txt,FALSE
+7,Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?,Independent Regulators Group,irg,BO2A.txt,TRUE
+8,Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?,Independent Regulators Group,irg,BO2A.txt,TRUE
+9,Does the organization have an executive board where a subset of members participate and which make strategic decisions?,Independent Regulators Group,irg,BO2A.txt,TRUE
+10,Does the PON have working groups where member organizations can participate in?,Independent Regulators Group,irg,BO2A.txt,TRUE
+11,Does accession into the PON depend on a decision by the incumbent member organizations?,Independent Regulators Group,irg,BO2A.txt,TRUE
+12,Does the PON clearly specify which types of organisations can become members?,Independent Regulators Group,irg,BO2A.txt,TRUE
+13,Do potential member organizations have to fullful certain conditions to become members?,Independent Regulators Group,irg,BO2A.txt,TRUE
+14,Is there a process for membership suspension from the PON?,Independent Regulators Group,irg,BO2A.txt,TRUE
+15,"Are there members which have no voting power, such as observer members?",Independent Regulators Group,irg,BO2A.txt,FALSE
+1,Are the procedures for decision-making in the PON specified?,EU Health Comision,euhc,BO3A.txt,TRUE
+2,Are voting rules (such as simple majority) explicitly established?,EU Health Comision,euhc,BO3A.txt,TRUE
+3,Are decisions made by simple majority voting by member organizations?,EU Health Comision,euhc,BO3A.txt,FALSE
+4,Are decisions made by consensus or unanimity by member organizations?,EU Health Comision,euhc,BO3A.txt,TRUE
+5,"If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?",EU Health Comision,euhc,BO3A.txt,FALSE
+6,Are there expert committees in the PON?,EU Health Comision,euhc,BO3A.txt,FALSE
+7,Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?,EU Health Comision,euhc,BO3A.txt,FALSE
+8,Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?,EU Health Comision,euhc,BO3A.txt,TRUE
+9,Does the organization have an executive board where a subset of members participate and which make strategic decisions?,EU Health Comision,euhc,BO3A.txt,FALSE
+10,Does the PON have working groups where member organizations can participate in?,EU Health Comision,euhc,BO3A.txt,TRUE
+11,Does accession into the PON depend on a decision by the incumbent member organizations?,EU Health Comision,euhc,BO3A.txt,TRUE
+12,Does the PON clearly specify which types of organisations can become members?,EU Health Comision,euhc,BO3A.txt,TRUE
+13,Do potential member organizations have to fullful certain conditions to become members?,EU Health Comision,euhc,BO3A.txt,TRUE
+14,Is there a process for membership suspension from the PON?,EU Health Comision,euhc,BO3A.txt,TRUE
+15,"Are there members which have no voting power, such as observer members?",EU Health Comision,euhc,BO3A.txt,FALSE
+1,Are the procedures for decision-making in the PON specified?,cOAlition S,coas,BO4A.txt,TRUE
+2,Are voting rules (such as simple majority) explicitly established?,cOAlition S,coas,BO4A.txt,TRUE
+3,Are decisions made by simple majority voting by member organizations?,cOAlition S,coas,BO4A.txt,TRUE
+4,Are decisions made by consensus or unanimity by member organizations?,cOAlition S,coas,BO4A.txt,TRUE
+5,"If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?",cOAlition S,coas,BO4A.txt,TRUE
+6,Are there expert committees in the PON?,cOAlition S,coas,BO4A.txt,TRUE
+7,Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?,cOAlition S,coas,BO4A.txt,TRUE
+8,Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?,cOAlition S,coas,BO4A.txt,TRUE
+9,Does the organization have an executive board where a subset of members participate and which make strategic decisions?,cOAlition S,coas,BO4A.txt,TRUE
+10,Does the PON have working groups where member organizations can participate in?,cOAlition S,coas,BO4A.txt,TRUE
+11,Does accession into the PON depend on a decision by the incumbent member organizations?,cOAlition S,coas,BO4A.txt,TRUE
+12,Does the PON clearly specify which types of organisations can become members?,cOAlition S,coas,BO4A.txt,TRUE
+13,Do potential member organizations have to fullful certain conditions to become members?,cOAlition S,coas,BO4A.txt,TRUE
+14,Is there a process for membership suspension from the PON?,cOAlition S,coas,BO4A.txt,FALSE
+15,"Are there members which have no voting power, such as observer members?",cOAlition S,coas,BO4A.txt,TRUE
+1,Are the procedures for decision-making in the PON specified?,Climate Action Network,can,BO5A.txt,TRUE
+2,Are voting rules (such as simple majority) explicitly established?,Climate Action Network,can,BO5A.txt,TRUE
+3,Are decisions made by simple majority voting by member organizations?,Climate Action Network,can,BO5A.txt,FALSE
+4,Are decisions made by consensus or unanimity by member organizations?,Climate Action Network,can,BO5A.txt,TRUE
+5,"If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?",Climate Action Network,can,BO5A.txt,FALSE
+6,Are there expert committees in the PON?,Climate Action Network,can,BO5A.txt,FALSE
+7,Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?,Climate Action Network,can,BO5A.txt,TRUE
+8,Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?,Climate Action Network,can,BO5A.txt,TRUE
+9,Does the organization have an executive board where a subset of members participate and which make strategic decisions?,Climate Action Network,can,BO5A.txt,TRUE
+10,Does the PON have working groups where member organizations can participate in?,Climate Action Network,can,BO5A.txt,TRUE
+11,Does accession into the PON depend on a decision by the incumbent member organizations?,Climate Action Network,can,BO5A.txt,FALSE
+12,Does the PON clearly specify which types of organisations can become members?,Climate Action Network,can,BO5A.txt,TRUE
+13,Do potential member organizations have to fullful certain conditions to become members?,Climate Action Network,can,BO5A.txt,TRUE
+14,Is there a process for membership suspension from the PON?,Climate Action Network,can,BO5A.txt,FALSE
+15,"Are there members which have no voting power, such as observer members?",Climate Action Network,can,BO5A.txt,TRUE
+1,Are the procedures for decision-making in the PON specified?,CEER,ceer,BO6A.txt,TRUE
+2,Are voting rules (such as simple majority) explicitly established?,CEER,ceer,BO6A.txt,TRUE
+3,Are decisions made by simple majority voting by member organizations?,CEER,ceer,BO6A.txt,FALSE
+4,Are decisions made by consensus or unanimity by member organizations?,CEER,ceer,BO6A.txt,TRUE
+5,"If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?",CEER,ceer,BO6A.txt,TRUE
+6,Are there expert committees in the PON?,CEER,ceer,BO6A.txt,TRUE
+7,Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?,CEER,ceer,BO6A.txt,TRUE
+8,Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?,CEER,ceer,BO6A.txt,TRUE
+9,Does the organization have an executive board where a subset of members participate and which make strategic decisions?,CEER,ceer,BO6A.txt,TRUE
+10,Does the PON have working groups where member organizations can participate in?,CEER,ceer,BO6A.txt,TRUE
+11,Does accession into the PON depend on a decision by the incumbent member organizations?,CEER,ceer,BO6A.txt,TRUE
+12,Does the PON clearly specify which types of organisations can become members?,CEER,ceer,BO6A.txt,TRUE
+13,Do potential member organizations have to fullful certain conditions to become members?,CEER,ceer,BO6A.txt,TRUE
+14,Is there a process for membership suspension from the PON?,CEER,ceer,BO6A.txt,TRUE
+15,"Are there members which have no voting power, such as observer members?",CEER,ceer,BO6A.txt,TRUE
