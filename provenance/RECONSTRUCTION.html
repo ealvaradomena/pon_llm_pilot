@@ -180,6 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#table-a5-audit" id="toc-table-a5-audit" class="nav-link" data-scroll-target="#table-a5-audit">Table A5 audit</a></li>
   <li><a href="#current-model-extension" id="toc-current-model-extension" class="nav-link" data-scroll-target="#current-model-extension">Current-model extension</a></li>
   <li><a href="#berec-caveat-and-dedicated-workflow" id="toc-berec-caveat-and-dedicated-workflow" class="nav-link" data-scroll-target="#berec-caveat-and-dedicated-workflow">BEREC caveat and dedicated workflow</a></li>
+  <li><a href="#analysis-integrity-safeguards" id="toc-analysis-integrity-safeguards" class="nav-link" data-scroll-target="#analysis-integrity-safeguards">Analysis-integrity safeguards</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -242,6 +243,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="berec-caveat-and-dedicated-workflow">BEREC caveat and dedicated workflow</h2>
 <p>BEREC’s preserved Dec.&nbsp;23 response predates the final Dec.&nbsp;24 request implementation. The exact request construction cannot be proven from the surviving artifacts. BEREC therefore remains outside strict five-PON aggregate comparisons and is handled only through dedicated, dry-run-by-default scripts using <code>BO1B.txt</code>.</p>
 <p>See <code>provenance/BEREC_REPLICATION.md</code> and <code>LEGACY_API_CALLS.md</code>.</p>
+</section>
+<section id="analysis-integrity-safeguards" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-integrity-safeguards">Analysis-integrity safeguards</h2>
+<p>The five-PON model comparison is defined as 75 decisions per model: five PONs by 15 computational questions. The comparison script now fails before writing results unless it finds exactly 75 decisions per model, exactly 15 decisions per model/PON, unique model/PON/question keys, exactly 75 paired model-to-model decisions, and matching human-reference values across model generations.</p>
+<p>These checks were added after an evaluation join was found to have multiplied human-reference rows across PONs. The corrected PON-specific join uses the function argument explicitly (<code>.env$entity_slug</code>) and the corrected comparison contains 75 decisions per model rather than 375. Under the corrected evaluation, frozen GPT-4 Turbo SBS agrees with the confirmed human reference in 86.7% of classifications and GPT-5.4 nano in 78.7%. Four of the 14 model-generation changes move toward the human reference and ten move away.</p>
 
 
 <!-- -->
@@ -755,7 +761,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>BEREC's preserved Dec. 23 response predates the final Dec. 24 request implementation. The exact request construction cannot be proven from the surviving artifacts. BEREC therefore remains outside strict five-PON aggregate comparisons and is handled only through dedicated, dry-run-by-default scripts using <span class="in">`BO1B.txt`</span>.</span>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>See <span class="in">`provenance/BEREC_REPLICATION.md`</span> and <span class="in">`LEGACY_API_CALLS.md`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>See <span class="in">`provenance/BEREC_REPLICATION.md`</span> and <span class="in">`LEGACY_API_CALLS.md`</span>.</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis-integrity safeguards</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>The five-PON model comparison is defined as 75 decisions per model: five PONs by 15 computational questions. The comparison script now fails before writing results unless it finds exactly 75 decisions per model, exactly 15 decisions per model/PON, unique model/PON/question keys, exactly 75 paired model-to-model decisions, and matching human-reference values across model generations.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>These checks were added after an evaluation join was found to have multiplied human-reference rows across PONs. The corrected PON-specific join uses the function argument explicitly (<span class="in">`.env$entity_slug`</span>) and the corrected comparison contains 75 decisions per model rather than 375. Under the corrected evaluation, frozen GPT-4 Turbo SBS agrees with the confirmed human reference in 86.7% of classifications and GPT-5.4 nano in 78.7%. Four of the 14 model-generation changes move toward the human reference and ten move away.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

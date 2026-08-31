@@ -173,6 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#repository-purpose" id="toc-repository-purpose" class="nav-link active" data-scroll-target="#repository-purpose">Repository purpose</a></li>
   <li><a href="#study-cases" id="toc-study-cases" class="nav-link" data-scroll-target="#study-cases">Study cases</a></li>
   <li><a href="#two-linked-reproductions" id="toc-two-linked-reproductions" class="nav-link" data-scroll-target="#two-linked-reproductions">Two linked reproductions</a></li>
+  <li><a href="#principal-comparison-result" id="toc-principal-comparison-result" class="nav-link" data-scroll-target="#principal-comparison-result">Principal comparison result</a></li>
   <li><a href="#table-a5-provenance" id="toc-table-a5-provenance" class="nav-link" data-scroll-target="#table-a5-provenance">Table A5 provenance</a></li>
   <li><a href="#reproducibility-architecture" id="toc-reproducibility-architecture" class="nav-link" data-scroll-target="#reproducibility-architecture">Reproducibility architecture</a></li>
   </ul>
@@ -224,10 +225,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Project-facing outputs use explicit agreement labels such as <code>3 TRUE / 1 FALSE</code>, and report directly whether each LLM agrees with the three-human majority vote.</p>
 </section>
+<section id="principal-comparison-result" class="level2">
+<h2 class="anchored" data-anchor-id="principal-comparison-result">Principal comparison result</h2>
+<p>Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS responses agree with the confirmed human reference in <strong>86.7%</strong> of cases, compared with <strong>78.7%</strong> for GPT-5.4 nano, an <strong>8.0-percentage-point decline</strong>. The model change alters 14 of 75 classifications (18.7%): 4 changes move toward the human reference and 10 move away.</p>
+<p>These figures describe this fixed five-PON, 15-question comparison and should not be interpreted as a general benchmark of either model family. See <a href="./reports/model-comparison.html">SBS Model Comparison</a> for the full breakdown.</p>
+</section>
 <section id="table-a5-provenance" class="level2">
 <h2 class="anchored" data-anchor-id="table-a5-provenance">Table A5 provenance</h2>
 <p>The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report <code>2-2</code> where the raw human + frozen LLM responses produce a 3-to-1 split: <strong>IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6</strong>. These are retained as documented Table A5 errors; no underlying response is altered.</p>
-<p>See <a href="./reports/results.html">2024 Replication</a> and <code>provenance/TABLE_A5_REPLICATION.md</code>.</p>
+<p>See <a href="./reports/results.html">2024 Replication</a> and <a href="./provenance/TABLE_A5_REPLICATION.html">Table A5 replication provenance</a>.</p>
 </section>
 <section id="reproducibility-architecture" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility-architecture">Reproducibility architecture</h2>
@@ -729,23 +735,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Project-facing outputs use explicit agreement labels such as <span class="in">`3 TRUE / 1 FALSE`</span>, and report directly whether each LLM agrees with the three-human majority vote.</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table A5 provenance</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principal comparison result</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report <span class="in">`2-2`</span> where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 errors; no underlying response is altered.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS responses agree with the confirmed human reference in **86.7%** of cases, compared with **78.7%** for GPT-5.4 nano, an **8.0-percentage-point decline**. The model change alters 14 of 75 classifications (18.7%): 4 changes move toward the human reference and 10 move away.</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">2024 Replication</span><span class="co">](reports/results.qmd)</span> and <span class="in">`provenance/TABLE_A5_REPLICATION.md`</span>.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>These figures describe this fixed five-PON, 15-question comparison and should not be interpreted as a general benchmark of either model family. See <span class="co">[</span><span class="ot">SBS Model Comparison</span><span class="co">](reports/model-comparison.qmd)</span> for the full breakdown.</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducibility architecture</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table A5 provenance</span></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>The repository separates:</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report <span class="in">`2-2`</span> where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 errors; no underlying response is altered.</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>frozen 2024 evidence in root-level <span class="in">`output/`</span> files;</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>new SBS model runs in timestamped directories under <span class="in">`output/current/`</span>, with completed runs explicitly marked by <span class="in">`run_manifest.json`</span> and partial/failed runs retained as <span class="in">`run_failed.json`</span>;</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>dedicated BEREC runs under <span class="in">`output/berec_replication/`</span>;</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>archival improved-protocol materials under <span class="in">`output/improved/`</span>; and</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>derived tables and figures under <span class="in">`derived/`</span>.</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">2024 Replication</span><span class="co">](reports/results.qmd)</span> and <span class="co">[</span><span class="ot">Table A5 replication provenance</span><span class="co">](provenance/TABLE_A5_REPLICATION.md)</span>.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducibility architecture</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>The repository separates:</span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>For execution instructions and API safeguards, see <span class="in">`README.md`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>frozen 2024 evidence in root-level <span class="in">`output/`</span> files;</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>new SBS model runs in timestamped directories under <span class="in">`output/current/`</span>, with completed runs explicitly marked by <span class="in">`run_manifest.json`</span> and partial/failed runs retained as <span class="in">`run_failed.json`</span>;</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>dedicated BEREC runs under <span class="in">`output/berec_replication/`</span>;</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>archival improved-protocol materials under <span class="in">`output/improved/`</span>; and</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>derived tables and figures under <span class="in">`derived/`</span>.</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>For execution instructions and API safeguards, see <span class="in">`README.md`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

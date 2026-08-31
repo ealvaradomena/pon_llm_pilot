@@ -171,6 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#design" id="toc-design" class="nav-link active" data-scroll-target="#design">Design</a></li>
+  <li><a href="#main-result" id="toc-main-result" class="nav-link" data-scroll-target="#main-result">Main result</a></li>
   <li><a href="#performance-against-the-confirmed-human-reference" id="toc-performance-against-the-confirmed-human-reference" class="nav-link" data-scroll-target="#performance-against-the-confirmed-human-reference">Performance against the confirmed human reference</a></li>
   <li><a href="#agreement-with-the-human-majority" id="toc-agreement-with-the-human-majority" class="nav-link" data-scroll-target="#agreement-with-the-human-majority">Agreement with the human majority</a></li>
   <li><a href="#model-generation-stability" id="toc-model-generation-stability" class="nav-link" data-scroll-target="#model-generation-stability">Model-generation stability</a></li>
@@ -240,23 +241,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </section>
+<section id="main-result" class="level2">
+<h2 class="anchored" data-anchor-id="main-result">Main result</h2>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS "</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"responses agreed with the confirmed human reference in **%s** of cases, "</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"compared with **%s** for GPT-5.4 nano. This is a **%+.1f percentage-point** "</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"change in agreement for the newer model.</span><span class="sc">\n\n</span><span class="st">"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    scales<span class="sc">::</span><span class="fu">percent</span>(legacy_accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    scales<span class="sc">::</span><span class="fu">percent</span>(current_accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    accuracy_change_pp</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Changing model generation altered **%s of 75 classifications (%s)**. "</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Of those changes, **%s moved toward** the human reference and **%s moved away**."</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    changed_n,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    scales<span class="sc">::</span><span class="fu">percent</span>(changed_n <span class="sc">/</span> <span class="dv">75</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    toward_n,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    away_n</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p>Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS responses agreed with the confirmed human reference in <strong>86.7%</strong> of cases, compared with <strong>78.7%</strong> for GPT-5.4 nano. This is a <strong>-8.0 percentage-point</strong> change in agreement for the newer model.</p>
+<p>Changing model generation altered <strong>14 of 75 classifications (18.7%)</strong>. Of those changes, <strong>4 moved toward</strong> the human reference and <strong>10 moved away</strong>.</p>
+<p>The result is descriptive of this fixed five-PON, 15-question comparison. It does not establish that one model generation is generally superior across other tasks, prompts, or domains.</p>
+</section>
 <section id="performance-against-the-confirmed-human-reference" class="level2">
 <h2 class="anchored" data-anchor-id="performance-against-the-confirmed-human-reference">Performance against the confirmed human reference</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  overall <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">disagreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>disagreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  overall <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">disagreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>disagreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-overall" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -269,13 +303,13 @@ Table&nbsp;1: Overall SBS performance against the confirmed human reference
 <colgroup>
 <col style="width: 20%">
 <col style="width: 18%">
-<col style="width: 3%">
-<col style="width: 3%">
 <col style="width: 2%">
 <col style="width: 2%">
 <col style="width: 2%">
-<col style="width: 6%">
-<col style="width: 13%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 14%">
 <col style="width: 7%">
 <col style="width: 5%">
 <col style="width: 9%">
@@ -302,32 +336,112 @@ Table&nbsp;1: Overall SBS performance against the confirmed human reference
 <tr class="odd">
 <td style="text-align: left;">GPT-4 Turbo (2024 legacy)</td>
 <td style="text-align: left;">gpt-4-turbo</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: right;">265</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: left;">78.7%</td>
-<td style="text-align: left;">21.3%</td>
-<td style="text-align: left;">84.1%</td>
-<td style="text-align: left;">89.8%</td>
-<td style="text-align: left;">37.5%</td>
-<td style="text-align: left;">86.9%</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">86.7%</td>
+<td style="text-align: left;">13.3%</td>
+<td style="text-align: left;">88.9%</td>
+<td style="text-align: left;">94.9%</td>
+<td style="text-align: left;">56.2%</td>
+<td style="text-align: left;">91.8%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">GPT-5.4 nano</td>
 <td style="text-align: left;">gpt-5.4-nano-2026-03-17</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: right;">241</td>
-<td style="text-align: right;">54</td>
-<td style="text-align: right;">54</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: left;">71.2%</td>
-<td style="text-align: left;">28.8%</td>
-<td style="text-align: left;">81.7%</td>
-<td style="text-align: left;">81.7%</td>
-<td style="text-align: left;">32.5%</td>
-<td style="text-align: left;">81.7%</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">78.7%</td>
+<td style="text-align: left;">21.3%</td>
+<td style="text-align: left;">86.4%</td>
+<td style="text-align: left;">86.4%</td>
+<td style="text-align: left;">50.0%</td>
+<td style="text-align: left;">86.4%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  by_pon_display <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">gpt-4-turbo</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        .data[[<span class="st">"gpt-4-turbo"</span>]],</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">accuracy =</span> <span class="fl">0.1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">gpt-5.4-nano-2026-03-17</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        .data[[<span class="st">"gpt-5.4-nano-2026-03-17"</span>]],</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">accuracy =</span> <span class="fl">0.1</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">change_pp =</span> <span class="fu">sprintf</span>(<span class="st">"%+.1f pp"</span>, .data<span class="sc">$</span>change_pp)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PON"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"GPT-4 Turbo"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"GPT-5.4 nano"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Change"</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-by-pon" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-by-pon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Accuracy against the confirmed human reference by PON
+</figcaption>
+<div aria-describedby="tbl-by-pon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">PON</th>
+<th style="text-align: left;">GPT-4 Turbo</th>
+<th style="text-align: left;">GPT-5.4 nano</th>
+<th style="text-align: left;">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">86.7%</td>
+<td style="text-align: left;">80.0%</td>
+<td style="text-align: left;">-6.7 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CEER</td>
+<td style="text-align: left;">93.3%</td>
+<td style="text-align: left;">86.7%</td>
+<td style="text-align: left;">-6.7 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COAS</td>
+<td style="text-align: left;">80.0%</td>
+<td style="text-align: left;">66.7%</td>
+<td style="text-align: left;">-13.3 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EUHC</td>
+<td style="text-align: left;">86.7%</td>
+<td style="text-align: left;">80.0%</td>
+<td style="text-align: left;">-6.7 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IRG</td>
+<td style="text-align: left;">86.7%</td>
+<td style="text-align: left;">80.0%</td>
+<td style="text-align: left;">-6.7 pp</td>
 </tr>
 </tbody>
 </table>
@@ -338,7 +452,7 @@ Table&nbsp;1: Overall SBS performance against the confirmed human reference
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <p><img src="../derived/figures/sbs_model_disagreement_by_pon.png" class="img-fluid"></p>
 </section>
@@ -348,21 +462,21 @@ Table&nbsp;1: Overall SBS performance against the confirmed human reference
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  coder <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Legacy GPT-4 Turbo SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>legacy_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">New GPT-5.4 nano SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>new_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"Model"</span>, <span class="at">values_to =</span> <span class="st">"agreement"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Agreement with human majority"</span>))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  coder <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Legacy GPT-4 Turbo SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>legacy_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">New GPT-5.4 nano SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>new_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"Model"</span>, <span class="at">values_to =</span> <span class="st">"agreement"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Agreement with human majority"</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-majority" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-majority-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: LLM agreement with the three-human majority across the 15-question computational instrument
+Table&nbsp;3: LLM agreement with the three-human majority across the 15-question computational instrument
 </figcaption>
 <div aria-describedby="tbl-majority-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -395,16 +509,16 @@ Table&nbsp;2: LLM agreement with the three-human majority across the 15-question
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  stability <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  stability <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-stability" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: Agreement between frozen GPT-4 Turbo SBS and newer-model SBS
+Table&nbsp;4: Agreement between frozen GPT-4 Turbo SBS and newer-model SBS
 </figcaption>
 <div aria-describedby="tbl-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -431,9 +545,85 @@ Table&nbsp;3: Agreement between frozen GPT-4 Turbo SBS and newer-model SBS
 </figure>
 </div>
 </div>
+<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  flips <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>changed) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(.data<span class="sc">$</span>pon, .data<span class="sc">$</span>direction, <span class="at">name =</span> <span class="st">"Changed"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> direction,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> Changed,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">Total =</span> .data<span class="sc">$</span><span class="st">`</span><span class="at">Toward human</span><span class="st">`</span> <span class="sc">+</span> .data<span class="sc">$</span><span class="st">`</span><span class="at">Away from human</span><span class="st">`</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(pon, Total, <span class="st">`</span><span class="at">Toward human</span><span class="st">`</span>, <span class="st">`</span><span class="at">Away from human</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"PON"</span>, <span class="st">"Changed"</span>, <span class="st">"Toward human"</span>, <span class="st">"Away from human"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-flips" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-flips-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Changed classifications and their direction relative to the human reference
+</figcaption>
+<div aria-describedby="tbl-flips-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">PON</th>
+<th style="text-align: right;">Changed</th>
+<th style="text-align: right;">Toward human</th>
+<th style="text-align: right;">Away from human</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CAN</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CEER</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COAS</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EUHC</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IRG</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>COAS contains the largest concentration of changed classifications. Question-level inspection should therefore distinguish overall model-generation instability from changes concentrated in particular institutional features and cases.</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <p><img src="../derived/figures/sbs_model_question_disagreement.png" class="img-fluid"></p>
 </section>
@@ -442,15 +632,15 @@ Table&nbsp;3: Agreement between frozen GPT-4 Turbo SBS and newer-model SBS
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-diagnostics" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4
+Table&nbsp;6
 </figcaption>
 <div aria-describedby="tbl-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -535,7 +725,7 @@ Table&nbsp;4
 </figure>
 </div>
 </div>
-<p>The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.</p>
+<p>The comparison script now enforces the expected analytical cardinality before writing results: 75 decisions per model, 15 decisions per model/PON, one row per model/PON/question key, 75 direct model-to-model comparisons, and a common human-reference value for each paired decision. The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.</p>
 
 
 <!-- -->
@@ -994,141 +1184,259 @@ Table&nbsp;4
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "SBS Model Comparison"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Frozen GPT-4 Turbo versus a newer pinned model under the same protocol"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>paths <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">overall =</span> <span class="st">"derived/sbs_model_metrics_overall.csv"</span>,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_pon =</span> <span class="st">"derived/sbs_model_metrics_by_pon.csv"</span>,</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">stability =</span> <span class="st">"derived/sbs_model_stability_overall.csv"</span>,</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">coder =</span> <span class="st">"derived/sbs_coder_comparison_extended.csv"</span>,</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">diagnostics =</span> <span class="st">"derived/sbs_output_format_diagnostics.csv"</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>comparison_ready <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">file.exists</span>(<span class="fu">unlist</span>(paths)))</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  overall <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>overall, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  by_pon <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>by_pon, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  stability <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>stability, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  coder <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>coder, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>diagnostics, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Design</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>This comparison changes **model generation only**. Both arms use the same reconstructed Dec. 24, 2024 SBS protocol and the same five PONs.</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Status <span class="pp">|</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-4 Turbo <span class="pp">|</span> Frozen 2024 <span class="in">`*_sbs.txt`</span> responses; never rerun <span class="pp">|</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gpt-5.4-nano-2026-03-17`</span> <span class="pp">|</span> New SBS run under <span class="in">`output/current/`</span> <span class="pp">|</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>The improved-protocol experiment and plain-zero-shot outputs are archival/secondary and are not pooled into this analysis. The comparison pipeline considers only newer-model run directories containing <span class="in">`run_manifest.json`</span> with <span class="in">`status == "complete"`</span>; a directory carrying <span class="in">`run_failed.json`</span>, or lacking an explicit completed manifest, is not treated as a completed result.</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: no-results</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>comparison_ready) {</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"::: {.callout-important}</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"## Newer-model SBS results are not complete yet</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Run the dry run, execute the five-request SBS batch, then rebuild derived products:</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```bash</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17 --execute</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/02_reconstruct_table_a5.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/05_compare_scenarios.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"quarto render</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">":::</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance against the confirmed human reference</span></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-overall</span></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Overall SBS performance against the confirmed human reference"</span></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>  overall <span class="sc">|&gt;</span></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">disagreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>disagreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-by-pon</span></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Share of SBS decisions disagreeing with the confirmed human reference by PON."</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agreement with the human majority</span></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>The extended coder table keeps HBM, ASC, and JNG visible and computes the human majority directly. It then reports whether each LLM agrees with that majority.</span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-majority</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "LLM agreement with the three-human majority across the 15-question computational instrument"</span></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>  coder <span class="sc">|&gt;</span></span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Legacy GPT-4 Turbo SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>legacy_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">New GPT-5.4 nano SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>new_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"Model"</span>, <span class="at">values_to =</span> <span class="st">"agreement"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Agreement with human majority"</span>))</span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model-generation stability</span></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-stability</span></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Agreement between frozen GPT-4 Turbo SBS and newer-model SBS"</span></span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>  stability <span class="sc">|&gt;</span></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-question</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Question-level disagreement with the confirmed human reference under the fixed SBS protocol."</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Run-integrity diagnostics</span></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-diagnostics</span></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="sc">|&gt;</span></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "SBS Model Comparison"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Frozen GPT-4 Turbo versus a newer pinned model under the same protocol"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>paths <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">overall =</span> <span class="st">"derived/sbs_model_metrics_overall.csv"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_pon =</span> <span class="st">"derived/sbs_model_metrics_by_pon.csv"</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">stability =</span> <span class="st">"derived/sbs_model_stability_overall.csv"</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">flips =</span> <span class="st">"derived/sbs_model_flip_audit.csv"</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">coder =</span> <span class="st">"derived/sbs_coder_comparison_extended.csv"</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">diagnostics =</span> <span class="st">"derived/sbs_output_format_diagnostics.csv"</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>comparison_ready <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">file.exists</span>(<span class="fu">unlist</span>(paths)))</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  overall <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>overall, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  by_pon <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>by_pon, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  stability <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>stability, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  flips <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>flips, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  coder <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>coder, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>diagnostics, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  legacy_accuracy <span class="ot">&lt;-</span> overall <span class="sc">|&gt;</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>model_id <span class="sc">==</span> <span class="st">"gpt-4-turbo"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span>accuracy)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>  current_accuracy <span class="ot">&lt;-</span> overall <span class="sc">|&gt;</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>model_id <span class="sc">==</span> <span class="st">"gpt-5.4-nano-2026-03-17"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span>accuracy)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>  accuracy_change_pp <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> (current_accuracy <span class="sc">-</span> legacy_accuracy)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>  flip_summary <span class="ot">&lt;-</span> flips <span class="sc">|&gt;</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>changed) <span class="sc">|&gt;</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(.data<span class="sc">$</span>direction, <span class="at">name =</span> <span class="st">"n"</span>)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>  changed_n <span class="ot">&lt;-</span> <span class="fu">sum</span>(flips<span class="sc">$</span>changed)</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  toward_n <span class="ot">&lt;-</span> flip_summary <span class="sc">|&gt;</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>direction <span class="sc">==</span> <span class="st">"Toward human"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(.data<span class="sc">$</span>n)) <span class="sc">|&gt;</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span>n)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>  away_n <span class="ot">&lt;-</span> flip_summary <span class="sc">|&gt;</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>direction <span class="sc">==</span> <span class="st">"Away from human"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(.data<span class="sc">$</span>n)) <span class="sc">|&gt;</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span>n)</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>  by_pon_display <span class="ot">&lt;-</span> by_pon <span class="sc">|&gt;</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(pon, model_id, accuracy) <span class="sc">|&gt;</span></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> model_id, <span class="at">values_from =</span> accuracy) <span class="sc">|&gt;</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">change_pp =</span> <span class="dv">100</span> <span class="sc">*</span> (</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>        .data[[<span class="st">"gpt-5.4-nano-2026-03-17"</span>]] <span class="sc">-</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>          .data[[<span class="st">"gpt-4-turbo"</span>]]</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Design</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>This comparison changes **model generation only**. Both arms use the same reconstructed Dec. 24, 2024 SBS protocol and the same five PONs.</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Status <span class="pp">|</span></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-4 Turbo <span class="pp">|</span> Frozen 2024 <span class="in">`*_sbs.txt`</span> responses; never rerun <span class="pp">|</span></span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gpt-5.4-nano-2026-03-17`</span> <span class="pp">|</span> New SBS run under <span class="in">`output/current/`</span> <span class="pp">|</span></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>The improved-protocol experiment and plain-zero-shot outputs are archival/secondary and are not pooled into this analysis. The comparison pipeline considers only newer-model run directories containing <span class="in">`run_manifest.json`</span> with <span class="in">`status == "complete"`</span>; a directory carrying <span class="in">`run_failed.json`</span>, or lacking an explicit completed manifest, is not treated as a completed result.</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: no-results</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>comparison_ready) {</span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"::: {.callout-important}</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"## Newer-model SBS results are not complete yet</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Run the dry run, execute the five-request SBS batch, then rebuild derived products:</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```bash</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17 --execute</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/02_reconstruct_table_a5.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/05_compare_scenarios.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"quarto render</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">":::</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Main result</span></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: main-result</span></span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS "</span>,</span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>      <span class="st">"responses agreed with the confirmed human reference in **%s** of cases, "</span>,</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>      <span class="st">"compared with **%s** for GPT-5.4 nano. This is a **%+.1f percentage-point** "</span>,</span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>      <span class="st">"change in agreement for the newer model.</span><span class="sc">\n\n</span><span class="st">"</span></span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>    scales<span class="sc">::</span><span class="fu">percent</span>(legacy_accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>    scales<span class="sc">::</span><span class="fu">percent</span>(current_accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>    accuracy_change_pp</span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Changing model generation altered **%s of 75 classifications (%s)**. "</span>,</span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Of those changes, **%s moved toward** the human reference and **%s moved away**."</span></span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>    changed_n,</span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>    scales<span class="sc">::</span><span class="fu">percent</span>(changed_n <span class="sc">/</span> <span class="dv">75</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>    toward_n,</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>    away_n</span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>The result is descriptive of this fixed five-PON, 15-question comparison. It does not establish that one model generation is generally superior across other tasks, prompts, or domains.</span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance against the confirmed human reference</span></span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-overall</span></span>
+<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Overall SBS performance against the confirmed human reference"</span></span>
+<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>  overall <span class="sc">|&gt;</span></span>
+<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>      <span class="at">disagreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>disagreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
+<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-by-pon</span></span>
+<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Accuracy against the confirmed human reference by PON"</span></span>
+<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>  by_pon_display <span class="sc">|&gt;</span></span>
+<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">gpt-4-turbo</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(</span>
+<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a>        .data[[<span class="st">"gpt-4-turbo"</span>]],</span>
+<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a>        <span class="at">accuracy =</span> <span class="fl">0.1</span></span>
+<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">gpt-5.4-nano-2026-03-17</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(</span>
+<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a>        .data[[<span class="st">"gpt-5.4-nano-2026-03-17"</span>]],</span>
+<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>        <span class="at">accuracy =</span> <span class="fl">0.1</span></span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>      <span class="at">change_pp =</span> <span class="fu">sprintf</span>(<span class="st">"%+.1f pp"</span>, .data<span class="sc">$</span>change_pp)</span>
+<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PON"</span>,</span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>        <span class="st">"GPT-4 Turbo"</span>,</span>
+<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>        <span class="st">"GPT-5.4 nano"</span>,</span>
+<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Change"</span></span>
+<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-by-pon</span></span>
+<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Share of SBS decisions disagreeing with the confirmed human reference by PON."</span></span>
+<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agreement with the human majority</span></span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a>The extended coder table keeps HBM, ASC, and JNG visible and computes the human majority directly. It then reports whether each LLM agrees with that majority.</span>
+<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-majority</span></span>
+<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "LLM agreement with the three-human majority across the 15-question computational instrument"</span></span>
+<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>  coder <span class="sc">|&gt;</span></span>
+<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Legacy GPT-4 Turbo SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>legacy_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">New GPT-5.4 nano SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>new_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"Model"</span>, <span class="at">values_to =</span> <span class="st">"agreement"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Agreement with human majority"</span>))</span>
+<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model-generation stability</span></span>
+<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-stability</span></span>
+<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Agreement between frozen GPT-4 Turbo SBS and newer-model SBS"</span></span>
+<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a>  stability <span class="sc">|&gt;</span></span>
+<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-flips</span></span>
+<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Changed classifications and their direction relative to the human reference"</span></span>
+<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a>  flips <span class="sc">|&gt;</span></span>
+<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>changed) <span class="sc">|&gt;</span></span>
+<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(.data<span class="sc">$</span>pon, .data<span class="sc">$</span>direction, <span class="at">name =</span> <span class="st">"Changed"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> direction,</span>
+<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> Changed,</span>
+<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a>      <span class="at">Total =</span> .data<span class="sc">$</span><span class="st">`</span><span class="at">Toward human</span><span class="st">`</span> <span class="sc">+</span> .data<span class="sc">$</span><span class="st">`</span><span class="at">Away from human</span><span class="st">`</span></span>
+<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(pon, Total, <span class="st">`</span><span class="at">Toward human</span><span class="st">`</span>, <span class="st">`</span><span class="at">Away from human</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"PON"</span>, <span class="st">"Changed"</span>, <span class="st">"Toward human"</span>, <span class="st">"Away from human"</span>)</span>
+<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>COAS contains the largest concentration of changed classifications. Question-level inspection should therefore distinguish overall model-generation instability from changes concentrated in particular institutional features and cases.</span>
+<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-question</span></span>
+<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Question-level disagreement with the confirmed human reference under the fixed SBS protocol."</span></span>
+<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="fu">## Run-integrity diagnostics</span></span>
+<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-diagnostics</span></span>
+<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="sc">|&gt;</span></span>
+<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a>The comparison script now enforces the expected analytical cardinality before writing results: 75 decisions per model, 15 decisions per model/PON, one row per model/PON/question key, 75 direct model-to-model comparisons, and a common human-reference value for each paired decision. The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
