@@ -1,0 +1,181 @@
+---
+title: "BEREC Reconstruction"
+---
+
+## Scope
+
+BEREC is analyzed separately from the principal five-PON model comparison.
+
+The main comparison uses IRG, EUHC, cOAlition S, CAN, and CEER under a common reconstructed step-by-step (SBS) protocol. BEREC presents a different provenance problem: a preserved historical output exists, but the exact historical interaction cannot be reconstructed with sufficient confidence to treat a new run as an exact replication.
+
+The BEREC analysis therefore compares three distinct conditions without treating any of them as ground truth.
+
+## Three BEREC conditions
+
+1. **Preserved historical output.** The surviving December 23, 2024 BEREC classification artifact is preserved unchanged in `output/BO1A-2024-12-23-55_cat.txt`.
+
+2. **Best-evidenced December 23 reconstruction.** The reconstructed historical-family condition uses `BO1B.txt`, the best-evidenced reconstructed December 23 prompt configuration, and the pinned `gpt-4-turbo-2024-04-09` model. This is explicitly a reconstruction, **not an exact-replication claim**.
+
+3. **December 24 SBS protocol with the newer model.** The recovered December 24 SBS protocol is applied to `BO1B.txt` using `gpt-5.4-nano-2026-03-17`.
+
+The derived comparison tables below are generated locally from those artifacts. No API calls are made during this analysis.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+berec_summary <- utils::read.csv(
+  "derived/berec_three_way_summary.csv",
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+berec_comparison <- utils::read.csv(
+  "derived/berec_three_way_comparison.csv",
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+berec_sources <- utils::read.csv(
+  "derived/berec_sources.csv",
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+```
+
+## Agreement across conditions
+
+```{r}
+#| echo: false
+#| tbl-cap: "Pairwise agreement among the three BEREC conditions."
+
+summary_display <- berec_summary
+
+summary_display$agreement_rate <- sprintf(
+  "%.1f%%",
+  100 * summary_display$agreement_rate
+)
+
+names(summary_display) <- c(
+  "Comparison",
+  "Questions",
+  "Same",
+  "Different",
+  "Agreement",
+  "TRUE → FALSE",
+  "FALSE → TRUE"
+)
+
+knitr::kable(
+  summary_display,
+  row.names = FALSE
+)
+```
+
+The best-evidenced GPT-4 Turbo reconstruction reproduces **13 of the 15 classifications** in the preserved historical BEREC artifact, corresponding to **86.7% classification agreement**.
+
+The preserved historical artifact and the newer-model SBS run agree on **10 of 15 classifications (66.7%)**. The reconstructed GPT-4 Turbo condition and newer-model SBS condition also agree on **10 of 15 classifications (66.7%)**.
+
+These percentages describe **classification agreement**, not accuracy. The preserved historical artifact is an observed historical output, not a validated ground-truth coding of BEREC.
+
+## Question-level comparison
+
+```{r}
+#| echo: false
+#| tbl-cap: "Question-level comparison of preserved and reconstructed BEREC classifications."
+
+question_display <- berec_comparison[
+  ,
+  c(
+    "question_id",
+    "question",
+    "preserved_historical",
+    "dec23_reconstructed_gpt4",
+    "dec24_sbs_gpt54_nano"
+  )
+]
+
+names(question_display) <- c(
+  "Q",
+  "Question",
+  "Preserved historical",
+  "Dec. 23 reconstructed GPT-4",
+  "Dec. 24 SBS GPT-5.4 nano"
+)
+
+knitr::kable(
+  question_display,
+  row.names = FALSE
+)
+```
+
+### Historical artifact versus reconstructed GPT-4 Turbo
+
+The best-evidenced December 23 reconstruction differs from the preserved historical artifact on only two questions:
+
+- **Q4:** preserved `TRUE`; reconstructed GPT-4 Turbo `FALSE`.
+- **Q12:** preserved `FALSE`; reconstructed GPT-4 Turbo `TRUE`.
+
+The two conditions therefore have the same overall response prevalence—8 `TRUE` and 7 `FALSE` classifications—but disagree on two individual classifications.
+
+### Reconstructed GPT-4 Turbo versus newer-model SBS
+
+Relative to the reconstructed GPT-4 Turbo condition, the newer-model SBS run changes five classifications:
+
+- **Q1:** `TRUE` → `FALSE`
+- **Q2:** `TRUE` → `FALSE`
+- **Q7:** `TRUE` → `FALSE`
+- **Q8:** `TRUE` → `FALSE`
+- **Q12:** `TRUE` → `FALSE`
+
+All five changes occur in the same direction. The reconstructed GPT-4 Turbo condition contains 8 `TRUE` classifications, whereas the newer-model SBS condition contains 3.
+
+## Interpretation
+
+The BEREC reconstruction provides useful evidence about the recoverability of the historical classification pattern. Under the best-evidenced December 23 configuration, the pinned GPT-4 Turbo snapshot reproduces 13 of the 15 classifications present in the preserved historical artifact.
+
+That result should not be interpreted as an exact replication of the historical API interaction. The surviving evidence does not establish every element of the original BEREC request strongly enough to make that claim.
+
+Likewise, the five differences between the reconstructed GPT-4 Turbo condition and the newer-model SBS condition cannot be attributed exclusively to model change. Those conditions differ in both model and reconstructed protocol.
+
+For this reason, BEREC remains an **auxiliary provenance and reconstruction analysis** and is not added as a sixth organization to the principal five-PON model comparison.
+
+## Provenance
+
+```{r}
+#| echo: false
+#| tbl-cap: "Sources used in the BEREC reconstruction analysis."
+
+source_display <- berec_sources
+
+names(source_display) <- c(
+  "Condition",
+  "Artifact",
+  "Model",
+  "Protocol",
+  "Claim"
+)
+
+knitr::kable(
+  source_display,
+  row.names = FALSE
+)
+```
+
+The preserved historical artifact remains read-only. Both reconstruction runs were written to new timestamped directories under `output/berec_replication/`.
+
+The numerical results on this page are read from:
+
+- `derived/berec_three_way_comparison.csv`
+- `derived/berec_three_way_summary.csv`
+- `derived/berec_sources.csv`
+
+These files are generated by:
+
+```text
+python scripts/08_compare_berec.py
+```
+
+That script performs local comparison only and makes **no API calls**.

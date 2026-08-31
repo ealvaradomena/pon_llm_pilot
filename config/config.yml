@@ -1,14 +1,15 @@
 project:
   boundary_object_dir: input/boundary_objects
   questions_file: input/reference/questions.csv
-  human_responses_file: input/reference/legacy_human_responses.csv
+  human_responses_file: input/reference/legacy_human_responses_confirmed.csv
   legacy_runs_file: input/reference/legacy_runs.csv
   current_output_dir: output/current
   improved_output_dir: output/improved
+  berec_output_dir: output/berec_replication
   derived_dir: derived
 
-# Historical request protocol recovered from the 2024 project.
-# The contemporary baseline keeps only the zero-shot condition.
+# Historical request protocol recovered from the Dec. 24, 2024 project.
+# The manuscript-facing condition appends the step-by-step clause.
 legacy_protocol:
   endpoint: chat.completions
   model_alias: gpt-4-turbo
@@ -23,9 +24,12 @@ legacy_protocol:
     zero_shot:
       suffix: ""
       code: z
+    step_by_step:
+      suffix: "Let's think step by step"
+      code: sbs
 
-# Concise protocol designed to reduce ambiguity while preserving the same task,
-# documents, questions, message roles, endpoint, and zero-shot design.
+# Archival/secondary improved protocol retained for provenance. It is not part of
+# the revised principal SBS comparison.
 improved_protocol:
   name: improved-v1
   endpoint: chat.completions
@@ -48,9 +52,10 @@ comparison:
     - can
     - ceer
   # Historical 2024 calls recorded the moving alias gpt-4-turbo. The pinned
-  # snapshot below is the closest reproducible counterpart available today.
+  # snapshot below is the best-supported dated GPT-4 Turbo reconstruction target.
   legacy_model: gpt-4-turbo-2024-04-09
   current_model: gpt-5.4-nano-2026-03-17
+  manuscript_excluded_question_id: 10
   mini_model: gpt-5.4-mini-2026-03-17
 
 entities:
@@ -58,6 +63,7 @@ entities:
     short_name: BEREC
     slug: berec
     boundary_object: BO1A.txt
+    berec_replication_boundary_object: BO1B.txt
   - name: Independent Regulators Group
     short_name: IRG
     slug: irg

@@ -1,0 +1,16 @@
+question,answer
+Are the procedures for decision-making in the PON specified?,TRUE
+Are voting rules (such as simple majority) explicitly established?,TRUE
+Are decisions made by simple majority voting by member organizations?,TRUE
+Are decisions made by consensus or unanimity by member organizations?,TRUE
+If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)?,TRUE
+Are there expert committees in the PON?,FALSE
+Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution?,TRUE
+Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions?,TRUE
+Does the organization have an executive board where a subset of members participate and which make strategic decisions?,TRUE
+Does the PON have working groups where member organizations can participate in?,TRUE
+Does accession into the PON depend on a decision by the incumbent member organizations?,TRUE
+Does the PON clearly specify which types of organisations can become members?,TRUE
+Do potential member organizations have to fullful certain conditions to become members?,TRUE
+Is there a process for membership suspension from the PON?,TRUE
+Are there members which have no voting power, such as observer members?,TRUE

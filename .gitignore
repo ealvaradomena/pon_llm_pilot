@@ -31,3 +31,7 @@ zipmymess.zip
 # Failed API runs
 output/**/batch_failed.json
 output/**/run_failed.json
+
+# Raw source-delivery artifacts
+input/reference/received_by_email/
+input/reference/shared_via_Google_Drive/

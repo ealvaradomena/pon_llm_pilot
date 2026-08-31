@@ -1,162 +1,143 @@
 ---
-title: "2024 Zero-Shot Results"
-subtitle: "Evaluation of the preserved December 2024 outputs"
+title: "2024 Replication"
+subtitle: "Frozen SBS outputs, human coders, and manuscript Table A5"
 editor: visual
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
 ```{r}
 #| label: setup
 #| include: false
 library(dplyr)
-library(ggplot2)
 library(knitr)
-library(purrr)
 library(readr)
-library(tibble)
 
-source("R/analysis.R")
-questions <- readr::read_csv(
-  "input/reference/questions.csv",
-  show_col_types = FALSE
-)
-human <- readr::read_csv(
-  "input/reference/legacy_human_responses.csv",
-  show_col_types = FALSE
-)
+replication_path <- "derived/table_a5_replication.csv"
+discrepancy_path <- "derived/table_a5_discrepancies.csv"
+# metrics_path <- "derived/legacy_sbs_human_metrics.csv"
 
-files <- tibble::tribble(
-  ~entity_slug, ~path,
-  "irg", "output/BO2A-2024-12-24-2-52-18_irg_z.txt",
-  "euhc", "output/BO3A-2024-12-24-2-53-29_euhc_z.txt",
-  "coas", "output/BO4A-2024-12-24-2-53-56_coas_z.txt",
-  "can", "output/BO5A-2024-12-24-2-54-17_can_z.txt",
-  "ceer", "output/BO6A-2024-12-24-2-54-38_ceer_z.txt"
-)
+metrics_path <- "derived/sbs_model_metrics_by_pon.csv"
 
-evaluation <- purrr::pmap_dfr(
-  files,
-  function(entity_slug, path) {
-    evaluate_output(
-      path = path,
-      entity_slug = entity_slug,
-      technique = "Zero-shot",
-      questions = questions,
-      human = human
-    ) |>
-      dplyr::mutate(pon = pon_label(entity_slug))
-  }
-)
+replication_ready <- file.exists(replication_path)
+metrics_ready <- file.exists(metrics_path)
 
-metrics <- evaluation |>
-  dplyr::group_by(.data$entity_slug, .data$pon) |>
-  dplyr::group_modify(~ compute_metrics(.x)) |>
-  dplyr::ungroup()
+if (replication_ready) {
+  a5 <- readr::read_csv(replication_path, show_col_types = FALSE)
+  discrepancies <- readr::read_csv(discrepancy_path, show_col_types = FALSE)
+}
+if (metrics_ready) {
+  legacy_metrics <- readr::read_csv(
+    metrics_path,
+    show_col_types = FALSE
+  ) |>
+    dplyr::filter(model_id == "gpt-4-turbo")
+}
 ```
 
-## Scope
+## Historical object being replicated
 
-This archival report retains only the five **zero-shot** response files from the final Dec. 24, 2024 pipeline for which a recovered human-reference vector is available. Historical step-by-step files remain preserved on disk but are no longer part of the analytical design.
+The manuscript-facing historical comparison contains four coders: **HBM, ASC, JNG, and the frozen GPT-4 Turbo SBS response**. The manuscript reports 14 prompts over five PONs, producing 70 agreement cells.
 
-BEREC is retained only as archival provenance and is excluded from the comparative experiment. All results on this page therefore use IRG, EUHC, COAS, CAN, and CEER.
+The reconstruction script uses the confirmed individual human responses and the preserved Dec. 24 `*_sbs.txt` files. It never calls OpenAI.
 
-## Performance by PON
+``` bash
+Rscript scripts/02_reconstruct_table_a5.R
+Rscript scripts/02_evaluate_preserved_outputs.R
+```
+
+## Agreement terminology
+
+The reconstructed project uses explicit response counts rather than making the reader decode `1`, `0`, `3-1`, or `2-2`. For example, `3 TRUE / 1 FALSE` states both the degree and direction of disagreement. A separate field identifies a single dissenting coder when applicable.
+
+The project also reports whether the legacy LLM agrees with the **three-human majority vote**.
+
+## Table A5 replication result
+
+```{r}
+#| label: a5-status
+#| results: asis
+if (!replication_ready) {
+  cat("::: {.callout-important}\nRun `Rscript scripts/02_reconstruct_table_a5.R` to build the 70-cell replication audit.\n:::\n")
+} else {
+  cat(sprintf(
+    "The surviving data reproduce **%s of %s** Table A5 cells. **%s** cells differ from the manuscript table.\n",
+    sum(a5$table_a5_match), nrow(a5), sum(!a5$table_a5_match)
+  ))
+}
+```
+
+```{r}
+#| label: tbl-a5-discrepancies
+#| tbl-cap: "Table A5 cells that do not match the surviving raw human and frozen SBS data"
+if (replication_ready) {
+  discrepancies |>
+    dplyr::select(
+      entity_slug,
+      manuscript_question_id,
+      HBM,
+      ASC,
+      JNG,
+      legacy_llm_sbs,
+      historical_four_coder_pattern,
+      manuscript_agreement,
+      notes
+    ) |>
+    knitr::kable(
+      col.names = c(
+        "PON", "Prompt", "HBM", "ASC", "JNG", "Legacy LLM SBS",
+        "Surviving pattern", "Table A5", "Conclusion"
+      )
+    )
+}
+```
+
+The three discrepancies are IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6. They are recorded as Table A5 errors; the source responses are not edited to make the table reproduce.
+
+## Frozen SBS performance against the confirmed human reference
 
 ```{r}
 #| label: tbl-legacy-metrics
-#| tbl-cap: "Performance of the preserved 2024 zero-shot outputs against the recovered human reference"
-
-metrics |>
-  dplyr::mutate(
-    accuracy = scales::percent(.data$accuracy, accuracy = 0.1),
-    precision = scales::percent(.data$precision, accuracy = 0.1),
-    recall = scales::percent(.data$recall, accuracy = 0.1),
-    specificity = scales::percent(.data$specificity, accuracy = 0.1),
-    f1 = scales::percent(.data$f1, accuracy = 0.1)
-  ) |>
-  dplyr::select(
-    .data$pon,
-    .data$accuracy,
-    .data$precision,
-    .data$recall,
-    .data$specificity,
-    .data$f1,
-    .data$tp,
-    .data$fp,
-    .data$fn,
-    .data$tn
-  ) |>
-  knitr::kable(
-    col.names = c(
-      "PON", "Accuracy", "Precision", "Recall", "Specificity",
-      "F1", "TP", "FP", "FN", "TN"
+#| tbl-cap: "Frozen 2024 GPT-4 Turbo SBS performance by PON over the 15-question computational instrument"
+if (metrics_ready) {
+  legacy_metrics |>
+    dplyr::select(
+      pon,
+      n,
+      accuracy,
+      disagreement_rate,
+      precision,
+      recall,
+      specificity,
+      f1
+    ) |>
+    dplyr::mutate(
+      accuracy = scales::percent(accuracy, accuracy = 0.1),
+      disagreement_rate = scales::percent(
+        disagreement_rate,
+        accuracy = 0.1
+      ),
+      precision = scales::percent(precision, accuracy = 0.1),
+      recall = scales::percent(recall, accuracy = 0.1),
+      specificity = scales::percent(specificity, accuracy = 0.1),
+      f1 = scales::percent(f1, accuracy = 0.1)
+    ) |>
+    knitr::kable(
+      col.names = c(
+        "PON",
+        "N",
+        "Accuracy",
+        "Disagreement",
+        "Precision",
+        "Recall",
+        "Specificity",
+        "F1"
+      ),
+      align = c("l", "r", "r", "r", "r", "r", "r", "r")
     )
-  )
+}
 ```
 
-::: {.callout-tip appearance="simple"}
-**Question:** What share of each PON's 15 classifications disagreed with the recovered human reference?
-:::
-
-```{r}
-#| label: fig-legacy-disagreement
-#| fig-cap: "Relative weight of disagreements with the recovered human reference in the preserved 2024 zero-shot outputs. Each bar represents the share of 15 decisions that disagreed."
-#| fig-height: 4.5
-
-plot_data <- metrics |>
-  dplyr::arrange(.data$disagreement_rate)
-
-ggplot2::ggplot(
-  plot_data,
-  ggplot2::aes(
-    x = stats::reorder(.data$pon, .data$disagreement_rate),
-    y = .data$disagreement_rate
-  )
-) +
-  ggplot2::geom_col(
-    width = 0.65,
-    fill = "#0072B2"
-  ) +
-  ggplot2::geom_text(
-    ggplot2::aes(
-      label = scales::percent(.data$disagreement_rate, accuracy = 0.1)
-    ),
-    hjust = -0.15,
-    size = 3.5
-  ) +
-  ggplot2::coord_flip() +
-  ggplot2::scale_y_continuous(
-    limits = c(0, 1),
-    breaks = seq(0, 1, by = 0.2),
-    labels = scales::label_percent(accuracy = 1),
-    expand = ggplot2::expansion(mult = c(0, 0.08))
-  ) +
-  ggplot2::labs(
-    x = NULL,
-    y = "Share disagreeing with human reference"
-  ) +
-  ggplot2::theme_minimal(base_size = 11) +
-  ggplot2::theme(panel.grid.minor = ggplot2::element_blank())
-```
-
-## Question-level discrepancies
-
-```{r}
-#| label: tbl-legacy-errors
-#| tbl-cap: "Question-level disagreements in the preserved 2024 zero-shot outputs"
-
-evaluation |>
-  dplyr::filter(!.data$agreement) |>
-  dplyr::select(
-    .data$question_id,
-    .data$pon,
-    .data$llm_response,
-    .data$human_response,
-    .data$eval
-  ) |>
-  dplyr::arrange(.data$question_id, .data$pon) |>
-  knitr::kable(
-    col.names = c("Question", "PON", "LLM", "Human", "Type")
-  )
-```
-
-The purpose of this page is archival. The six-scenario report evaluates how classifications vary across model choice, protocol, and their combination.
+This evaluation uses all 15 computational questions. The 14-question subset is used only where the project explicitly reconstructs manuscript Table A5.

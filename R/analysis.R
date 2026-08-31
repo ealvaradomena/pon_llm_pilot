@@ -1,16 +1,30 @@
 # ////////////////////////////////////////////////////
 #
+#
 # PON LLM Pilot - Analysis Functions
 #
-# Purpose
+# Purpose:
 # - Parse preserved and current LLM outputs
-# - Evaluate four zero-shot model/protocol scenarios
-# - Compare model-generation stability under each protocol
-# - Produce concise, publication-ready visualizations
+# - Evaluate SBS outputs against the human reference
+# - Compare model-generation stability under a fixed SBS protocol
+# - Produce publication-ready visualizations
+#
+# Requirements:
+# - R packages referenced by the functions in this file
+# - Question and response files supplied by calling scripts
+#
+# AI Disclosure:
+# - Code documentation and formatting assisted by ChatGPT
+# - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-r-scripts.md
 #
 # ////////////////////////////////////////////////////
-
+# ////////////////////////////////////////////////////
+#
+#
 # 1. Parse LLM Output ----
+#
+#
+# ////////////////////////////////////////////////////
 
 extract_binary_responses <- function(raw_text) {
   # Remove Markdown code fences while preserving response content
@@ -64,7 +78,13 @@ parse_llm_output <- function(path, questions, response_name = "llm_response") {
   result
 }
 
+# ////////////////////////////////////////////////////
+#
+#
 # 2. Diagnose LLM Output Formatting ----
+#
+#
+# ////////////////////////////////////////////////////
 
 diagnose_llm_output <- function(path, questions) {
   lines <- readLines(
@@ -108,7 +128,13 @@ diagnose_llm_output <- function(path, questions) {
   )
 }
 
+# ////////////////////////////////////////////////////
+#
+#
 # 3. Human-Reference Evaluation ----
+#
+#
+# ////////////////////////////////////////////////////
 
 classify_agreement <- function(llm_response, human_response) {
   dplyr::case_when(
@@ -175,7 +201,10 @@ evaluate_output <- function(path, entity_slug, technique, questions, human) {
 
   reference <- human |>
     dplyr::filter(.data$entity_slug == entity_slug) |>
-    dplyr::select("question_id", "human_response")
+    dplyr::transmute(
+      question_id = .data$question_id,
+      human_response = toupper(as.character(.data$human_response))
+    )
 
   parsed |>
     dplyr::left_join(reference, by = "question_id") |>
@@ -188,7 +217,13 @@ evaluate_output <- function(path, entity_slug, technique, questions, human) {
     )
 }
 
+# ////////////////////////////////////////////////////
+#
+#
 # 4. Model-to-Model Comparison ----
+#
+#
+# ////////////////////////////////////////////////////
 
 compare_model_outputs <- function(
   legacy_path,
@@ -228,7 +263,13 @@ compare_model_outputs <- function(
     )
 }
 
+# ////////////////////////////////////////////////////
+#
+#
 # 5. Display Labels and Visual Style ----
+#
+#
+# ////////////////////////////////////////////////////
 
 pon_label <- function(entity_slug) {
   dplyr::recode(
@@ -258,7 +299,13 @@ protocol_shapes <- function() {
   )
 }
 
+# ////////////////////////////////////////////////////
+#
+#
 # 6. Model-by-Protocol Visualizations ----
+#
+#
+# ////////////////////////////////////////////////////
 
 plot_scenario_disagreement <- function(metrics_data) {
   plot_data <- metrics_data |>

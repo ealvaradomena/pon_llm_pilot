@@ -1,6 +1,6 @@
 ---
 title: "Methods"
-subtitle: "A zero-shot 3 × 2 model-by-protocol comparison"
+subtitle: "A fixed-protocol SBS model-generation comparison"
 editor: visual
 ---
 
@@ -13,28 +13,27 @@ library(readr)
 library(yaml)
 
 cfg <- yaml::read_yaml("config/config.yml")
-questions <- readr::read_csv(
-  cfg$project$questions_file,
-  show_col_types = FALSE
-)
+questions <- readr::read_csv(cfg$project$questions_file, show_col_types = FALSE)
 ```
 
 ## Study objective
 
-The pilot asks whether LLMs can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). Each document is coded against 15 ordered yes/no governance questions.
+The pilot asks whether LLMs can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). The revised comparison holds the recovered manuscript-facing **step-by-step (SBS) protocol** fixed and varies model generation only.
 
-The extension uses a **zero-shot 3 × 2 design** that separates two sources of variation:
+The principal comparison is:
 
-1. **Model:** GPT-4 Turbo, GPT-5.4 nano, or GPT-5.4 mini.
-2. **Protocol:** the recovered 2024 prompt or a concise improved prompt.
+| Model | Protocol | Source |
+|---|---|---|
+| GPT-4 Turbo | Reconstructed Dec. 24, 2024 SBS | Frozen legacy output |
+| GPT-5.4 nano (`gpt-5.4-nano-2026-03-17`) | Same reconstructed SBS protocol | New API run |
 
-This yields six scenarios while keeping the five study documents, 15 questions, endpoint, message roles, and binary task fixed.
+Plain-zero-shot and `improved-v1` artifacts remain preserved but are not part of the principal design. The archival `improved-v1` runner is dry-run by default, runs the current-model arm independently unless another arm is explicitly selected, and requires a separate `ARCHIVAL-GPT4` confirmation token before any GPT-4 Turbo API call. Such archival reruns write only to new run-specific directories and never replace frozen 2024 outputs.
 
 ## Cases and source documents
 
 ```{r}
 #| label: tbl-cases
-#| tbl-cap: "PONs and boundary-object files retained in the reconstructed project"
+#| tbl-cap: "PONs in the strict SBS comparison"
 
 tibble::tribble(
   ~PON, ~File,
@@ -47,83 +46,66 @@ tibble::tribble(
   knitr::kable()
 ```
 
-The comparative experiment uses IRG, EUHC, COAS, CAN, and CEER. These five cases have recovered human-reference vectors tied to the final Dec. 24 computational protocol.
+BEREC is not pooled into this comparison. Dedicated BEREC replication uses `BO1B.txt` and separate guarded scripts.
 
-## Binary coding instrument
+## Reconstructed 2024 SBS protocol
+
+The final Dec. 24 implementation used Chat Completions with:
+
+1. a **system message** containing the policy-analyst instruction, the SBS suffix, and the ordered questions; and
+2. a **user message** containing the complete boundary-object text.
+
+The request supplied `model` and `messages` explicitly. No temperature, top-p, token limit, seed, response format, or tools were explicitly supplied in the historical code.
+
+The recovered base instruction is:
+
+> You are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.
+
+The manuscript-facing SBS condition appends:
+
+> Let's think step by step
+
+The project preserves the recovered string-concatenation behavior, including its whitespace quirks. `scripts/00_check_protocol.py` prints the resulting prompt hash without making an API call.
+
+## Fifteen computational questions and fourteen manuscript prompts
 
 ```{r}
 #| label: tbl-questions
 #| tbl-cap: "Binary governance questions in the preserved computational instrument"
 
 questions |>
-  knitr::kable(
-    col.names = c("ID", "Question")
-  )
+  knitr::kable(col.names = c("Computational ID", "Question"))
 ```
 
-::: {.callout-note}
-The manuscript later reports 14 prompts. The preserved computational instrument contains one additional working-groups item. It remains in all six scenarios so the comparison does not change the outcome space retrospectively.
-:::
+The computational instrument contains 15 questions. Manuscript Table A5 contains 14 because the working-groups item—computational question 10—is omitted. The project does not delete or renumber the historical computational instrument. Instead it defines a separate 14-question manuscript subset for Table A5 replication.
 
-## Zero-shot only
+## Human coders and majority vote
 
-The analytical design no longer uses the historical `Let's think step by step` condition. Those files remain preserved as archival evidence, but they are excluded from evaluation, plots, tables, and new API runs. Removing that condition makes the comparison easier to interpret: each model/protocol cell differs on one intended dimension rather than mixing model generation with a weakly motivated prompting intervention.
+The authoritative human file is `input/reference/legacy_human_responses_confirmed.csv`. The individual coders are displayed as **HBM**, **ASC**, and **JNG**.
 
-## 2024 protocol
+For each question/PON combination the pipeline records:
 
-The final Dec. 24 implementation used Chat Completions with two messages:
+- each human response;
+- the human majority vote;
+- whether the frozen legacy LLM agrees with that majority; and
+- after the new run, whether the newer LLM agrees with that majority.
 
-1. a **system message** containing the policy-analyst instruction and ordered questions;
-2. a **user message** containing the complete boundary-object text.
+Historical four-coder agreement is expressed with explicit counts such as `3 TRUE / 1 FALSE` rather than the manuscript's shorthand. The original `1`, `0`, `3-1`, `2-2`, and `3-1*` values are retained only as manuscript-reference fields.
 
-The request supplied only `model` and `messages` explicitly. No explicit temperature, top-p, token limit, seed, response format, or tools were supplied.
+## Frozen historical benchmark
 
-The preserved instruction is:
+The five `*_sbs.txt` files from Dec. 24, 2024 are treated as immutable research artifacts. The principal runner refuses `gpt-4-turbo` and `gpt-4-turbo-2024-04-09`, preventing accidental regeneration through the newer-model workflow.
 
-> You are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.
+## New-model run
 
-The historical string concatenation, including its whitespace quirks, is retained for all three 2024-protocol cells.
+The new arm uses the pinned snapshot `gpt-5.4-nano-2026-03-17`. It sends five requests—one per strict-comparison PON—and writes only to a new timestamped directory under `output/current/`. Each response receives a JSON metadata sidecar. A fully successful run receives `run_manifest.json` with `status: complete`; if execution fails after the run directory is created, partial outputs are retained and `run_failed.json` records the failure. Downstream comparison scripts accept only runs whose completion manifest explicitly reports `status == "complete"`.
 
-## Improved protocol
+## BEREC replication boundary
 
-The improved protocol keeps the same zero-shot task, documents, questions, Chat Completions endpoint, and message roles. The substantive treatment is the instruction text:
+The original BEREC Dec. 23 request state is not recoverable with enough certainty to support an exact-replication claim. The project therefore distinguishes:
 
-> Use only the supplied document. For each question, answer TRUE only if the text explicitly supports it; otherwise FALSE. Do not infer unstated rules or use outside knowledge. Return exactly 15 rows as question_id,response, preceded by that header. No other text.
+- exact replication: not defensible from surviving request provenance;
+- model-family replication: still limited by protocol uncertainty; and
+- protocol replication: feasible by applying the recovered Dec. 24 SBS protocol to BEREC with a newer model.
 
-The improvement is deliberately concise. It adds four things the old prompt left underspecified: a source boundary, an explicit TRUE/FALSE decision threshold, a prohibition on unstated inference, and an exact row-level output contract. These changes target both classification ambiguity and the serialization anomalies observed in the contemporary baseline run without introducing examples, chain-of-thought instructions, or a structured-output API parameter. The shorter wording also reduces prompt overhead while leaving the source document and questions unchanged.
-
-All three improved-protocol model arms use the same 500-token maximum output allowance. The client expresses that ceiling with the model-appropriate Chat Completions parameter (`max_tokens` for GPT-4 Turbo and `max_completion_tokens` for GPT-5.4 nano and GPT-5.4 mini). The ceiling is an operational execution constraint rather than part of the classification prompt, is held constant across the three improved-protocol arms, and is recorded in the run metadata.
-
-Before execution, the runner uses `tiktoken` to estimate the two-message request size for every PON. For the GPT-4 Turbo arm, estimated input plus the output cap must remain below 29,750 tokens: the observed 30,000-token account TPM ceiling less a 250-token safety margin. This local preflight was added after the API rejected the largest request at 30,012 requested tokens. Because Chat Completions framing can vary by serving implementation, the local count is treated as a conservative guardrail rather than an exact reconstruction of server-side accounting. A failed preflight creates no batch directory and makes no API call.
-
-## Six scenarios
-
-```{r}
-#| label: tbl-design
-#| tbl-cap: "Model-by-protocol scenarios"
-
-tibble::tribble(
-  ~Model, ~Protocol, ~Status,
-  "GPT-4 Turbo", "2024 protocol", "Preserved 2024 zero-shot output",
-  "GPT-5.4 nano", "2024 protocol", "Retained 2026 zero-shot run",
-  "GPT-5.4 mini", "2024 protocol", "Retained 2026 zero-shot run",
-  "GPT-4 Turbo", "Improved protocol", "2026 API run",
-  "GPT-5.4 nano", "Improved protocol", "2026 API run",
-  "GPT-5.4 mini", "Improved protocol", "2026 API run"
-) |>
-  knitr::kable()
-```
-
-The 2024 historical calls recorded the alias `gpt-4-turbo`, not a returned snapshot identifier. The improved-protocol arm therefore uses the pinned `gpt-4-turbo-2024-04-09` snapshot as the closest reproducible counterpart. The contemporary arms use pinned `gpt-5.4-nano-2026-03-17` and `gpt-5.4-mini-2026-03-17` snapshots under both protocols.
-
-## BEREC exclusion
-
-BEREC is retained only as archival provenance. Its preserved output predates the final Dec. 24 message-role implementation, and its boundary object is substantially larger than the other study documents. It is excluded from new default runs and from every comparative table, figure, aggregate statistic, and analytical denominator.
-
-## Human-reference evaluation
-
-The recovered computational workspace contains one human-reference vector per PON for IRG, EUHC, COAS, CAN, and CEER. All six scenarios are evaluated against these same 75 binary decisions. They should not be conflated with the later three-human-coder validation described in the manuscript.
-
-## New-run provenance
-
-Every new request saves the raw model output plus a JSON sidecar containing the requested and returned model IDs, completion ID, UTC request time, prompt and document hashes, usage data, system fingerprint when available, selected response headers, the explicit output-token limit when used, and the parameters deliberately left unspecified. Failed improved-protocol batches receive `batch_failed.json`; only fully completed batches receive `batch_manifest.json`. Single-model improved runs receive their own `run_manifest.json` only after completion.
+The best-supported dated GPT-4 Turbo snapshot is `gpt-4-turbo-2024-04-09`. Dedicated BEREC scripts use `BO1B.txt`, default to dry-run, require both `--execute` and `--confirm-api-call BEREC`, plan one API request, and write only under `output/berec_replication/`.

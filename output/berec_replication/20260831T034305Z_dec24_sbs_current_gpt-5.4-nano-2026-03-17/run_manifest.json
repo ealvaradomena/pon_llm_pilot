@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "replication_claim": "protocol replication: recovered Dec. 24 SBS protocol applied to BEREC BO1B",
+  "requested_model": "gpt-5.4-nano-2026-03-17",
+  "protocol": "berec-dec24-sbs-current",
+  "created_utc": "2026-08-31T03:43:14.513574+00:00",
+  "boundary_object": "BO1B.txt",
+  "generated": [
+    {
+      "raw_output": "BO1B_berec_sbs.txt",
+      "metadata": "BO1B_berec_sbs.json"
+    }
+  ]
+}

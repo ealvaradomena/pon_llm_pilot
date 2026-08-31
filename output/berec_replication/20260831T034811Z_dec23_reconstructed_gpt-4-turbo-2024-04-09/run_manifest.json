@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "replication_claim": "best-evidenced Dec. 23 reconstruction; not exact replication",
+  "protocol": "berec-dec23-reconstructed",
+  "requested_model": "gpt-4-turbo-2024-04-09",
+  "returned_model": "gpt-4-turbo-2024-04-09",
+  "completion_id": "chatcmpl-EInIGQjZCXvQPLTk8Il2JKPx9gNE0",
+  "system_fingerprint": "fp_0334fb4582",
+  "finish_reason": "stop",
+  "boundary_object": "BO1B.txt",
+  "boundary_object_sha256": "df802da68b4155f25d6064647d7219e3386deedac1c6a3ad36d924850adcbce6",
+  "system_message_sha256": "df802da68b4155f25d6064647d7219e3386deedac1c6a3ad36d924850adcbce6",
+  "user_message_sha256": "1d5bd1dafb08a36611ffab134f15042c2cb456b0e197efc34fcd010f1cbff60e",
+  "question_count": 15,
+  "request_parameters_explicitly_supplied": [
+    "model",
+    "messages"
+  ],
+  "request_parameters_intentionally_unspecified": [
+    "temperature",
+    "max_tokens",
+    "max_completion_tokens",
+    "top_p",
+    "seed",
+    "response_format",
+    "tools"
+  ],
+  "request_timestamp_utc": "2026-08-31T03:48:27.799042+00:00",
+  "response_headers": {
+    "x-request-id": "req_6ecf4ca8044d4a5ea009d2ce3d1fd6ee",
+    "openai-processing-ms": "12106",
+    "openai-version": "2020-10-01",
+    "date": "Mon, 31 Aug 2026 03:48:28 GMT"
+  },
+  "usage": {
+    "completion_tokens": 306,
+    "prompt_tokens": 6261,
+    "total_tokens": 6567,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": 0,
+      "audio_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "raw_output_file": "BO1B_berec_dec23_reconstructed.txt",
+  "raw_output_sha256": "d14187b4299ba5a8410614b4e7108b511f9c9f16f2f9ca0cab45dee4247410e9"
+}

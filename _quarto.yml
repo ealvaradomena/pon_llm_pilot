@@ -2,6 +2,16 @@ project:
   type: website
   output-dir: _site
   execute-dir: project
+  render:
+    - index.qmd
+    - reports/methods.qmd
+    - reports/results.qmd
+    - reports/model-comparison.qmd
+    - reports/berec.qmd
+    - provenance/BEREC_REPLICATION.md
+    - provenance/LEGACY_API_CALLS.md
+    - provenance/RECONSTRUCTION.md
+    - provenance/TABLE_A5_REPLICATION.md
   resources:
     - derived/figures/**
 
@@ -15,9 +25,11 @@ website:
       - href: reports/methods.qmd
         text: Methods
       - href: reports/results.qmd
-        text: 2024 Results
+        text: 2024 Replication
       - href: reports/model-comparison.qmd
-        text: Six-Scenario Comparison
+        text: SBS Model Comparison
+      - href: reports/berec.qmd
+        text: BEREC
     right:
       - icon: github
         href: https://github.com/ealvaradomena/pon_llm_pilot
@@ -34,13 +46,3 @@ format:
     code-tools: true
     smooth-scroll: true
     theme: cosmo
-    df-print: paged
-
-crossref:
-  fig-title: "Figure"
-  tbl-title: "Table"
-
-execute:
-  echo: false
-  warning: false
-  message: false

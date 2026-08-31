@@ -1,11 +1,27 @@
-"""Run zero-shot PON extraction protocols with reproducible OpenAI model IDs.
+# ////////////////////////////////////////////////////
+#
+# PON LLM Pilot - LLM Extraction Helpers
+#
+# Purpose
+# - Build reconstructed extraction prompts and execute model runs
+# - Preserve historical outputs while saving new model responses and metadata to isolated run directories
+#
+# Requirements
+# - Project configuration in config/config.yml
+# - Boundary-object and question files registered by the configuration
+# - OPENAI_API_KEY only for functions that explicitly execute API requests
+#
+# AI Disclosure
+# - Code documentation and formatting assisted by ChatGPT
+# - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-python-scripts.md
+#
+# ////////////////////////////////////////////////////
+"""Run PON extraction protocols with reproducible OpenAI model IDs.
 
-The module supports two protocol families:
-- ``2024-legacy`` reproduces the recovered December 2024 zero-shot prompt.
-- ``improved-v1`` keeps the same task, documents, questions, endpoint, and message
-  roles but clarifies the evidence threshold and output contract.
-
-Raw model text is always saved unchanged. Parsing and scoring happen later in R.
+The primary contemporary workflow reproduces the manuscript-facing December 2024
+step-by-step (SBS) prompt while preserving all historical outputs unchanged. The
+older improved-protocol helpers remain available for archival reproducibility but
+are not part of the primary comparison. Raw model text is always saved unchanged.
 """
 
 from __future__ import annotations
@@ -24,13 +40,18 @@ import yaml
 import tiktoken
 
 
+# 1. Represent Project Entities ----
+
 @dataclass(frozen=True)
 class Entity:
     name: str
     short_name: str
     slug: str
     boundary_object: str
+    berec_replication_boundary_object: str | None = None
 
+
+# 2. Load Configuration and Questions ----
 
 def load_config(path: str | Path = "config/config.yml") -> dict:
     with Path(path).open(encoding="utf-8") as handle:
@@ -47,6 +68,8 @@ def load_questions(path: str | Path) -> list[str]:
     return questions
 
 
+# 3. Build Protocol Prompts ----
+
 def build_system_prompt(starter: str, questions: Iterable[str], suffix: str = "") -> str:
     """Reproduce the exact string concatenation used in the 2024 code."""
     return starter + suffix + "The questions are: " + " ".join(questions)
@@ -60,6 +83,8 @@ def build_improved_system_prompt(starter: str, questions: Iterable[str]) -> str:
     )
     return f"{starter}\n\nQuestions:\n{numbered}"
 
+
+# 4. Prepare Reproducibility and API Utilities ----
 
 def sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
@@ -205,6 +230,8 @@ def preflight_improved_requests(
     return rows
 
 
+# 5. Execute One SBS Request ----
+
 def run_one(
     client: Any,
     model: str,
@@ -215,8 +242,10 @@ def run_one(
     protocol_name: str,
     run_dir: Path,
     max_output_tokens: int | None = None,
+    technique: str = "Zero-shot",
+    technique_code: str = "z",
 ) -> tuple[Path, Path]:
-    """Execute one zero-shot request and save raw text plus request metadata."""
+    """Execute one request and save raw text plus request metadata."""
     boundary_text = bo_path.read_text(encoding="utf-8")
 
     # Build the request explicitly so provenance records the operational cap.
@@ -239,7 +268,7 @@ def run_one(
     content = completion.choices[0].message.content or ""
     requested_at = datetime.now(timezone.utc)
 
-    stem = f"{bo_path.stem}_{entity.slug}_z"
+    stem = f"{bo_path.stem}_{entity.slug}_{technique_code}"
     text_path = run_dir / f"{stem}.txt"
     metadata_path = run_dir / f"{stem}.json"
 
@@ -260,8 +289,8 @@ def run_one(
         "entity_slug": entity.slug,
         "boundary_object": bo_path.name,
         "boundary_object_sha256": sha256_file(bo_path),
-        "technique": "Zero-shot",
-        "technique_code": "z",
+        "technique": technique,
+        "technique_code": technique_code,
         "question_count": len(questions),
         "system_prompt_sha256": sha256_text(system_prompt),
         "system_prompt": system_prompt,
@@ -298,6 +327,8 @@ def run_one(
     return text_path, metadata_path
 
 
+# 6. Resolve and Run the Primary SBS Pipeline ----
+
 def resolve_model(cfg: dict, cli_model: str | None) -> str:
     model = cli_model or cfg.get("comparison", {}).get("current_model")
     if not model:
@@ -320,55 +351,121 @@ def run_pipeline(
     model: str | None = None,
     entity_slugs: set[str] | None = None,
 ) -> Path:
-    """Run the preserved 2024 zero-shot prompt with one selected model."""
+    """Run the manuscript-facing 2024 SBS prompt with one selected newer model."""
     cfg = load_config(config_path)
     selected_model = resolve_model(cfg, model)
     questions = load_questions(cfg["project"]["questions_file"])
-    client = _load_client()
+    legacy_forbidden = {
+        str(cfg["legacy_protocol"]["model_alias"]),
+        str(cfg["comparison"]["legacy_model"]),
+    }
+    if selected_model in legacy_forbidden or selected_model.lower().startswith("gpt-4-turbo"):
+        raise RuntimeError(
+            "The primary current-model runner refuses legacy GPT-4 Turbo IDs. "
+            "Historical 2024 outputs are frozen and must not be regenerated."
+        )
+
+    selected_entities = _selected_entities(cfg, entity_slugs)
+    if any(entity.slug == "berec" for entity in selected_entities):
+        raise RuntimeError(
+            "BEREC is excluded from the primary five-PON SBS runner. "
+            "Use the dedicated BEREC execution scripts."
+        )
 
     run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = Path(cfg["project"]["current_output_dir"]) / (
-        f"{run_stamp}_{safe_model_slug(selected_model)}"
-    )
+    run_id = f"{run_stamp}_{safe_model_slug(selected_model)}"
+    run_dir = Path(cfg["project"]["current_output_dir"]) / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
+    started_utc = datetime.now(timezone.utc).isoformat()
 
     prompt = build_system_prompt(
         cfg["legacy_protocol"]["starter"],
         questions,
-        cfg["legacy_protocol"]["techniques"]["zero_shot"]["suffix"],
+        cfg["legacy_protocol"]["techniques"]["step_by_step"]["suffix"],
     )
 
     generated: list[dict[str, str]] = []
-    for entity in _selected_entities(cfg, entity_slugs):
-        bo_path = Path(cfg["project"]["boundary_object_dir"]) / entity.boundary_object
-        if not bo_path.exists():
-            raise FileNotFoundError(bo_path)
+    processing_pon: str | None = None
 
-        text_path, metadata_path = run_one(
-            client=client,
-            model=selected_model,
-            bo_path=bo_path,
-            questions=questions,
-            system_prompt=prompt,
-            entity=entity,
-            protocol_name="2024-legacy",
-            run_dir=run_dir,
-        )
-        generated.append(
-            {
-                "entity_slug": entity.slug,
-                "raw_output": text_path.name,
-                "metadata": metadata_path.name,
-            }
-        )
+    try:
+        client = _load_client()
+        for entity in selected_entities:
+            processing_pon = entity.slug
+            bo_path = Path(cfg["project"]["boundary_object_dir"]) / entity.boundary_object
+            if not bo_path.exists():
+                raise FileNotFoundError(bo_path)
 
+            text_path, metadata_path = run_one(
+                client=client,
+                model=selected_model,
+                bo_path=bo_path,
+                questions=questions,
+                system_prompt=prompt,
+                entity=entity,
+                protocol_name="2024-sbs",
+                run_dir=run_dir,
+                technique="Step-by-step (SBS)",
+                technique_code="sbs",
+            )
+            generated.append(
+                {
+                    "entity_slug": entity.slug,
+                    "raw_output": text_path.name,
+                    "metadata": metadata_path.name,
+                }
+            )
+            processing_pon = None
+
+    except Exception as exc:
+        output_files = sorted(
+            path.name
+            for path in run_dir.iterdir()
+            if path.is_file() and path.name not in {"run_manifest.json", "run_failed.json"}
+        )
+        failure_manifest = {
+            "status": "failed",
+            "protocol": "2024-sbs",
+            "protocol_version": "reconstructed-dec24-2024-sbs",
+            "requested_model": selected_model,
+            "run_id": run_id,
+            "started_utc": started_utc,
+            "failed_utc": datetime.now(timezone.utc).isoformat(),
+            "config_file": str(config_path),
+            "question_count": len(questions),
+            "input_pons": [entity.slug for entity in selected_entities],
+            "completed_pons": [row["entity_slug"] for row in generated],
+            "processing_pon": processing_pon,
+            "generated": generated,
+            "output_files": output_files,
+            "error_type": type(exc).__name__,
+            "error_message": str(exc),
+        }
+        (run_dir / "run_failed.json").write_text(
+            json.dumps(failure_manifest, indent=2),
+            encoding="utf-8",
+        )
+        raise
+
+    output_files = [
+        filename
+        for row in generated
+        for filename in (row["raw_output"], row["metadata"])
+    ]
     manifest = {
-        "protocol": "2024-legacy",
+        "status": "complete",
+        "protocol": "2024-sbs",
+        "protocol_version": "reconstructed-dec24-2024-sbs",
         "requested_model": selected_model,
-        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "run_id": run_id,
+        "started_utc": started_utc,
+        "completed_utc": datetime.now(timezone.utc).isoformat(),
+        "created_utc": started_utc,
         "config_file": str(config_path),
         "question_count": len(questions),
+        "input_pons": [entity.slug for entity in selected_entities],
+        "completed_pons": [row["entity_slug"] for row in generated],
         "generated": generated,
+        "output_files": output_files,
     }
     (run_dir / "run_manifest.json").write_text(
         json.dumps(manifest, indent=2),
@@ -377,6 +474,19 @@ def run_pipeline(
     return run_dir
 
 
+
+# 7. Preserve the Archival Improved-Protocol Workflow ----
+
+def _assert_isolated_improved_output_root(cfg: dict) -> Path:
+    """Require improved-protocol reruns to stay below a dedicated subdirectory."""
+    root = Path(cfg["project"]["improved_output_dir"])
+    legacy_root = Path("output")
+    if root.resolve() == legacy_root.resolve():
+        raise RuntimeError(
+            "Unsafe improved-protocol output root: output/ contains frozen historical artifacts. "
+            "Use a dedicated subdirectory such as output/improved/."
+        )
+    return root
 
 def run_improved_model(
     config_path: str | Path = "config/config.yml",
@@ -401,10 +511,9 @@ def run_improved_model(
         questions,
     )
 
+    improved_root = _assert_isolated_improved_output_root(cfg)
     run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = Path(cfg["project"]["improved_output_dir"]) / (
-        f"{run_stamp}_{safe_model_slug(selected_model)}"
-    )
+    run_dir = improved_root / f"{run_stamp}_{safe_model_slug(selected_model)}"
     run_dir.mkdir(parents=True, exist_ok=False)
 
     generated: list[dict[str, str]] = []
@@ -505,8 +614,9 @@ def run_improved_batch(
         questions,
     )
 
+    improved_root = _assert_isolated_improved_output_root(cfg)
     batch_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    batch_dir = Path(cfg["project"]["improved_output_dir"]) / batch_stamp
+    batch_dir = improved_root / batch_stamp
     batch_dir.mkdir(parents=True, exist_ok=False)
 
     model_runs: list[dict[str, str]] = []

@@ -1,0 +1,480 @@
+BoR (10) 03
+
+RULES OF PROCEDURE OF THE BOARD OF REGULATORS
+
+The Body of European Regulators for Electronic Communications (hereinafter, “BEREC”)
+has been established by Regulation (EC) 1211/2009 (hereinafter the “Regulation”) and its
+functioning shall be governed by the Regulation and these rules of procedure (hereinafter,
+the “Rules of /Procedure”). In case of inconsistency between these Rules of Procedure and
+the Regulation, the Regulation shall prevail.
+The Board of Regulators shall exercise the relevant tasks assigned to BEREC by the
+Regulation, in accordance with the provisions of these Rules of Procedure.
+Article 1 – Composition
+Members
+1. The Board of Regulators shall be composed of one member per member state who shall
+be the head or nominated high-level representative of the national regulatory authority
+established in each Member State with primary responsibility for overseeing the
+day-to-day operation of the markets for electronic communications networks and services
+(hereinafter NRA).
+2. Each NRA shall nominate one alternate, whose names shall be communicated to the
+Office. When neither the Member nor the nominated alternate can attend a meeting of
+the Board of Regulators, a further alternate may attend and stand in for those
+representatives, provided that he/she is authorised to do so in writing and that the
+authorisation is communicated to the Chair and to the Administrative Manager of the
+Office in advance of the meeting concerned.
+3. The Board of Regulators shall be assisted by a working group (Contact Network)
+composed of senior representatives of all members to prepare the decisions to be taken
+by the Board of Regulators. The European Commission and the other observers shall be
+represented at the Contact Network.
+Observers
+Heads (or their representatives) of the independent national regulatory authorities from EEA
+States that are not members of the European Union and from those States that are
+candidates for accession to the European Union shall have the right to participate in Board of
+Regulators meetings as observers (“Observers”).
+
+1
+
+BoR (10) 03
+
+The Commission and the EFTA Surveillance Authority shall attend as Observers and shall be
+represented at an appropriate level.
+Upon the suggestion of Members or Observers, or on its own initiative, the Chair may invite
+Heads (or their representatives) of other independent national regulatory authorities to
+participate in Board of Regulators meetings as Observers.
+Other participants
+Upon suggestion of Members or Observers, or on its own initiative, the Chair may invite
+external experts to take part in meetings of the Board of Regulators. Such invitations should
+be made not later than four weeks before the meeting in question. A clear distinction should
+be made between experts, on the one hand, and interested parties (market participants,
+consumers and end-users or their representatives) on the other hand (whose participation in
+BEREC work shall be through consultations and/or public hearings).
+
+Article 2 – Appointment and Term of the Chair and Vice-Chairs
+1. Before serving her/his term as Chair for one year, the Chair shall first serve one year as
+Vice-Chair. She/he shall also serve as Vice-Chair for the year following her/his term as
+Chair. Every year the Board of Regulators shall appoint the Chair for the year subsequent
+to the following year according to the selection procedure described in this Article.
+2. The Board of Regulators shall elect the Vice-Chair who shall become Chair the following
+year from among the members with voting rights. Candidacies for Vice-Chair shall be
+submitted to the Office in writing either by the candidates themselves or by other
+members of the Board of Regulators at least 2 months before the election. The Chair will
+circulate the list of candidates to the Members within five working days of that date.
+3. A candidacy must be supported by at least 4 Members. The candidate shall have a
+record of active personal participation in BEREC and shall ensure that she/he is able to
+devote a significant part of her/his time to her/his position in the BEREC.
+4. The election shall be by a secret ballot. A candidate shall be elected by a 2/3 majority of
+the Members. The election shall take place at the last ordinary plenary meeting of the
+year. Two tellers shall be designated from among the members to assist in the vote.
+5. The election shall take place in accordance with the following procedure :
+a. If the Office only receives one candidacy, this candidate shall be elected provided
+that she/he receives the support of 2/3 majority of all members. Should the
+candidate not receive that support in the first round, the vote shall be repeated
+once. Should the candidate not receive that support in the second round, a new
+invitation for candidacies shall open.
+
+2
+
+BoR (10) 03
+
+b. If two or more candidacies are submitted and during the first vote no candidate
+obtains a 2/3 majority of the votes of all Members, the candidate with the least
+support shall be withdrawn from the selection process. Rounds will run until a
+candidate receives a 2/3 majority of votes of all members. Where there remains a
+sole candidacy that does not obtain the support of a 2/3 majority, a new invitation
+for candidacies shall open.
+6. In addition to the support provided to the Chair by the two Vice-Chairs, the Board of
+Regulators may decide to elect other Members as additional Vice-Chairs for 1year. The
+election of the additional Vice-Chairs will take place during the last ordinary Plenary
+meeting of the year for the following year in accordance with the voting rules set out in
+paragraph 3,4 and 5.
+7. The serving Chair shall inform the Board of Regulators of the voting results.
+8. On an exceptional basis the Chair and Vice-Chairs for 2010 including the Vice-Chair
+becoming Chair in 2011, will be elected during the first meeting of the Board of
+Regulators. Candidacies supported by 4 members will be received at the beginning of the
+meeting. The Chair and the Vice-Chairs will be elected in accordance with paragraphs 3,
+4 and 5 of this Article. The election shall take place after the Board of Regulators has
+adopted its Rules of Procedure.
+Article 3 – Duties of the Chair and Vice Chair
+1. The Chair shall be responsible for external relations on behalf of BEREC. She/he shall
+inform all Members of any planned external engagements and contacts and report on
+their results.
+2. The Board of Regulators may decide to grant the Chair a clearly defined mandate to
+speak and act on behalf of the BEREC.
+3.
+
+A Vice-Chair shall assume the duties of the Chair if the latter is not in a position to
+perform her/his duties. The Vice-Chair(s) will assist the Chair, at her/his request, in the
+performance of her/his duties.
+
+Article 4 – Plenary meetings of the Board of Regulators
+1. The ordinary plenary meetings of the Board of Regulators shall be convened by the Chair
+in writing not less than ten days prior to the proposed meeting date and shall occur at
+least four times a year.
+
+3
+
+BoR (10) 03
+
+2. Extraordinary plenary meetings of the Board of Regulators may also be convened at the
+initiative of the Chair in consultation with the Administrative Manager, or at the request of
+at least one third of the Board of Regulators’ members. Extraordinary meetings shall be
+convened by the Chair in writing not less than three days before the date of the meeting
+3. Any Member wishing to host a Board of Regulators meeting shall submit a proposal to
+the Office. In the event of more than one proposal being received for a particular meeting,
+the Member planned to Chair BEREC for the concerned period shall have the final
+decision. In the event that no proposal for hosting a meeting is presented by a Member,
+the Board of Regulators may request the Office to make a proposal to organise the
+meeting at a suitable place.
+4. Notices of the meetings shall indicate the date, time and place of the proposed meeting
+and shall contain the agenda and the working documents, the draft proposals and all
+relevant material which are needed for the meeting. The Office shall be responsible for
+distributing the agenda and relevant documents.
+5. The Administrative Manager shall be entitled to take part, without having the right to vote,
+in meetings of the Board of Regulators.
+6. Each member may be represented at the meeting by another member, provided that
+written authorisation from the absent member is submitted to the Chair. A member may
+represent a maximum of two other members.
+Article 5 – Agenda
+1. A provisional agenda shall be drawn up by the Chair assisted by the Administrative
+Manager. It shall contain, in addition to those items the inclusion of which is requested by
+a Member, any item the inclusion of which is requested by the Administrative Manager.
+2. Any request made by Members for including, deleting or substituting an item on the
+agenda shall state the reasons on which it is based. The Chair shall inform the other
+members of any such request.
+3. The agenda shall be adopted at the beginning of each meeting.
+
+Article 6 – Documents for meetings
+1. The provisional agenda and draft proposals, documents, submission notes and other
+relevant material shall be prepared in accordance with the decisions of the Contact
+Network, together with any additional material considered necessary by the
+Administrative Manager. As the case may require, the material shall be prepared either
+by the Office or by a Working Group with the assistance of the Office. The material shall
+be distributed by the Office not less than 10 days before ordinary meetings and not less
+
+4
+
+BoR (10) 03
+
+than 3 days before extraordinary meetings, so that members have the opportunity to
+propose amendments prior to the vote.
+2. Exceptionally, documents such as short statements or press releases may be prepared
+and agreed during meetings of the Board of Regulators.
+3. Documents submitted to the Board of Regulators shall be accompanied by a covering
+submission note prepared either by the Office or by a Working Group with the assistance
+of the Office, which outlines the key issues and the decision being sought by the Board of
+Regulators.
+Article 7 – Minutes and follow-up
+1. The Office shall prepare the draft minutes of the meetings of the Board of Regulators.
+2. The minutes of each meeting shall as a general rule indicate in respect of each item :
+a. Documents submitted to the Board of Regulators
+b. A summary record of the proceedings
+c. A record of the decisions adopted or the conclusions reached by the Board of
+Regulators, summarising the main arguments together with the reservations of a
+member at its request
+d. The list of attendees
+3. The draft minutes shall be approved electronically by the Members no later than 15
+working days after that meeting. The minutes of all meetings shall be kept by the Office in
+a register, which shall be accessible to any Member upon request.
+4. The follow-up actions to be undertaken after the meeting will be summarised by the Chair
+in the end of the meeting and will be circulated electronically within 3 working days.
+5. Until the Office is operational, the duties related to this article will be performed by the
+Chair of the Board of Regulators.
+Article 8 – Quorum
+The quorum necessary for meetings shall be achieved when at least two-thirds of all voting
+members are present or represented by proxy in accordance with Article 9 (2). In order to
+determine whether the quorum is met, an attendance list shall be drawn up by the Office at
+the beginning of each meeting.
+
+5
+
+BoR (10) 03
+
+Article 9 – Voting procedures for meetings
+1. The Board of Regulators shall act by a two-thirds majority of all its members unless
+otherwise provided in the Regulation, in the Framework Directive or in the Specific
+Directives, voting in accordance with the procedures in this article and Article 10.
+2. In addition to his own vote, each voting member may cast a maximum of two votes
+received by written proxy. The proxy shall be submitted to the Chair at the beginning of
+the meeting and shall be recorded in the minutes.
+3. Voting shall be by a show of hands or by secret ballot. A request for a secret ballot must
+be made by at least two voting members present and supported by a majority of
+members.
+4. The Chair shall submit a proposal for a decision to the Members, who shall vote by “yes”
+if they are in favour of it, or “no”, or “abstention”.
+5. If at least the requisite number of members has voted in favour of the proposal the Chair
+shall declare the proposal approved.
+6. If the number of members who have either voted against the proposal or who have
+formally abstained results in the threshold for approval not having been met, the
+Chairman shall declare that the proposal has not been approved.
+7. The adopted documents or decisions shall include the reservations of an NRA at its
+request
+
+Article 10 – Electronic voting procedure
+1. The Chair may seek a decision of the Board of Regulators by means of an electronic
+voting procedure when a meeting is not possible or practicable and cannot wait untill the
+next plenary meeting.
+2. The Chair shall inform the Members as soon as possible of the need and justification for
+an electronic voting procedure. Where a future need can be foreseen, the Chair shall, if
+possible, inform Members at a meeting of its intended use.
+3. The electronic voting may be initiated by the Chair in consultation with the Administrative
+Manager. Draft decisions together with the relevant documents shall be addressed to
+members and, for information, to observers, after approval of the Chair. The minimum
+period which must be given for comments to be submitted is 5 working days, except in
+
+6
+
+BoR (10) 03
+
+case of justified extreme urgency where the time-limit is of one working day. All
+comments received within the deadline shall be distributed to the Members.
+4. If significantly different opinions are expressed in the comments, the Chair with the
+support of the Administrative Manager, shall attempt to resolve the differences between
+the respective Members. The Chair shall prepare a final proposal and submit it to the
+vote. She/he shall send it to the members and shall lay down a time-limit which must not
+be less than 7 calendar days, except in cases of justified extreme urgency where the
+time-limit is of one working day.
+5. For any voting round to be valid, at least the majority of the Members must have cast
+their vote or formally abstained.
+6. If the number of members who have either voted against the proposal or who have
+formally abstained prevent the required threshold for approval being met, the Chair shall
+declare the proposal not approved. In this case the Chair, in consultation with the
+Administrative Manager, shall inform the Members of the number of votes cast for and
+against the proposal, as well as the number of formal abstentions, in the first round and
+shall organise a second and last round of electronic voting.
+7. In the second round, the votes of members who have not cast their vote and the
+abstention will be counted as representing support for the position taken by the majority
+of those who have voted. The proposal will be approved if the required majority of the
+votes are considered to be in favour of the proposal.
+8. A full report on the outcome of the procedure will be made available to members. The
+report will indicate in particular:
+a. The detailed results of the voting (i.e., number of votes cast – specifying the
+number of negative and positive votes and abstentions); and
+b. The remarks and reservations of Members upon their request.
+9. Members can make public use of their part of the voting report if they want.
+10. If the electronic procedure remains undecided, an extraordinary meeting shall be
+convened at the initiative of the Chair.
+Article 11 – Expert Working Groups
+The Board of Regulators may decide to create Expert Working Groups to assist with the
+performance of the tasks and functions of BEREC and request the Office to provide support.
+The Chair of each Expert Working Group shall be designated by the Board of Regulators.
+Expert Working Groups shall be open to all members and observers.
+
+7
+
+BoR (10) 03
+
+Article 12 – Contact Network
+The Contact Network is a specific type of Expert Working Group, composed of senior
+representatives of all Members, chaired by a representative of the Chair of the Board of
+Regulators. Its members shall have a mandate to speak on behalf of their NRAs. The
+Administrative Manager attends Contact Networks meetings.
+The Contact Network ensures coordination of proposals to be considered by the Board of
+Regulators. The Board of Regulators may decide to delegate some of its duties to the
+Contact Network. However this mandate shall be clearly defined in advance.
+In particular, the Contact Network shall perform the following tasks:
+1. The Contact Network shall make the necessary preparations with the support of the
+Office for each meeting of the Board of Regulators. To this end it shall:
+a. aim to resolve outstanding differences of opinion between the Members,
+b. ensure that proposed papers to be submitted for consideration by the Board of
+Regulators are duly and timely prepared, and
+c. with the assistance of the Administrative Manager, agree the draft agenda for
+each meeting of the Board of Regulators, which shall then be proposed to the
+Chair of the Board of Regulators for approval.
+2. The Contact Network shall act as a filter and facilitator between Expert Working Groups,
+on the one hand, and the Board of Regulators, on the other hand, with the assistance of
+the Office. To this end, it shall, inter alia:
+a. assess the completeness and the consistency of papers proposed to the Board of
+Regulators, and ensure that these papers are ready for discussion and decision
+by the Board of Regulators, and
+b. facilitate the arrangements and coordination with the Office.
+3. The Contact Network can delay items being considered by the Board of Regulators
+where issues need further work and can make recommendations to the Board, for
+example in setting priorities for the execution of the Work Programme.
+4. The Contact Network also operates as an informal network whose members are the key
+contact points between NRAs for seeking and exchanging information on regulatory
+issues.
+5. The Contact Network shall meet three to four weeks prior to the ordinary meetings of the
+Board of Regulators, and may, if requested by the Chair of the Contact Network, meet
+prior to any extraordinary meetings.
+
+8
+
+BoR (10) 03
+
+Article 13 – Article 7 Expert Groups (establishment – functioning – reports- voting)
+TO BE COMPLETED BEFORE THE TIME LIMIT FOR TRANSPOSITION
+Article 14 – Preparation and approval of the Work Program
+1. The draft Work Programme of BEREC shall be prepared by the Chair with the assistance
+of the Office, if required, and of the Expert Working Groups, which can make proposals to
+the Chair.
+2. The draft Work Programme shall then be submitted for the consideration and comments
+of Members and Observers through the Contact Network, after which an amended draft
+shall be submitted for the approval of the Board of Regulators.
+3. Once approved by the Board of Regulators, the draft Work Programme shall be
+published for public consultation, which shall take the form of both a public hearing and
+written comments.
+4. Having taken account of the responses, the Chair, with the assistance of the
+Administrative Manager, shall finalize the Work Programme. Before submitting to the
+Board of Regulators for final approval, she/he shall inform the Contact Network and, in
+relation to the attribution and/or confirmation of the Chairs of the Expert Working Groups
+as well as regarding the commitment of NRAs resources, the Expert Working Groups.
+5. The Board of Regulators shall adopt the annual Work Programme of BEREC before the
+end of each year preceding that to which the work Programme relates.
+6. The Board of Regulators shall transmit the Work Programme to the European Parliament,
+the Council and the Commission each year as soon as it is adopted
+Article 15 – Project Requirements Definition
+1. Once the Work Programme has been approved and work items have been assigned to
+the Expert Working Groups, the Chair of each Expert Working Group shall prepare, with
+the assistance of the Office, a Project Requirements Definition (PRD) for each work item
+for which they are responsible.
+2. The PRD shall provide a clear statement of the purpose and scope of the planned
+activity, taking into account the objectives set in the Work Programme. It shall set out :
+a. the form which the deliverable(s) will take
+b. the list of Members actively contributing to the Expert Working Group
+c. the anticipated dates of interim and final delivery.
+
+9
+
+BoR (10) 03
+
+Article 16 – Public Consultations
+1. Public consultations shall be organised in such cases where the input and comments of
+stakeholders is required.
+2. Subject to Article 16.3 of these Rules of Procedure, the Board of Regulators shall agree
+on a case-by-case basis, whether to organise a public consultation, by a written
+procedure, and/or a public hearing, to gather either comments on a draft document
+and/or opinions in a preliminary phase of analysis.
+3. The consultation procedure shall in principle be restricted to one round of written
+comments in the case of a consultation document, unless specific circumstances require
+otherwise.
+4. In deciding on whether and how to consult, the Board of Regulators shall take into
+account considerations such as the nature of the specific subject, possible alternatives to
+consultation, confidentiality issues, the interests of third parties, and the urgency of the
+matter.
+5. Public consultations/hearings will be organised by the Office in coordination with the
+Chair of the relevant Expert Working Group, or with the Chair of the Board of Regulators
+in the case of Article 16(2).
+6. The procedure for consultation and the time-scale for responses will be made available
+on the BEREC website.
+7. The time-scale for responses will in principle be a minimum of 15 working days and a
+maximum of 20 working days.
+8. Comments, to be addressed to the Office in written form, preferably by e-mail, will be
+made available on the BEREC’s website, except where confidentiality has been
+requested.
+
+Article 17 – Right of access to BEREC’s documents and confidentiality
+Without prejudice to the right of access to BEREC documents under EU legislation, the
+publication or making available to the public or any stakeholder of any BEREC Documents
+requires the prior approval of the Board of Regulators.
+
+10
+
+BoR (10) 03
+
+Article 18 – BEREC websites
+The Office shall run a BEREC internal website (intranet). It shall be used as a closed
+platform for the electronic exchange of documents between Members and in appropriate
+cases Observers, and shall be the preferred method of document circulation among
+Members.
+In addition, BEREC shall also have an external website, also run by the Office, where all
+BEREC documents approved by the Board of Regulators for publication will be published.
+Article 19 - Declarations
+1. Members of the Board of Regulators shall make a declaration of commitment to fulfil their
+duties and a declaration of interests which could be prejudicial to their independence.
+These declarations shall be made annually in writing and be entered in a register held by
+the Office which is accessible to the public, on request, at the seat of the Office. In
+addition, declarations of interests shall be published on the website of BEREC. These
+Declarations shall be made in accordance with the models contained in Annex 1 and 2.
+2. At each meeting, members shall declare any interest which could be considered to be
+prejudicial to their independence with respect to any point on the agenda. Anyone
+declaring such interests shall not participate in any vote on the relevant point.
+Article 20- Duty of confidentiality
+Members of the Board of Regulators shall be required, even after their duties have ceased,
+not to disclose information of the kind covered by the duty of professional secrecy.
+Article 21 – Revision of the rules of procedure
+1. The Chair of the Board of Regulators may propose, following a request from one of the
+Members or on his/her own initiative, amendments to these rules of procedure.
+2. These amendments shall be adopted by the Board of Regulators, in accordance with
+article 9 of these Rules of Procedure. They may include in particular further specific
+provisions with regard to the Work Programme, article 7 and transparency requirements.
+Article 22 – General provisions
+These rules of procedure shall be published on the BEREC website.
+
+11
+
+BoR (10) 03
+
+Annex 1
+ANNUAL DECLARATION OF COMMITMENT FOR MEMBERS OF THE BOARD OF
+REGULATORS acc. to Art. 21 of the BEREC Regulation (1211/2009)
+
+I …………………………………………….., hereby declare that I shall make all reasonable
+efforts to fulfil my duties as a member of the Board of Regulators (BEREC).
+More particularly, I undertake to exercise the functions entrusted to me by BEREC and not to
+seek or accept any instructions incompatible with my individual tasks or with the tasks of
+BEREC from any other party.
+I understand that this Declaration will be entered in a register held by the BEREC Office
+which is accessible to the public, on request, at the seat of the Office.
+
+Done at _________________________ on ____/____ 201__
+Signature: _______________________________________
+Position: _______________________________________
+
+12
+
+BoR (10) 03
+
+Annex 2
+ANNUAL DECLARATION OF INTERESTS OF THE MEMBERS OF THE BOARD OF
+REGULATORS
+Title (Ms., Mr., Dr., Prof.): ………………………………………..
+First Name: …………………………………………………………
+Surname: ……………………………………………………………
+Position: ……………………………………………………………
+hereby declares to have the following interests:
+1. Work and activities in organisations relevant to the operating area of BEREC during the
+past 5 years1: Name of organisation/Position/Period
+…………….……………………………………………………………………
+…………….……………………………………………………………………
+2. Financial interests in a company relevant to the operating area of BEREC2 during the past
+5 years and exceeding 50 000 € and/or voting rights of 5 % or more per company (Name of
+the company)
+…………….……………………………………………………………………
+…………….……………………………………………………………………
+3. Other interests or facts whether or not related to such organisations which you consider
+should be made known to BEREC, including matters relating to the members of your
+household:
+…………….……………………………………………………………………
+…………….……………………………………………………………………
+4.
+Work and activities, whether or not remunerated, for and/or on behalf of such a
+company or organisation and other links with the organisations relevant to BEREC.
+…………….……………………………………………………………………
+…………….……………………………………………………………………
+I, ………………………………………………………………., hereby declare on my honour that,
+to the best of my knowledge, the only direct or indirect interests I have in organisations
+relevant to the operating area of BEREC related to my position referred to above are those
+listed above.
+I further declare that should any changes occur and should it appear that I have or acquire
+additional interests that should be made known to BEREC I shall forthwith declare them and
+complete a new declaration of interests detailing the changes.
+1
+
+Please include here any work/activities during the past 5 years you may have done in a public or
+private company operating within the electronic communications sector
+2
+Please consider here any financial interests you may have had during the 5 past years in a public or
+private company operating in the electronic communications sector, exceeding the thresholds abovementioned
+
+13
+
+BoR (10) 03
+
+I understand that this Declaration will be published on BEREC’s website and entered in a
+register held by the Office, which is accessible to the public, on request at the seat of the
+Office.
+Signature:………………………………… Date:………………..
+
+14
+
+

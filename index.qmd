@@ -1,36 +1,48 @@
 ---
 title: "PON Governance LLM Pilot"
-subtitle: "Zero-shot model-generation and protocol comparison"
+subtitle: "Reconstructing the 2024 SBS protocol and comparing model generations"
 editor: visual
 ---
 
 ## Repository purpose
 
-This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*. The manuscript itself is not distributed here.
+This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*.
 
-The project preserves the December 2024 zero-shot outputs and adds a controlled 3 × 2 extension:
+The revised principal analysis asks:
 
-> **How much do governance classifications depend on model choice, protocol design, or both?**
+> **How does a newer model compare with the frozen 2024 GPT-4 Turbo responses when both are evaluated under the same reconstructed step-by-step (SBS) protocol?**
 
-The six scenarios cross GPT-4 Turbo, GPT-5.4 nano, and GPT-5.4 mini with the recovered 2024 prompt and a concise improved prompt. The five study documents, 15 questions, binary outcome space, Chat Completions endpoint, and zero-shot design remain fixed.
+The historical benchmark is the preserved Dec. 24, 2024 `*_sbs.txt` output. The newer arm uses the pinned `gpt-5.4-nano-2026-03-17` snapshot. The original 2024 outputs are never regenerated or overwritten.
 
-## Corpus
+## Study cases
 
-The archival source corpus contains six PONs: **BEREC, IRG, EUHC, COAS, CAN, and CEER**. The comparative experiment uses **IRG, EUHC, COAS, CAN, and CEER**. BEREC remains preserved for provenance but is excluded because its surviving Dec. 23 output predates the final Dec. 24 request implementation and its boundary object is unusually large.
+The strict comparison uses **IRG, EUHC, COAS, CAN, and CEER**. BEREC remains part of the archival corpus but is handled separately because its preserved Dec. 23 output predates the final Dec. 24 request implementation.
+
+Dedicated BEREC replication uses `BO1B.txt`, not `BO1A.txt`, and is excluded from the five-PON aggregate analysis.
+
+## Two linked reproductions
+
+The repository separates two tasks:
+
+1. **Manuscript Table A5 replication.** HBM, ASC, JNG, and the frozen legacy SBS LLM reconstruct the historical four-coder agreement table over the manuscript's 14 prompts.
+2. **Extended SBS model comparison.** The same human data and frozen legacy SBS outputs are compared with a new `gpt-5.4-nano-2026-03-17` SBS run over the preserved 15-question computational instrument.
+
+Project-facing outputs use explicit agreement labels such as `3 TRUE / 1 FALSE`, and report directly whether each LLM agrees with the three-human majority vote.
+
+## Table A5 provenance
+
+The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report `2-2` where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 errors; no underlying response is altered.
+
+See [2024 Replication](reports/results.qmd) and `provenance/TABLE_A5_REPLICATION.md`.
 
 ## Reproducibility architecture
 
-The repository separates four layers:
+The repository separates:
 
-- **preserved 2024 evidence** in `output/`;
-- **current-model runs under the 2024 protocol** in `output/current/`;
-- **improved-protocol model runs** in `output/improved/`; and
-- **derived comparisons** in `derived/`.
+- frozen 2024 evidence in root-level `output/` files;
+- new SBS model runs in timestamped directories under `output/current/`, with completed runs explicitly marked by `run_manifest.json` and partial/failed runs retained as `run_failed.json`;
+- dedicated BEREC runs under `output/berec_replication/`;
+- archival improved-protocol materials under `output/improved/`; and
+- derived tables and figures under `derived/`.
 
-Historical step-by-step outputs remain preserved but are not part of the analytical design.
-
-## Reports
-
-[Methods](reports/methods.qmd) documents the zero-shot 3 × 2 design and both protocols. [2024 Zero-Shot Results](reports/results.qmd) reconstructs the archival 2024 evaluation. [Six-Scenario Comparison](reports/model-comparison.qmd) evaluates model and protocol effects against the same recovered human reference.
-
-For execution instructions, API-key setup, and provenance cautions, see `README.md`.
+For execution instructions and API safeguards, see `README.md`.

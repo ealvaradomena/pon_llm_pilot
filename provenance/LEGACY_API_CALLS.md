@@ -32,12 +32,13 @@ The preserved Dec. 24 output set covers IRG, EU Health Coalition, cOAlition S, C
 
 ## BEREC provenance
 
-`BO1A.txt` is BEREC's boundary object, and `output/BO1A-2024-12-23-55_cat.txt` is a preserved BEREC binary-output file from December 23, 2024.
+`output/BO1A-2024-12-23-55_cat.txt` is the preserved BEREC binary-output file from December 23, 2024. The original source-state provenance is incomplete. For all new dedicated BEREC replication experiments, the project now requires `input/boundary_objects/BO1B.txt`; those experiments do not rewrite or replace the historical artifact.
 
 However, BEREC predates the final Dec. 24 implementation. Earlier report versions around the BEREC development stage show a different message-role layout in which the boundary-object text was passed as the system message and the question prompt as the user message. The surviving materials do not establish with enough certainty which exact source-code state produced the Dec. 23 BEREC file. For that reason:
 
 - the BEREC file is retained as an authentic legacy output;
-- the current pipeline runs BEREC under the final manuscript-facing Dec. 24 protocol, alongside the other five PONs;
+- BEREC is excluded from the main five-PON SBS pipeline and is handled only through dedicated BEREC execution workflows;
+- all new dedicated BEREC experiments use `input/boundary_objects/BO1B.txt` and keep the best-evidenced historical reconstruction separate from contemporary Dec. 24 SBS protocol replication;
 - BEREC's legacy/current classification differences are reported descriptively;
 - BEREC is excluded from aggregate statistics labeled as a **strict same-protocol comparison**.
 
@@ -45,7 +46,7 @@ However, BEREC predates the final Dec. 24 implementation. Earlier report version
 
 The following were not stored with the 2024 response text and therefore cannot be reconstructed reliably:
 
-- exact resolved model snapshot behind the `gpt-4-turbo` alias at each request;
+- the returned model snapshot actually recorded by the 2024 API response (the surviving text does not store it);
 - OpenAI response ID and HTTP request ID;
 - `system_fingerprint`;
 - token usage and cost per request;
@@ -59,3 +60,8 @@ The current-model runner records these fields whenever the contemporary API retu
 ## Credential note
 
 One legacy Quarto source contained an API key directly in source code. That credential is intentionally **not** copied into this repository or this provenance note. If the historical credential has not already been revoked, it should be rotated. The reconstructed project reads credentials only from `OPENAI_API_KEY` and ignores `.env` in version control.
+
+
+## Current snapshot evidence
+
+OpenAI currently documents `gpt-4-turbo-2024-04-09` as the dated GPT-4 Turbo snapshot and lists Chat Completions support. It is marked deprecated. This makes it the best-supported dated snapshot for a controlled reconstruction, but it does not retroactively prove what serving state produced a preserved 2024 response. See `BEREC_REPLICATION.md`.
