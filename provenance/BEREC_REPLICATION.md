@@ -24,7 +24,9 @@ Reference: https://developers.openai.com/api/docs/models/gpt-4-turbo
 |---|---|---|
 | Exact replication | Same exact 2024 BEREC request protocol + same exact dated snapshot | **Not defensible from surviving evidence.** The dated snapshot is available, but the precise Dec. 23 BEREC prompt/message state is uncertain. |
 | Model-family replication | Same exact BEREC protocol + GPT-4 Turbo family, different snapshot | The protocol uncertainty remains, so this cannot become a strict replication merely by changing snapshots. |
-| Protocol replication | Recovered Dec. 24 SBS protocol + a currently available newer model | **Feasible.** This is explicitly a retrospective application of the recovered Dec. 24 SBS protocol to BEREC, not a claim about the original Dec. 23 call. |
+| Protocol replication | Recovered Dec. 24 SBS protocol + GPT-5.4 nano | **Feasible.** This is explicitly a retrospective application of the recovered Dec. 24 SBS protocol to BEREC, not a claim about the original Dec. 23 call. |
+
+: BEREC replication claim levels {#tbl-berec-replication-claims}
 
 The project therefore uses the term **best-evidenced Dec. 23 reconstruction** for the historical-snapshot experiment.
 
@@ -48,7 +50,7 @@ python scripts/06_run_berec_2024_reconstruction.py \
   --confirm-api-call BEREC
 ```
 
-### Dec. 24 SBS protocol with the newer model
+### Dec. 24 SBS protocol with GPT-5.4 nano
 
 Dry run; no API call:
 

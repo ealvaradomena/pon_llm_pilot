@@ -55,7 +55,7 @@ The following were not stored with the 2024 response text and therefore cannot b
 - request retry history;
 - local timezone associated with the timestamps in filenames.
 
-The current-model runner records these fields whenever the contemporary API returns them so that future comparisons have stronger provenance.
+The contemporary SBS runner records these fields whenever the API returns them so that subsequent comparisons have stronger provenance.
 
 ## Credential note
 

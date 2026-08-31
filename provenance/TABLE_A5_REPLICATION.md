@@ -35,7 +35,9 @@ The surviving raw human data and frozen legacy SBS outputs reconstruct 67 of 70 
 | cOAlition S | 8 | FALSE | TRUE | TRUE | TRUE | 3 TRUE / 1 FALSE | `2-2` | Table A5 does not match the raw data; manuscript prose independently describes this as a 3-1 decision with a human outlier. |
 | CEER | 6 | TRUE | FALSE | TRUE | TRUE | 3 TRUE / 1 FALSE | `2-2` | Table A5 does not match the surviving raw data. |
 
-These are recorded as **Table A5 errors**. No source response is altered to force agreement with the manuscript table.
+: Table A5 discrepancies relative to the surviving coder-level data {#tbl-table-a5-discrepancies}
+
+These are recorded as **Table A5 discrepancies relative to the surviving coder-level data**. No source response is altered to force agreement with the manuscript table.
 
 ## Reproduce the audit
 
@@ -47,6 +49,7 @@ The script makes no API calls and writes:
 
 - `derived/table_a5_replication.csv` — all 70 manuscript cells;
 - `derived/table_a5_discrepancies.csv` — the three discrepant cells; and
-- `derived/sbs_coder_comparison_extended.csv` — all 15 computational questions, including human majority, legacy LLM agreement, and the newer-model SBS response when a completed newer-model run is available.
+- `derived/sbs_coder_comparison_extended.csv` — all 15 computational questions, including human majority, legacy LLM agreement, and the original completed GPT-5.4 nano contemporary extension.
+- `derived/sbs_model_evaluation_long.csv` and companion `sbs_model_*` products — the multi-model comparison layer containing the completed GPT-5.4 nano and GPT-5.6 Luna arms alongside the frozen GPT-4 Turbo benchmark.
 
-The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. The newer model is added only as an adjacent extension and never retroactively folded into the manuscript's four-coder agreement pattern.
+The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. Contemporary models are added only as adjacent extensions and are never retroactively folded into the manuscript's four-coder agreement pattern. GPT-5.6 Luna belongs to the multi-model SBS comparison rather than the historical Table A5 reconstruction itself.

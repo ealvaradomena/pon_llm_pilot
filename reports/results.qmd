@@ -94,13 +94,165 @@ if (replication_ready) {
 }
 ```
 
-The three discrepancies are IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6. They are recorded as Table A5 errors; the source responses are not edited to make the table reproduce.
+The three discrepancies are IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6. They are retained as Table A5 discrepancies relative to the surviving coder-level data; the source responses are not edited to force agreement with the manuscript table.
 
-## Frozen SBS performance against the confirmed human reference
+### Manuscript agreement findings supported by the surviving data
+
+The manuscript highlights several agreement patterns that can be checked directly from the surviving five-PON coder-level data. The summaries below are computed from the same reconstructed 70-cell object rather than transcribed from the manuscript.
+
+```{r}
+#| label: manuscript-agreement-findings
+#| results: asis
+if (replication_ready) {
+  agreement_findings <- a5 |>
+    dplyr::mutate(
+      full_agreement = rowSums(
+        dplyr::across(
+          c(HBM, ASC, JNG, legacy_llm_sbs),
+          ~ .x == TRUE
+        )
+      ) %in% c(0L, 4L),
+      PON = dplyr::recode(
+        .data$entity_slug,
+        irg = "IRG",
+        euhc = "EUHC",
+        coas = "cOAlition S",
+        can = "CAN",
+        ceer = "CEER"
+      )
+    )
+
+  prompt_agreement <- agreement_findings |>
+    dplyr::group_by(.data$manuscript_question_id, .data$question) |>
+    dplyr::summarise(
+      full_agreement_pons = sum(.data$full_agreement),
+      total_pons = dplyr::n(),
+      .groups = "drop"
+    ) |>
+    dplyr::arrange(.data$manuscript_question_id)
+
+  pon_agreement <- agreement_findings |>
+    dplyr::group_by(.data$PON) |>
+    dplyr::summarise(
+      full_agreement_prompts = sum(.data$full_agreement),
+      total_prompts = dplyr::n(),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      proportion = sprintf(
+        "%s/%s (%.1f%%)",
+        .data$full_agreement_prompts,
+        .data$total_prompts,
+        100 * .data$full_agreement_prompts / .data$total_prompts
+      ),
+      PON = factor(
+        .data$PON,
+        levels = c("IRG", "cOAlition S", "EUHC", "CEER", "CAN")
+      )
+    ) |>
+    dplyr::arrange(.data$PON)
+
+  unanimous_prompts <- prompt_agreement |>
+    dplyr::filter(.data$full_agreement_pons == .data$total_pons) |>
+    dplyr::pull(.data$manuscript_question_id)
+
+  if (!identical(as.integer(unanimous_prompts), c(1L, 7L, 9L, 11L, 12L))) {
+    stop("Unexpected set of fully agreeing manuscript prompts")
+  }
+
+  q5_agreement <- prompt_agreement |>
+    dplyr::filter(.data$manuscript_question_id == 5L) |>
+    dplyr::pull(.data$full_agreement_pons)
+
+  if (!identical(as.integer(q5_agreement), 0L)) {
+    stop("Unexpected prompt 5 full-agreement count")
+  }
+
+  cat(
+    "Across the **five PONs represented in the surviving Table A5 data**, prompts **1, 7, 9, 11, and 12** show full four-coder agreement for all **5/5 PONs**. Prompt **5** is the opposite extreme: **0/5 PONs** show full four-coder agreement.\n\n"
+  )
+}
+```
+
+```{r}
+#| label: tbl-prompt-agreement-counts
+#| tbl-cap: "Number of PONs with full four-coder agreement for each manuscript prompt"
+if (replication_ready) {
+  prompt_agreement |>
+    dplyr::transmute(
+      Prompt = .data$manuscript_question_id,
+      Question = .data$question,
+      `Full agreement` = sprintf(
+        "%s/%s",
+        .data$full_agreement_pons,
+        .data$total_pons
+      )
+    ) |>
+    knitr::kable(align = c("r", "l", "r"))
+}
+```
+
+```{r}
+#| label: tbl-pon-agreement-counts
+#| tbl-cap: "Number of manuscript prompts with full four-coder agreement by PON"
+if (replication_ready) {
+  pon_agreement |>
+    dplyr::transmute(
+      PON = as.character(.data$PON),
+      `Full-agreement prompts` = .data$proportion
+    ) |>
+    knitr::kable(align = c("l", "r"))
+}
+```
+
+EUHC and CEER have the highest full-agreement counts at **11/14 prompts (78.6%)** each, followed by IRG at **10/14 (71.4%)**, cOAlition S at **8/14 (57.1%)**, and CAN at **7/14 (50.0%)**. These are descriptive agreement summaries of the surviving five-PON historical comparison; they are not model-accuracy estimates.
+
+### Full 70-cell reconstruction
+
+The table below reports all 70 manuscript-facing cells reconstructed from the surviving individual human codings and frozen SBS responses. The **Table A5** column preserves the manuscript transcription; **Match** indicates whether that cell is reproduced by the surviving source data.
+
+```{r}
+#| label: tbl-a5-full-reconstruction
+#| tbl-cap: "Full reconstruction of the 70 manuscript Table A5 cells"
+if (replication_ready) {
+  a5 |>
+    dplyr::mutate(
+      PON = dplyr::recode(
+        .data$entity_slug,
+        irg = "IRG",
+        euhc = "EUHC",
+        coas = "cOAlition S",
+        can = "CAN",
+        ceer = "CEER"
+      ),
+      Match = dplyr::if_else(.data$table_a5_match, "Match", "Mismatch")
+    ) |>
+    dplyr::arrange(
+      factor(.data$PON, levels = c("IRG", "EUHC", "cOAlition S", "CAN", "CEER")),
+      .data$manuscript_question_id
+    ) |>
+    dplyr::select(
+      .data$PON,
+      Prompt = .data$manuscript_question_id,
+      .data$HBM,
+      .data$ASC,
+      .data$JNG,
+      `Legacy LLM SBS` = .data$legacy_llm_sbs,
+      `Surviving pattern` = .data$historical_four_coder_pattern,
+      `Table A5` = .data$manuscript_agreement,
+      .data$Match
+    ) |>
+    knitr::kable(
+      align = c("l", "r", "l", "l", "l", "l", "l", "l", "l")
+    )
+}
+```
+
+## Frozen SBS agreement with the confirmed human reference
 
 ```{r}
 #| label: tbl-legacy-metrics
-#| tbl-cap: "Frozen 2024 GPT-4 Turbo SBS performance by PON over the 15-question computational instrument"
+#| tbl-cap: "Frozen 2024 GPT-4 Turbo SBS agreement with the confirmed human reference by PON"
 if (metrics_ready) {
   legacy_metrics |>
     dplyr::select(
@@ -128,7 +280,7 @@ if (metrics_ready) {
       col.names = c(
         "PON",
         "N",
-        "Accuracy",
+        "Agreement",
         "Disagreement",
         "Precision",
         "Recall",
@@ -140,4 +292,4 @@ if (metrics_ready) {
 }
 ```
 
-This evaluation uses all 15 computational questions. The 14-question subset is used only where the project explicitly reconstructs manuscript Table A5.
+This evaluation uses all 15 computational questions. The 14-question subset is used only where the project explicitly reconstructs manuscript Table A5. Precision, recall, specificity, and F1 treat the three-human majority classification as the reference label; they are descriptive reference-based diagnostics rather than claims of external ground-truth accuracy.

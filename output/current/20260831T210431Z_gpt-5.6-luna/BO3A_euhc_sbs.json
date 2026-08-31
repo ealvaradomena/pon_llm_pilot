@@ -1,0 +1,59 @@
+{
+  "protocol": "2024-sbs",
+  "endpoint": "chat.completions",
+  "requested_model": "gpt-5.6-luna",
+  "returned_model": "gpt-5.6-luna",
+  "completion_id": "chatcmpl-EJ3TNGRFPFuscJtfU6gTg2mkNmKmB",
+  "completion_created": 1788210289,
+  "system_fingerprint": null,
+  "finish_reason": "stop",
+  "entity": "EU Health Coalition",
+  "entity_slug": "euhc",
+  "boundary_object": "BO3A.txt",
+  "boundary_object_sha256": "0cd209622b3e7c4d237528cb4806cdfeb957754158e923ed7af69b85a1f839d7",
+  "technique": "Step-by-step (SBS)",
+  "technique_code": "sbs",
+  "question_count": 15,
+  "system_prompt_sha256": "4550a083b08c6254d80b922e44225c0dea944066df849d5bdba5cc3af3b8541f",
+  "system_prompt": "You are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.Let's think step by stepThe questions are: Are the procedures for decision-making in the PON specified? Are voting rules (such as simple majority) explicitly established? Are decisions made by simple majority voting by member organizations? Are decisions made by consensus or unanimity by member organizations? If the PON has both a plenary assembly and an executive board, do they have different decision-making rules (as in simple majority, qualified majority or unanimity/consensus)? Are there expert committees in the PON? Does the PON have any unit or body in charge of the operations/ day-to-day functioning/ running /execution? Does the organization have a plenary assembly where all members participate and which makes the constitutional decisions? Does the organization have an executive board where a subset of members participate and which make strategic decisions? Does the PON have working groups where member organizations can participate in? Does accession into the PON depend on a decision by the incumbent member organizations? Does the PON clearly specify which types of organisations can become members? Do potential member organizations have to fullful certain conditions to become members? Is there a process for membership suspension from the PON? Are there members which have no voting power, such as observer members?",
+  "user_message_sha256": "6a94cc1d17d8e1d6a559d227e57d2b9d6ddd7e4be039675cd69df2f81f3a9f31",
+  "request_parameters_explicitly_supplied": [
+    "model",
+    "messages"
+  ],
+  "output_token_limit": null,
+  "request_parameters_intentionally_unspecified": [
+    "temperature",
+    "max_tokens",
+    "max_completion_tokens",
+    "top_p",
+    "seed",
+    "response_format",
+    "tools"
+  ],
+  "request_timestamp_utc": "2026-08-31T21:04:54.908227+00:00",
+  "response_headers": {
+    "x-request-id": "req_2370e50877df4ecfbe8a2ce2972ae837",
+    "openai-processing-ms": "5353",
+    "openai-version": "2020-10-01",
+    "date": "Mon, 31 Aug 2026 21:04:55 GMT"
+  },
+  "usage": {
+    "completion_tokens": 582,
+    "prompt_tokens": 3050,
+    "total_tokens": 3632,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": 0,
+      "audio_tokens": 0,
+      "reasoning_tokens": 286,
+      "rejected_prediction_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 3047,
+      "cached_tokens": 0
+    }
+  },
+  "raw_output_file": "BO3A_euhc_sbs.txt",
+  "raw_output_sha256": "7cfe95fb4cab5dc249f275ae93d32d76f8fa95698031e439a01a2606ee0fa228"
+}

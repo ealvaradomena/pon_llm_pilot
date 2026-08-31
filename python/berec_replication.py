@@ -91,9 +91,11 @@ def run_dec23_best_evidenced(config_path: Path) -> Path:
     entity, bo_path = berec_paths(cfg)
     model = str(cfg["comparison"]["legacy_model"])
 
-    # Best-evidenced early layout: BEREC text as system message, question prompt as user.
+    # Reconstruct the best-evidenced early message-role layout
     question_prompt = build_system_prompt(
-        cfg["legacy_protocol"]["starter"], questions, ""
+        cfg["legacy_protocol"]["starter"],
+        questions,
+        "",
     )
     boundary_text = bo_path.read_text(encoding="utf-8")
     run_dir = create_isolated_run_dir(cfg, "dec23_reconstructed", model)
@@ -130,8 +132,13 @@ def run_dec23_best_evidenced(config_path: Path) -> Path:
             "question_count": len(questions),
             "request_parameters_explicitly_supplied": ["model", "messages"],
             "request_parameters_intentionally_unspecified": [
-                "temperature", "max_tokens", "max_completion_tokens", "top_p",
-                "seed", "response_format", "tools"
+                "temperature",
+                "max_tokens",
+                "max_completion_tokens",
+                "top_p",
+                "seed",
+                "response_format",
+                "tools",
             ],
             "request_timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "response_headers": _response_headers(raw_response),
@@ -157,23 +164,27 @@ def run_dec23_best_evidenced(config_path: Path) -> Path:
         raise
 
 
-# 3. Run the December 24 SBS Protocol with the Newer Model ----
+# 3. Run the December 24 SBS Protocol with GPT-5.4 Nano ----
 
 def run_dec24_sbs_current(config_path: Path) -> Path:
-    """Apply the recovered Dec. 24 SBS protocol to BO1B with the newer model."""
+    """Apply the recovered Dec. 24 SBS protocol to BO1B with configured GPT-5.4 nano."""
     from python.llm_extract import run_one
 
     cfg = load_config(config_path)
     questions = load_questions(Path(cfg["project"]["questions_file"]))
     entity, bo_path = berec_paths(cfg)
     model = str(cfg["comparison"]["current_model"])
-    # forbidden = {str(cfg["legacy_protocol"]["model_alias"]), str(cfg["comparison"]["legacy_model"])}
-    # if model in forbidden:
-    #     raise RuntimeError("Current BEREC SBS runner refuses legacy GPT-4 Turbo model IDs.")
-    forbidden = {str(cfg["legacy_protocol"]["model_alias"]),str(cfg["comparison"]["legacy_model"]),}
+
+    # Prevent the BEREC contemporary runner from crossing into the historical model family
+    forbidden = {
+        str(cfg["legacy_protocol"]["model_alias"]),
+        str(cfg["comparison"]["legacy_model"]),
+    }
 
     if model in forbidden or model.lower().startswith("gpt-4-turbo"):
-        raise RuntimeError("Current BEREC SBS runner refuses legacy GPT-4 Turbo model IDs.")
+        raise RuntimeError(
+            "Current BEREC SBS runner refuses legacy GPT-4 Turbo model IDs."
+        )
 
     prompt = build_system_prompt(
         cfg["legacy_protocol"]["starter"],
@@ -198,7 +209,10 @@ def run_dec24_sbs_current(config_path: Path) -> Path:
         )
         manifest = {
             "status": "complete",
-            "replication_claim": "protocol replication: recovered Dec. 24 SBS protocol applied to BEREC BO1B",
+            "replication_claim": (
+                "protocol replication: recovered Dec. 24 SBS protocol applied to "
+                "BEREC BO1B"
+            ),
             "requested_model": model,
             "protocol": "berec-dec24-sbs-current",
             "created_utc": datetime.now(timezone.utc).isoformat(),

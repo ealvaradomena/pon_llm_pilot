@@ -7,6 +7,7 @@ project:
     - reports/methods.qmd
     - reports/results.qmd
     - reports/model-comparison.qmd
+    - reports/comparison-table.qmd
     - reports/berec.qmd
     - provenance/BEREC_REPLICATION.md
     - provenance/LEGACY_API_CALLS.md
@@ -28,6 +29,8 @@ website:
         text: 2024 Replication
       - href: reports/model-comparison.qmd
         text: SBS Model Comparison
+      - href: reports/comparison-table.qmd
+        text: Comparison Table
       - href: reports/berec.qmd
         text: BEREC
     right:

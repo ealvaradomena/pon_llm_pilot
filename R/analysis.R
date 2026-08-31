@@ -18,6 +18,7 @@
 # - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-r-scripts.md
 #
 # ////////////////////////////////////////////////////
+
 # ////////////////////////////////////////////////////
 #
 #
@@ -169,8 +170,8 @@ compute_metrics <- function(data) {
 
   f1 <- if (
     is.na(precision) ||
-      is.na(recall) ||
-      (precision + recall) == 0
+    is.na(recall) ||
+    (precision + recall) == 0
   ) {
     NA_real_
   } else {
@@ -193,25 +194,52 @@ compute_metrics <- function(data) {
 }
 
 evaluate_output <- function(path, entity_slug, technique, questions, human) {
+  # Parse one complete LLM response against the canonical instrument
   parsed <- parse_llm_output(
     path = path,
     questions = questions,
     response_name = "llm_response"
   )
 
+  # Restrict the human reference to the requested PON
   reference <- human |>
-    dplyr::filter(.data$entity_slug == entity_slug) |>
+    dplyr::filter(.data$entity_slug == .env$entity_slug) |>
     dplyr::transmute(
       question_id = .data$question_id,
       human_response = toupper(as.character(.data$human_response))
     )
 
+  # Require exactly one human reference per question
+  if (nrow(reference) != nrow(questions)) {
+    stop(
+      sprintf(
+        "Expected %s human-reference rows for %s; found %s",
+        nrow(questions),
+        entity_slug,
+        nrow(reference)
+      )
+    )
+  }
+
+  if (anyDuplicated(reference$question_id)) {
+    stop(
+      sprintf(
+        "Duplicate human-reference question IDs found for %s",
+        entity_slug
+      )
+    )
+  }
+
+  # Evaluate each LLM classification against its PON-specific reference
   parsed |>
     dplyr::left_join(reference, by = "question_id") |>
     dplyr::mutate(
-      entity_slug = entity_slug,
-      technique = technique,
-      eval = classify_agreement(.data$llm_response, .data$human_response),
+      entity_slug = .env$entity_slug,
+      technique = .env$technique,
+      eval = classify_agreement(
+        .data$llm_response,
+        .data$human_response
+      ),
       agreement = .data$llm_response == .data$human_response,
       source_file = basename(path)
     )
@@ -226,11 +254,11 @@ evaluate_output <- function(path, entity_slug, technique, questions, human) {
 # ////////////////////////////////////////////////////
 
 compare_model_outputs <- function(
-  legacy_path,
-  current_path,
-  entity_slug,
-  protocol,
-  questions
+    legacy_path,
+    current_path,
+    entity_slug,
+    protocol,
+    questions
 ) {
   legacy <- parse_llm_output(
     path = legacy_path,
@@ -251,13 +279,15 @@ compare_model_outputs <- function(
       by = "question_id"
     ) |>
     dplyr::mutate(
-      entity_slug = entity_slug,
-      protocol = protocol,
+      entity_slug = .env$entity_slug,
+      protocol = .env$protocol,
       agreement = .data$legacy_response == .data$current_response,
       flip = dplyr::case_when(
         .data$agreement ~ "No change",
-        .data$legacy_response == "FALSE" & .data$current_response == "TRUE" ~ "FALSE → TRUE",
-        .data$legacy_response == "TRUE" & .data$current_response == "FALSE" ~ "TRUE → FALSE",
+        .data$legacy_response == "FALSE" &
+          .data$current_response == "TRUE" ~ "FALSE → TRUE",
+        .data$legacy_response == "TRUE" &
+          .data$current_response == "FALSE" ~ "TRUE → FALSE",
         TRUE ~ NA_character_
       )
     )
@@ -288,6 +318,7 @@ model_palette <- function() {
   c(
     "GPT-4 Turbo" = "#3B5B92",
     "GPT-5.4 nano" = "#C05A47",
+    "GPT-5.6 Luna" = "#7A5AA6",
     "GPT-5.4 mini" = "#2A7F62"
   )
 }

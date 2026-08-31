@@ -1,0 +1,78 @@
+{
+  "status": "complete",
+  "protocol": "2024-sbs",
+  "protocol_version": "reconstructed-dec24-2024-sbs",
+  "requested_model": "gpt-5.6-luna",
+  "model_provenance": {
+    "identifier_type": "undated_model_id",
+    "snapshot_status": "no_dated_snapshot_exposed",
+    "openai_docs_checked_date": "2026-08-31",
+    "openai_model_docs": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+    "provenance_note": "OpenAI's GPT-5.6 Luna model page was checked on 2026-08-31. Its Snapshots section listed gpt-5.6-luna but no dated snapshot identifier. Preserve the request timestamp plus requested and returned model IDs for every run; do not describe gpt-5.6-luna as a dated or immutable snapshot."
+  },
+  "run_id": "20260831T210431Z_gpt-5.6-luna",
+  "started_utc": "2026-08-31T21:04:48.953689+00:00",
+  "completed_utc": "2026-08-31T21:05:17.586194+00:00",
+  "created_utc": "2026-08-31T21:04:48.953689+00:00",
+  "finalized_utc": "2026-08-31T21:09:25.662530+00:00",
+  "manifest_recovered_locally": true,
+  "recovery_reason": "API requests and per-PON artifacts completed, but initial manifest serialization failed because a YAML date value was not JSON serializable. Manifest finalized locally after validating all five metadata/raw-output pairs; no API calls were made.",
+  "config_file": "C:\\Users\\ealva\\Documents\\GitHub\\pon_llm_pilot\\config\\config.yml",
+  "question_count": 15,
+  "input_pons": [
+    "irg",
+    "euhc",
+    "coas",
+    "can",
+    "ceer"
+  ],
+  "completed_pons": [
+    "irg",
+    "euhc",
+    "coas",
+    "can",
+    "ceer"
+  ],
+  "returned_model_ids": [
+    "gpt-5.6-luna"
+  ],
+  "generated": [
+    {
+      "entity_slug": "irg",
+      "raw_output": "BO2A_irg_sbs.txt",
+      "metadata": "BO2A_irg_sbs.json"
+    },
+    {
+      "entity_slug": "euhc",
+      "raw_output": "BO3A_euhc_sbs.txt",
+      "metadata": "BO3A_euhc_sbs.json"
+    },
+    {
+      "entity_slug": "coas",
+      "raw_output": "BO4A_coas_sbs.txt",
+      "metadata": "BO4A_coas_sbs.json"
+    },
+    {
+      "entity_slug": "can",
+      "raw_output": "BO5A_can_sbs.txt",
+      "metadata": "BO5A_can_sbs.json"
+    },
+    {
+      "entity_slug": "ceer",
+      "raw_output": "BO6A_ceer_sbs.txt",
+      "metadata": "BO6A_ceer_sbs.json"
+    }
+  ],
+  "output_files": [
+    "BO2A_irg_sbs.txt",
+    "BO2A_irg_sbs.json",
+    "BO3A_euhc_sbs.txt",
+    "BO3A_euhc_sbs.json",
+    "BO4A_coas_sbs.txt",
+    "BO4A_coas_sbs.json",
+    "BO5A_can_sbs.txt",
+    "BO5A_can_sbs.json",
+    "BO6A_ceer_sbs.txt",
+    "BO6A_ceer_sbs.json"
+  ]
+}

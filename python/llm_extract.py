@@ -4,7 +4,7 @@
 #
 # Purpose
 # - Build reconstructed extraction prompts and execute model runs
-# - Preserve historical outputs while saving new model responses and metadata to isolated run directories
+# - Preserve historical outputs while saving new responses and metadata to isolated run directories
 #
 # Requirements
 # - Project configuration in config/config.yml
@@ -32,7 +32,7 @@ import json
 import os
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -346,14 +346,55 @@ def _selected_entities(cfg: dict, entity_slugs: set[str] | None) -> list[Entity]
     return entities
 
 
+def _json_safe(value: Any) -> Any:
+    """Normalize YAML-native date/datetime values before JSON serialization."""
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    if isinstance(value, dict):
+        return {key: _json_safe(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_json_safe(item) for item in value]
+    return value
+
+
+def _comparison_model_provenance(cfg: dict, model: str) -> dict:
+    """Return JSON-safe configured provenance metadata for one comparison model."""
+    for item in cfg.get("comparison", {}).get("comparison_models", []):
+        if str(item.get("model_id")) == model:
+            return _json_safe({
+                key: value
+                for key, value in item.items()
+                if key not in {"label", "model_id"}
+            })
+    return {}
+
+
+def _returned_model_ids(run_dir: Path, generated: list[dict[str, str]]) -> list[str]:
+    """Collect unique API-returned model identifiers from completed sidecars."""
+    returned: set[str] = set()
+    for row in generated:
+        metadata_path = run_dir / row["metadata"]
+        if not metadata_path.exists():
+            continue
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        model_id = metadata.get("returned_model")
+        if model_id:
+            returned.add(str(model_id))
+    return sorted(returned)
+
+
 def run_pipeline(
     config_path: str | Path = "config/config.yml",
     model: str | None = None,
     entity_slugs: set[str] | None = None,
 ) -> Path:
-    """Run the manuscript-facing 2024 SBS prompt with one selected newer model."""
+    """Run the manuscript-facing 2024 SBS prompt with one selected contemporary model."""
     cfg = load_config(config_path)
     selected_model = resolve_model(cfg, model)
+    model_provenance = _comparison_model_provenance(cfg, selected_model)
     questions = load_questions(cfg["project"]["questions_file"])
     legacy_forbidden = {
         str(cfg["legacy_protocol"]["model_alias"]),
@@ -427,6 +468,7 @@ def run_pipeline(
             "protocol": "2024-sbs",
             "protocol_version": "reconstructed-dec24-2024-sbs",
             "requested_model": selected_model,
+            "model_provenance": model_provenance,
             "run_id": run_id,
             "started_utc": started_utc,
             "failed_utc": datetime.now(timezone.utc).isoformat(),
@@ -434,6 +476,7 @@ def run_pipeline(
             "question_count": len(questions),
             "input_pons": [entity.slug for entity in selected_entities],
             "completed_pons": [row["entity_slug"] for row in generated],
+            "returned_model_ids": _returned_model_ids(run_dir, generated),
             "processing_pon": processing_pon,
             "generated": generated,
             "output_files": output_files,
@@ -456,6 +499,7 @@ def run_pipeline(
         "protocol": "2024-sbs",
         "protocol_version": "reconstructed-dec24-2024-sbs",
         "requested_model": selected_model,
+        "model_provenance": model_provenance,
         "run_id": run_id,
         "started_utc": started_utc,
         "completed_utc": datetime.now(timezone.utc).isoformat(),
@@ -464,6 +508,7 @@ def run_pipeline(
         "question_count": len(questions),
         "input_pons": [entity.slug for entity in selected_entities],
         "completed_pons": [row["entity_slug"] for row in generated],
+        "returned_model_ids": _returned_model_ids(run_dir, generated),
         "generated": generated,
         "output_files": output_files,
     }
@@ -473,6 +518,136 @@ def run_pipeline(
     )
     return run_dir
 
+
+
+def finalize_existing_run(
+    run_dir: str | Path,
+    config_path: str | Path = "config/config.yml",
+) -> Path:
+    """Finalize a completed current-model run locally without making API calls.
+
+    This recovery path is intentionally limited to a run directory that already
+    contains one raw-output/metadata pair for every configured study entity.
+    It exists so a manifest-writing failure cannot force duplicate API requests.
+    """
+    cfg = load_config(config_path)
+    run_dir = Path(run_dir)
+    configured_root = Path(cfg["project"]["current_output_dir"]).resolve()
+    resolved_run_dir = run_dir.resolve()
+    if configured_root not in resolved_run_dir.parents:
+        raise RuntimeError(
+            f"Refusing to finalize a directory outside {configured_root}: {resolved_run_dir}"
+        )
+    if not run_dir.is_dir():
+        raise FileNotFoundError(run_dir)
+    if (run_dir / "run_manifest.json").exists():
+        raise RuntimeError(f"Run already has run_manifest.json: {run_dir}")
+
+    metadata_paths = sorted(
+        path for path in run_dir.glob("*.json")
+        if path.name not in {"run_manifest.json", "run_failed.json"}
+    )
+    metadata_rows = [
+        json.loads(path.read_text(encoding="utf-8"))
+        for path in metadata_paths
+    ]
+    expected_entities = list(cfg["comparison"]["study_entities"])
+    if len(metadata_rows) != len(expected_entities):
+        raise RuntimeError(
+            f"Expected {len(expected_entities)} metadata sidecars; found {len(metadata_rows)}. "
+            "Do not finalize an incomplete run."
+        )
+
+    entity_slugs = [str(row.get("entity_slug")) for row in metadata_rows]
+    if set(entity_slugs) != set(expected_entities) or len(entity_slugs) != len(set(entity_slugs)):
+        raise RuntimeError(
+            "Metadata sidecars do not contain exactly one row for each configured study PON."
+        )
+
+    requested_models = {str(row.get("requested_model")) for row in metadata_rows}
+    if len(requested_models) != 1:
+        raise RuntimeError(f"Expected one requested model; found: {sorted(requested_models)}")
+    selected_model = next(iter(requested_models))
+    if selected_model.lower().startswith("gpt-4-turbo"):
+        raise RuntimeError(
+            "Refusing to finalize a legacy GPT-4 Turbo run in the current-model workflow."
+        )
+
+    expected_question_count = len(load_questions(cfg["project"]["questions_file"]))
+    for row in metadata_rows:
+        if int(row.get("question_count", -1)) != expected_question_count:
+            raise RuntimeError(
+                "Unexpected question count in "
+                f"{row.get('entity_slug')}: {row.get('question_count')}"
+            )
+        raw_name = row.get("raw_output_file")
+        if not raw_name or not (run_dir / str(raw_name)).is_file():
+            raise RuntimeError(f"Missing raw output for {row.get('entity_slug')}: {raw_name}")
+        if sha256_file(run_dir / str(raw_name)) != row.get("raw_output_sha256"):
+            raise RuntimeError(f"Raw-output hash mismatch for {row.get('entity_slug')}")
+
+    prompt_hashes = {str(row.get("system_prompt_sha256")) for row in metadata_rows}
+    if len(prompt_hashes) != 1:
+        raise RuntimeError("Metadata sidecars do not share one system-prompt hash.")
+
+    generated = [
+        {
+            "entity_slug": str(row["entity_slug"]),
+            "raw_output": str(row["raw_output_file"]),
+            "metadata": path.name,
+        }
+        for path, row in zip(metadata_paths, metadata_rows)
+    ]
+    generated.sort(key=lambda row: expected_entities.index(row["entity_slug"]))
+
+    timestamps = sorted(
+        str(row["request_timestamp_utc"])
+        for row in metadata_rows
+        if row.get("request_timestamp_utc")
+    )
+    finalized_utc = datetime.now(timezone.utc).isoformat()
+    started_utc = timestamps[0] if timestamps else None
+    completed_utc = timestamps[-1] if timestamps else None
+    output_files = [
+        filename
+        for row in generated
+        for filename in (row["raw_output"], row["metadata"])
+    ]
+    manifest = {
+        "status": "complete",
+        "protocol": "2024-sbs",
+        "protocol_version": "reconstructed-dec24-2024-sbs",
+        "requested_model": selected_model,
+        "model_provenance": _comparison_model_provenance(cfg, selected_model),
+        "run_id": run_dir.name,
+        "started_utc": started_utc,
+        "completed_utc": completed_utc,
+        "created_utc": started_utc,
+        "finalized_utc": finalized_utc,
+        "manifest_recovered_locally": True,
+        "recovery_reason": (
+            "API requests and per-PON artifacts completed, but initial manifest serialization "
+            "failed because a YAML date value was not JSON serializable. Manifest finalized "
+            "locally after validating all five metadata/raw-output pairs; no API calls were made."
+        ),
+        "config_file": str(config_path),
+        "question_count": expected_question_count,
+        "input_pons": expected_entities,
+        "completed_pons": [row["entity_slug"] for row in generated],
+        "returned_model_ids": _returned_model_ids(run_dir, generated),
+        "generated": generated,
+        "output_files": output_files,
+    }
+    (run_dir / "run_manifest.json").write_text(
+        json.dumps(manifest, indent=2),
+        encoding="utf-8",
+    )
+    print("API calls: NONE")
+    print(f"Validated existing artifacts: {len(generated)} PONs")
+    print(f"Requested model: {selected_model}")
+    print(f"Returned model IDs: {', '.join(manifest['returned_model_ids']) or '(none recorded)'}")
+    print(f"Finalized manifest: {run_dir / 'run_manifest.json'}")
+    return run_dir
 
 
 # 7. Preserve the Archival Improved-Protocol Workflow ----

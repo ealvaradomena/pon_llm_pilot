@@ -25,7 +25,10 @@ The principal comparison is:
 | Model | Protocol | Source |
 |---|---|---|
 | GPT-4 Turbo | Reconstructed Dec. 24, 2024 SBS | Frozen legacy output |
-| GPT-5.4 nano (`gpt-5.4-nano-2026-03-17`) | Same reconstructed SBS protocol | New API run |
+| GPT-5.4 nano (`gpt-5.4-nano-2026-03-17`) | Same reconstructed SBS protocol | Completed timestamped API run |
+| GPT-5.6 Luna (`gpt-5.6-luna`) | Same reconstructed SBS protocol | Completed timestamped API run |
+
+: Principal SBS model-generation comparison {#tbl-principal-model-comparison}
 
 Plain-zero-shot and `improved-v1` artifacts remain preserved but are not part of the principal design. The archival `improved-v1` runner is dry-run by default, runs the current-model arm independently unless another arm is explicitly selected, and requires a separate `ARCHIVAL-GPT4` confirmation token before any GPT-4 Turbo API call. Such archival reruns write only to new run-specific directories and never replace frozen 2024 outputs.
 
@@ -83,22 +86,24 @@ The computational instrument contains 15 questions. Manuscript Table A5 contains
 
 The authoritative human file is `input/reference/legacy_human_responses_confirmed.csv`. The individual coders are displayed as **HBM**, **ASC**, and **JNG**.
 
-For each question/PON combination the pipeline records:
+For each question/PON combination, the pipeline records:
 
-- each human response;
-- the human majority vote;
-- whether the frozen legacy LLM agrees with that majority; and
-- after the new run, whether the newer LLM agrees with that majority.
+- each individual human response;
+- the three-human majority vote, used as the confirmed human reference;
+- whether the human coders are unanimous; and
+- each model classification and whether it agrees with that human majority.
 
 Historical four-coder agreement is expressed with explicit counts such as `3 TRUE / 1 FALSE` rather than the manuscript's shorthand. The original `1`, `0`, `3-1`, `2-2`, and `3-1*` values are retained only as manuscript-reference fields.
 
 ## Frozen historical benchmark
 
-The five `*_sbs.txt` files from Dec. 24, 2024 are treated as immutable research artifacts. The principal runner refuses `gpt-4-turbo` and `gpt-4-turbo-2024-04-09`, preventing accidental regeneration through the newer-model workflow.
+The five `*_sbs.txt` files from Dec. 24, 2024 are treated as immutable research artifacts. The principal runner refuses `gpt-4-turbo` and `gpt-4-turbo-2024-04-09`, preventing accidental regeneration through the contemporary-model workflow.
 
-## New-model run
+## Contemporary-model runs
 
-The new arm uses the pinned snapshot `gpt-5.4-nano-2026-03-17`. It sends five requests—one per strict-comparison PON—and writes only to a new timestamped directory under `output/current/`. Each response receives a JSON metadata sidecar. A fully successful run receives `run_manifest.json` with `status: complete`; if execution fails after the run directory is created, partial outputs are retained and `run_failed.json` records the failure. Downstream comparison scripts accept only runs whose completion manifest explicitly reports `status == "complete"`.
+The principal comparison registers two contemporary arms: the pinned GPT-5.4 nano snapshot `gpt-5.4-nano-2026-03-17` and GPT-5.6 Luna using the currently exposed API model ID `gpt-5.6-luna`. Each arm was executed independently with `scripts/03_run_current_model.py`, using five requests—one per strict-comparison PON—and writing only to its own timestamped directory under `output/current/`. Completed runs are discovered and reused, so the current comparison does **not** rerun GPT-5.4 nano, GPT-5.6 Luna, or any historical output.
+
+Each response receives a JSON metadata sidecar. A fully successful run receives `run_manifest.json` with `status: complete`; if execution fails after the run directory is created, partial outputs are retained and `run_failed.json` records the failure. Downstream comparison scripts accept only runs whose completion manifest explicitly reports `status == "complete"` and require one completed run for every model registered in `comparison.comparison_models`. OpenAI's GPT-5.6 Luna model page was checked on **2026-08-31**: its **Snapshots** section listed `gpt-5.6-luna` but no dated snapshot identifier. The project therefore treats `gpt-5.6-luna` as an **undated model ID**, records the documentation URL and check date in configuration, and preserves the UTC execution time plus requested and API-returned model IDs in response metadata and the run manifest. It is not described as a dated or immutable snapshot.
 
 ## BEREC replication boundary
 
@@ -106,6 +111,6 @@ The original BEREC Dec. 23 request state is not recoverable with enough certaint
 
 - exact replication: not defensible from surviving request provenance;
 - model-family replication: still limited by protocol uncertainty; and
-- protocol replication: feasible by applying the recovered Dec. 24 SBS protocol to BEREC with a newer model.
+- protocol replication: feasible as a retrospective application of the recovered Dec. 24 SBS protocol to BEREC with GPT-5.4 nano.
 
 The best-supported dated GPT-4 Turbo snapshot is `gpt-4-turbo-2024-04-09`. Dedicated BEREC scripts use `BO1B.txt`, default to dry-run, require both `--execute` and `--confirm-api-call BEREC`, plan one API request, and write only under `output/berec_replication/`.

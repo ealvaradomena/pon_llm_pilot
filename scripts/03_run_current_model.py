@@ -3,7 +3,7 @@
 # PON LLM Pilot - Current-Model SBS Runner
 #
 # Purpose
-# - Dry-run or execute the reconstructed December 2024 SBS protocol with a newer model
+# - Dry-run or execute the reconstructed December 2024 SBS protocol with a contemporary model
 # - Refuse legacy GPT-4 Turbo identifiers and keep BEREC outside the principal workflow
 #
 # Requirements
@@ -16,7 +16,7 @@
 # - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-python-scripts.md
 #
 # ////////////////////////////////////////////////////
-"""Run a newer model under the reconstructed 2024 SBS PON protocol.
+"""Run a contemporary model under the reconstructed 2024 SBS PON protocol.
 
 Safety defaults:
 - dry-run unless --execute is supplied;
@@ -41,6 +41,7 @@ from python.llm_extract import (
     load_questions,
     resolve_model,
     run_pipeline,
+    finalize_existing_run,
 )
 
 
@@ -62,6 +63,14 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Actually call the API. Without this flag, print a dry-run summary only.",
     )
+    parser.add_argument(
+        "--finalize-existing-run",
+        type=Path,
+        help=(
+            "Finalize an already-completed output/current run locally after validating its "
+            "existing raw outputs and metadata. Makes no API calls."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -70,6 +79,16 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     cfg = load_config(ROOT / "config/config.yml")
+
+    if args.finalize_existing_run is not None:
+        if args.execute:
+            raise SystemExit("Do not combine --finalize-existing-run with --execute.")
+        finalize_existing_run(
+            run_dir=args.finalize_existing_run,
+            config_path=ROOT / "config/config.yml",
+        )
+        return
+
     model = resolve_model(cfg, args.model)
     questions = load_questions(ROOT / cfg["project"]["questions_file"])
 
@@ -103,6 +122,25 @@ def main() -> None:
     prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
 
     print(f"Model: {model}")
+    model_entry = next(
+        (
+            item
+            for item in cfg["comparison"].get("comparison_models", [])
+            if str(item.get("model_id")) == model
+        ),
+        None,
+    )
+    if model_entry:
+        identifier_type = model_entry.get("identifier_type")
+        snapshot_status = model_entry.get("snapshot_status")
+        if identifier_type:
+            print(f"Model identifier type: {identifier_type}")
+        if snapshot_status:
+            print(f"Snapshot status: {snapshot_status}")
+        if model_entry.get("openai_docs_checked_date"):
+            print(f"OpenAI model docs checked: {model_entry['openai_docs_checked_date']}")
+        if model_entry.get("openai_model_docs"):
+            print(f"OpenAI model docs: {model_entry['openai_model_docs']}")
     print("Protocol: reconstructed Dec. 24, 2024 step-by-step (SBS) Chat Completions prompt")
     print(f"Technique code: {cfg['legacy_protocol']['techniques']['step_by_step']['code']}")
     print(f"PONs: {', '.join(selected_entities)}")
@@ -121,6 +159,7 @@ def main() -> None:
         model=model,
         entity_slugs=set(selected_entities),
     )
+    # FINAL OUTPUT LINE
     print(f"Saved current-model SBS run to: {run_dir}")
 
 

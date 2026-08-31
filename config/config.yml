@@ -44,7 +44,7 @@ improved_protocol:
 
 comparison:
   # BEREC remains in the archival entity registry below but is excluded from
-  # the comparative experiment and all future default study runs.
+  # the principal five-PON comparison and the default current-model runner.
   study_entities:
     - irg
     - euhc
@@ -54,7 +54,26 @@ comparison:
   # Historical 2024 calls recorded the moving alias gpt-4-turbo. The pinned
   # snapshot below is the best-supported dated GPT-4 Turbo reconstruction target.
   legacy_model: gpt-4-turbo-2024-04-09
+  # Keep current_model for backward compatibility with the original contemporary
+  # arm and the dedicated BEREC workflow. The principal five-PON comparison
+  # evaluates every entry in comparison_models.
   current_model: gpt-5.4-nano-2026-03-17
+  comparison_models:
+    - model_id: gpt-5.4-nano-2026-03-17
+      label: GPT-5.4 nano
+      identifier_type: dated_snapshot
+      snapshot_status: pinned_dated_snapshot
+    - model_id: gpt-5.6-luna
+      label: GPT-5.6 Luna
+      identifier_type: undated_model_id
+      snapshot_status: no_dated_snapshot_exposed
+      openai_docs_checked_date: "2026-08-31"
+      openai_model_docs: https://developers.openai.com/api/docs/models/gpt-5.6-luna
+      provenance_note: >-
+        OpenAI's GPT-5.6 Luna model page was checked on 2026-08-31. Its
+        Snapshots section listed gpt-5.6-luna but no dated snapshot identifier.
+        Preserve the request timestamp plus requested and returned model IDs for
+        every run; do not describe gpt-5.6-luna as a dated or immutable snapshot.
   manuscript_excluded_question_id: 10
   mini_model: gpt-5.4-mini-2026-03-17
 

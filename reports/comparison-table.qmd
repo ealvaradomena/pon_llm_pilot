@@ -1,0 +1,371 @@
+---
+title: "Human–LLM Comparison"
+subtitle: "All 75 PON-question classifications under the reconstructed SBS protocol"
+editor: visual
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(knitr)
+library(readr)
+library(tidyr)
+library(yaml)
+
+cfg <- yaml::read_yaml("config/config.yml")
+human_path <- cfg$project$human_responses_file
+evaluation_path <- "derived/sbs_model_evaluation_long.csv"
+berec_path <- "derived/berec_three_way_comparison.csv"
+study_entities <- unlist(cfg$comparison$study_entities)
+legacy_model_id <- cfg$legacy_protocol$model_alias
+comparison_models <- purrr::map_dfr(
+  cfg$comparison$comparison_models,
+  ~ tibble::as_tibble(.x)
+) |>
+  dplyr::transmute(
+    model_id = as.character(.data$model_id),
+    model = as.character(.data$label)
+  )
+gpt54_id <- comparison_models$model_id[comparison_models$model == "GPT-5.4 nano"]
+gpt56_id <- comparison_models$model_id[comparison_models$model == "GPT-5.6 Luna"]
+expected_model_ids <- c(legacy_model_id, comparison_models$model_id)
+
+comparison_ready <- file.exists(human_path) && file.exists(evaluation_path) &&
+  length(gpt54_id) == 1L && length(gpt56_id) == 1L
+
+normalize_binary <- function(x) {
+  toupper(as.character(x))
+}
+
+if (comparison_ready) {
+  human <- readr::read_csv(human_path, show_col_types = FALSE) |>
+    dplyr::filter(.data$entity_slug %in% study_entities) |>
+    dplyr::transmute(
+      entity_slug = .data$entity_slug,
+      question_id = .data$question_id,
+      question = .data$question,
+      HBM = normalize_binary(.data$coding_brint),
+      ASC = normalize_binary(.data$coding_angel),
+      JNG = normalize_binary(.data$coding_juan),
+      human_vote = normalize_binary(.data$human_response)
+    ) |>
+    dplyr::mutate(
+      majority_from_individuals = dplyr::if_else(
+        rowSums(dplyr::across(c(.data$HBM, .data$ASC, .data$JNG), ~ .x == "TRUE")) >= 2,
+        "TRUE", "FALSE"
+      ),
+      unanimity = dplyr::if_else(
+        .data$HBM == .data$ASC & .data$ASC == .data$JNG,
+        "Yes",
+        '<span class="text-danger fw-bold">No</span>'
+      )
+    )
+
+  evaluation <- readr::read_csv(evaluation_path, show_col_types = FALSE) |>
+    dplyr::filter(
+      .data$entity_slug %in% study_entities,
+      .data$model_id %in% expected_model_ids
+    )
+
+  expected_questions <- 15L
+  expected_pons <- length(study_entities)
+  expected_rows <- expected_questions * expected_pons
+  evaluation_counts <- evaluation |>
+    dplyr::count(.data$model_id, name = "n")
+
+  comparison_ready <- nrow(human) == expected_rows &&
+    !anyDuplicated(human[c("entity_slug", "question_id")]) &&
+    all(human$human_vote == human$majority_from_individuals) &&
+    setequal(evaluation_counts$model_id, expected_model_ids) &&
+    all(evaluation_counts$n == expected_rows)
+}
+
+if (comparison_ready) {
+  model_values <- evaluation |>
+    dplyr::transmute(
+      entity_slug = .data$entity_slug,
+      question_id = .data$question_id,
+      model_id = .data$model_id,
+      response = normalize_binary(.data$llm_response)
+    ) |>
+    tidyr::pivot_wider(names_from = .data$model_id, values_from = .data$response)
+
+  comparison <- human |>
+    dplyr::left_join(model_values, by = c("entity_slug", "question_id")) |>
+    dplyr::transmute(
+      entity_slug = .data$entity_slug,
+      question_id = .data$question_id,
+      question = .data$question,
+      HBM = .data$HBM, ASC = .data$ASC, JNG = .data$JNG,
+      human_vote = .data$human_vote, unanimity = .data$unanimity,
+      gpt4 = .data[[legacy_model_id]],
+      gpt54 = .data[[gpt54_id]],
+      gpt56 = .data[[gpt56_id]]
+    ) |>
+    dplyr::mutate(
+      pon = dplyr::recode(
+        .data$entity_slug,
+        irg = "IRG", euhc = "EUHC", coas = "COAS", can = "CAN", ceer = "CEER"
+      ),
+      gpt4_match = dplyr::if_else(
+        .data$gpt4 == .data$human_vote,
+        '<span class="text-success fw-bold">✓</span>',
+        '<span class="text-danger fw-bold">✕</span>'
+      ),
+      gpt54_match = dplyr::if_else(
+        .data$gpt54 == .data$human_vote,
+        '<span class="text-success fw-bold">✓</span>',
+        '<span class="text-danger fw-bold">✕</span>'
+      ),
+      gpt56_match = dplyr::if_else(
+        .data$gpt56 == .data$human_vote,
+        '<span class="text-success fw-bold">✓</span>',
+        '<span class="text-danger fw-bold">✕</span>'
+      ),
+      llm_final_vote = dplyr::if_else(
+        rowSums(dplyr::across(c(.data$gpt4, .data$gpt54, .data$gpt56), ~ .x == "TRUE")) >= 2,
+        "TRUE", "FALSE"
+      ),
+      final_llm_human_match = dplyr::if_else(
+        .data$llm_final_vote == .data$human_vote,
+        '<span class="text-success fw-bold">✓</span>',
+        '<span class="text-danger fw-bold">✕</span>'
+      )
+    ) |>
+    dplyr::arrange(
+      factor(.data$entity_slug, levels = c("irg", "euhc", "coas", "can", "ceer")),
+      .data$question_id
+    )
+
+  if (nrow(comparison) != expected_rows ||
+      any(is.na(comparison$gpt4)) || any(is.na(comparison$gpt54)) || any(is.na(comparison$gpt56))) {
+    stop("Comparison table is incomplete after joining human and LLM responses")
+  }
+
+  human_true <- sum(comparison$human_vote == "TRUE")
+  human_false <- sum(comparison$human_vote == "FALSE")
+  gpt4_matches <- sum(comparison$gpt4 == comparison$human_vote)
+  gpt54_matches <- sum(comparison$gpt54 == comparison$human_vote)
+  gpt56_matches <- sum(comparison$gpt56 == comparison$human_vote)
+  llm_final_matches <- sum(comparison$llm_final_vote == comparison$human_vote)
+}
+```
+
+This page reports every classification in the five-PON, 15-question computational instrument. **Human Final Vote (HFV)** is the majority classification among HBM, ASC, and JNG and serves as the confirmed human reference used throughout the site. **Human Unanimity** is shown as Yes or <span class="text-danger fw-bold">No</span>; only the No cells are colored. Each **Match w/ HFV** column is <span class="text-success fw-bold">✓</span> when that model agrees with HFV and <span class="text-danger fw-bold">✕</span> when it does not. **LLM Final Vote** is the majority classification across GPT-4 Turbo, GPT-5.4 nano, and GPT-5.6 Luna, and **Final LLM-Human Match** compares that three-model majority with HFV.
+
+```{r}
+#| label: comparison-status
+#| results: asis
+if (!comparison_ready) {
+  cat("::: {.callout-important}\nRun `Rscript scripts/05_compare_scenarios.R` to build the model-evaluation data required for this table.\n:::\n")
+} else {
+  cat(sprintf(
+    "**75 classifications · HFV: %s TRUE / %s FALSE · GPT-4 Turbo %s/75 matches (%.1f%%) · GPT-5.4 nano %s/75 matches (%.1f%%) · GPT-5.6 Luna %s/75 matches (%.1f%%) · LLM Final Vote %s/75 matches (%.1f%%)**\n",
+    human_true,
+    human_false,
+    gpt4_matches,
+    100 * gpt4_matches / 75,
+    gpt54_matches,
+    100 * gpt54_matches / 75,
+    gpt56_matches,
+    100 * gpt56_matches / 75,
+    llm_final_matches,
+    100 * llm_final_matches / 75
+  ))
+}
+```
+
+## Complete comparison table
+
+```{r}
+#| label: tbl-human-llm-comparison
+#| tbl-cap: "Human coding, model classifications, and final human–LLM majority comparison for all 75 PON-question pairs"
+#| results: asis
+if (comparison_ready) {
+  table_data <- comparison |>
+    dplyr::select(
+      `Question ID` = .data$question_id,
+      Question = .data$question,
+      PON = .data$pon,
+      HBM = .data$HBM,
+      ASC = .data$ASC,
+      JNG = .data$JNG,
+      `Human Final Vote (HFV)` = .data$human_vote,
+      `Human Unanimity` = .data$unanimity,
+      `GPT-4 Turbo` = .data$gpt4,
+      `GPT-4 Match w/ HFV` = .data$gpt4_match,
+      `GPT-5.4 nano` = .data$gpt54,
+      `GPT-5.4 Match w/ HFV` = .data$gpt54_match,
+      `GPT-5.6 Luna` = .data$gpt56,
+      `GPT-5.6 Match w/ HFV` = .data$gpt56_match,
+      `LLM Final Vote` = .data$llm_final_vote,
+      `Final LLM-Human Match` = .data$final_llm_human_match
+    )
+
+  html_escape <- function(x) {
+    x |>
+      as.character() |>
+      gsub("&", "&amp;", x = _, fixed = TRUE) |>
+      gsub("<", "&lt;", x = _, fixed = TRUE) |>
+      gsub(">", "&gt;", x = _, fixed = TRUE) |>
+      gsub('"', "&quot;", x = _, fixed = TRUE)
+  }
+
+  body_rows <- vapply(
+    seq_len(nrow(table_data)),
+    function(i) {
+      row <- table_data[i, ]
+      cells <- c(
+        sprintf('<td class="question-id">%s</td>', html_escape(row[[1]])),
+        sprintf('<td class="question-text">%s</td>', html_escape(row[[2]])),
+        sprintf('<td>%s</td>', html_escape(row[[3]])),
+        sprintf('<td>%s</td>', html_escape(row[[4]])),
+        sprintf('<td>%s</td>', html_escape(row[[5]])),
+        sprintf('<td>%s</td>', html_escape(row[[6]])),
+        sprintf('<td>%s</td>', html_escape(row[[7]])),
+        sprintf('<td>%s</td>', row[[8]]),
+        sprintf('<td class="pair-start">%s</td>', html_escape(row[[9]])),
+        sprintf('<td class="pair-end">%s</td>', row[[10]]),
+        sprintf('<td class="pair-start">%s</td>', html_escape(row[[11]])),
+        sprintf('<td class="pair-end">%s</td>', row[[12]]),
+        sprintf('<td class="pair-start">%s</td>', html_escape(row[[13]])),
+        sprintf('<td class="pair-end">%s</td>', row[[14]]),
+        sprintf('<td class="final-vote-start">%s</td>', html_escape(row[[15]])),
+        sprintf('<td>%s</td>', row[[16]])
+      )
+      paste0("<tr>", paste(cells, collapse = ""), "</tr>")
+    },
+    character(1)
+  )
+
+  table_html <- paste0(
+    '<div class="table-responsive complete-comparison-wrap">',
+    '<table class="table table-striped table-hover complete-comparison-table">',
+    '<thead>',
+    '<tr>',
+    '<th rowspan="2">Question ID</th>',
+    '<th rowspan="2" class="question-text">Question</th>',
+    '<th rowspan="2">PON</th>',
+    '<th colspan="3" class="human-banner">Human coders</th>',
+    '<th rowspan="2">Human Final Vote (HFV)</th>',
+    '<th rowspan="2">Human Unanimity</th>',
+    '<th rowspan="2" class="pair-start">GPT-4 Turbo</th>',
+    '<th rowspan="2" class="pair-end">Match w/ HFV</th>',
+    '<th rowspan="2" class="pair-start">GPT-5.4 nano</th>',
+    '<th rowspan="2" class="pair-end">Match w/ HFV</th>',
+    '<th rowspan="2" class="pair-start">GPT-5.6 Luna</th>',
+    '<th rowspan="2" class="pair-end">Match w/ HFV</th>',
+    '<th rowspan="2" class="final-vote-start">LLM Final Vote</th>',
+    '<th rowspan="2">Final LLM-Human Match</th>',
+    '</tr>',
+    '<tr>',
+    '<th>HBM</th>',
+    '<th>ASC</th>',
+    '<th>JNG</th>',
+    '</tr>',
+    '</thead>',
+    '<tbody>',
+    paste(body_rows, collapse = ""),
+    '</tbody>',
+    '</table>',
+    '</div>'
+  )
+
+  cat(
+    '<style>\n',
+    '.complete-comparison-wrap { width: 100%; overflow-x: auto; }\n',
+    '.complete-comparison-table { min-width: 1900px; margin-bottom: 0; }\n',
+    '.complete-comparison-table th, .complete-comparison-table td { vertical-align: middle; text-align: center; }\n',
+    '.complete-comparison-table thead th { white-space: nowrap; }\n',
+    '.complete-comparison-table .question-id { white-space: nowrap; }\n',
+    '.complete-comparison-table .question-text { min-width: 360px; white-space: normal; text-align: left !important; }\n',
+    '.complete-comparison-table .pair-start { border-left: 3px solid var(--bs-border-color, #adb5bd) !important; padding-left: 1rem !important; }\n',
+    '.complete-comparison-table .pair-end { padding-right: 1rem !important; }\n',
+    '.complete-comparison-table .final-vote-start { border-left: 4px double var(--bs-border-color, #868e96) !important; padding-left: 1rem !important; }\n',
+    '.complete-comparison-table .human-banner { border-bottom: 1px solid var(--bs-border-color, #dee2e6); }\n',
+    '</style>\n',
+    table_html,
+    '\n',
+    sep = ""
+  )
+}
+```
+
+The table is ordered IRG, EUHC, COAS, CAN, and CEER, with questions in instrument order within each PON. It uses the confirmed human-reference file and the same frozen GPT-4 Turbo, GPT-5.4 nano, and GPT-5.6 Luna SBS evaluations used elsewhere in the site; all displayed classifications and match indicators are computed from those stored inputs rather than transcribed manually.
+
+
+## BEREC auxiliary comparison
+
+BEREC is shown separately because it is **not part of the five-PON aggregate comparison** and confirmed responses from HBM, ASC, and JNG are unavailable. Therefore, no HFV, human-unanimity measure, or human-reference match statistic can be computed for BEREC. The table reports only the preserved historical BEREC output, the **best-evidenced December 23 GPT-4 Turbo reconstruction**, and the **retrospective December 24 SBS application using GPT-5.4 nano**.
+
+```{r}
+#| label: tbl-berec-model-comparison
+#| tbl-cap: "Preserved and reconstructed model classifications for the 15 BEREC questions"
+#| results: asis
+
+berec_ready <- file.exists(berec_path)
+
+if (!berec_ready) {
+  cat("::: {.callout-important}\nRun `python scripts/08_compare_berec.py` to build the BEREC comparison data required for this table.\n:::\n")
+} else {
+  berec_comparison <- readr::read_csv(
+    berec_path,
+    show_col_types = FALSE
+  ) |>
+    dplyr::transmute(
+      question_id = as.integer(.data$question_id),
+      Question = .data$question,
+      `Preserved historical BEREC` = normalize_binary(.data$preserved_historical),
+      `Reconstructed GPT-4 Turbo` = normalize_binary(.data$dec23_reconstructed_gpt4),
+      `GPT-5.4 nano` = normalize_binary(.data$dec24_sbs_gpt54_nano)
+    ) |>
+    dplyr::arrange(.data$question_id)
+
+  if (nrow(berec_comparison) != 15L) {
+    stop(
+      sprintf(
+        "Expected 15 BEREC model-comparison rows; found %s",
+        nrow(berec_comparison)
+      )
+    )
+  }
+
+  if (anyDuplicated(berec_comparison$question_id)) {
+    stop("BEREC model-comparison question IDs are not unique")
+  }
+
+  berec_value_columns <- c(
+    "Preserved historical BEREC",
+    "Reconstructed GPT-4 Turbo",
+    "GPT-5.4 nano"
+  )
+
+  if (any(is.na(berec_comparison[berec_value_columns]))) {
+    stop("BEREC model-comparison data contain missing classifications")
+  }
+
+  berec_table <- berec_comparison |>
+    dplyr::select(
+      Question = .data$Question,
+      `Preserved historical BEREC` = .data$`Preserved historical BEREC`,
+      `Reconstructed GPT-4 Turbo` = .data$`Reconstructed GPT-4 Turbo`,
+      `GPT-5.4 nano` = .data$`GPT-5.4 nano`
+    )
+
+  cat('<div class="table-responsive">\n')
+  print(
+    knitr::kable(
+      berec_table,
+      align = c("l", "c", "c", "c")
+    )
+  )
+  cat('\n</div>\n')
+}
+```
+
+The BEREC table is descriptive only. The preserved historical output is **not ground truth**, and the December 23 GPT-4 Turbo run is a **best-evidenced reconstruction rather than an exact replication**. BEREC remains excluded from the 75-row five-PON totals and aggregate performance statistics reported above.

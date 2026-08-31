@@ -16,7 +16,7 @@ The BEREC analysis therefore compares three distinct conditions without treating
 
 2. **Best-evidenced December 23 reconstruction.** The reconstructed historical-family condition uses `BO1B.txt`, the best-evidenced reconstructed December 23 prompt configuration, and the pinned `gpt-4-turbo-2024-04-09` model. This is explicitly a reconstruction, **not an exact-replication claim**.
 
-3. **December 24 SBS protocol with the newer model.** The recovered December 24 SBS protocol is applied to `BO1B.txt` using `gpt-5.4-nano-2026-03-17`.
+3. **Retrospective December 24 SBS application with GPT-5.4 nano.** The recovered December 24 SBS protocol is applied to `BO1B.txt` using the pinned `gpt-5.4-nano-2026-03-17` snapshot.
 
 The derived comparison tables below are generated locally from those artifacts. No API calls are made during this analysis.
 
@@ -48,8 +48,9 @@ berec_sources <- utils::read.csv(
 ## Agreement across conditions
 
 ```{r}
+#| label: tbl-berec-pairwise-agreement
 #| echo: false
-#| tbl-cap: "Pairwise agreement among the three BEREC conditions."
+#| tbl-cap: "Pairwise agreement among the three BEREC conditions"
 
 summary_display <- berec_summary
 
@@ -76,15 +77,16 @@ knitr::kable(
 
 The best-evidenced GPT-4 Turbo reconstruction reproduces **13 of the 15 classifications** in the preserved historical BEREC artifact, corresponding to **86.7% classification agreement**.
 
-The preserved historical artifact and the newer-model SBS run agree on **10 of 15 classifications (66.7%)**. The reconstructed GPT-4 Turbo condition and newer-model SBS condition also agree on **10 of 15 classifications (66.7%)**.
+The preserved historical artifact and the GPT-5.4 nano SBS run agree on **10 of 15 classifications (66.7%)**. The reconstructed GPT-4 Turbo condition and the GPT-5.4 nano SBS condition also agree on **10 of 15 classifications (66.7%)**.
 
 These percentages describe **classification agreement**, not accuracy. The preserved historical artifact is an observed historical output, not a validated ground-truth coding of BEREC.
 
 ## Question-level comparison
 
 ```{r}
+#| label: tbl-berec-question-comparison
 #| echo: false
-#| tbl-cap: "Question-level comparison of preserved and reconstructed BEREC classifications."
+#| tbl-cap: "Question-level comparison of preserved and reconstructed BEREC classifications"
 
 question_display <- berec_comparison[
   ,
@@ -120,9 +122,9 @@ The best-evidenced December 23 reconstruction differs from the preserved histori
 
 The two conditions therefore have the same overall response prevalence—8 `TRUE` and 7 `FALSE` classifications—but disagree on two individual classifications.
 
-### Reconstructed GPT-4 Turbo versus newer-model SBS
+### Reconstructed GPT-4 Turbo versus GPT-5.4 nano SBS
 
-Relative to the reconstructed GPT-4 Turbo condition, the newer-model SBS run changes five classifications:
+Relative to the reconstructed GPT-4 Turbo condition, the GPT-5.4 nano SBS run changes five classifications:
 
 - **Q1:** `TRUE` → `FALSE`
 - **Q2:** `TRUE` → `FALSE`
@@ -130,7 +132,7 @@ Relative to the reconstructed GPT-4 Turbo condition, the newer-model SBS run cha
 - **Q8:** `TRUE` → `FALSE`
 - **Q12:** `TRUE` → `FALSE`
 
-All five changes occur in the same direction. The reconstructed GPT-4 Turbo condition contains 8 `TRUE` classifications, whereas the newer-model SBS condition contains 3.
+All five changes occur in the same direction. The reconstructed GPT-4 Turbo condition contains 8 `TRUE` classifications, whereas the GPT-5.4 nano SBS condition contains 3.
 
 ## Interpretation
 
@@ -138,15 +140,16 @@ The BEREC reconstruction provides useful evidence about the recoverability of th
 
 That result should not be interpreted as an exact replication of the historical API interaction. The surviving evidence does not establish every element of the original BEREC request strongly enough to make that claim.
 
-Likewise, the five differences between the reconstructed GPT-4 Turbo condition and the newer-model SBS condition cannot be attributed exclusively to model change. Those conditions differ in both model and reconstructed protocol.
+Likewise, the five differences between the reconstructed GPT-4 Turbo condition and the GPT-5.4 nano SBS condition cannot be attributed exclusively to model change. Those conditions differ in both model and reconstructed protocol.
 
 For this reason, BEREC remains an **auxiliary provenance and reconstruction analysis** and is not added as a sixth organization to the principal five-PON model comparison.
 
 ## Provenance
 
 ```{r}
+#| label: tbl-berec-sources
 #| echo: false
-#| tbl-cap: "Sources used in the BEREC reconstruction analysis."
+#| tbl-cap: "Sources used in the BEREC reconstruction analysis"
 
 source_display <- berec_sources
 

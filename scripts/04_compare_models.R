@@ -15,6 +15,7 @@
 # - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-r-scripts.md
 #
 # ////////////////////////////////////////////////////
-# Compatibility entry point.
-# The primary study compares frozen 2024 GPT-4 Turbo SBS with newer-model SBS.
+# Preserve the historical entry point while delegating all work downstream
+# The primary comparison includes frozen GPT-4 Turbo and all configured contemporary SBS models
 source("scripts/05_compare_scenarios.R")
+# FINAL OUTPUT LINE

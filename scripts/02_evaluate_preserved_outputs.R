@@ -18,6 +18,7 @@
 # - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-r-scripts.md
 #
 # ////////////////////////////////////////////////////
+
 # ////////////////////////////////////////////////////
 #
 #
@@ -115,3 +116,4 @@ readr::write_csv(metrics, file.path(derived_dir, "legacy_sbs_human_metrics.csv")
 readr::write_csv(errors, file.path(derived_dir, "legacy_sbs_human_errors.csv"))
 
 cat("Evaluated five frozen 2024 SBS outputs; API calls: NONE\n")
+# FINAL OUTPUT LINE

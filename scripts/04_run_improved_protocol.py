@@ -113,7 +113,10 @@ def parse_args() -> argparse.Namespace:
             "identifiers still require the archival confirmation token."
         ),
     )
-    parser.add_argument("--legacy-model", help="Override the configured archival GPT-4 Turbo model ID")
+    parser.add_argument(
+        "--legacy-model",
+        help="Override the configured archival GPT-4 Turbo model ID",
+    )
     parser.add_argument("--current-model", help="Override the configured current model ID")
     parser.add_argument(
         "--entity",
@@ -216,7 +219,8 @@ def main() -> None:
     if args.model:
         if args.legacy_model or args.current_model or args.arm != "current":
             raise SystemExit(
-                "--model cannot be combined with --legacy-model, --current-model, or a non-default --arm"
+                "--model cannot be combined with --legacy-model, --current-model, "
+                "or a non-default --arm"
             )
         require_legacy_confirmation(
             execute=args.execute,
@@ -224,7 +228,11 @@ def main() -> None:
             confirmation=args.confirm_legacy_model_call,
             cfg=cfg,
         )
-        role = "archival historical model" if is_historical_gpt4_turbo(args.model, cfg) else "explicit single model"
+        role = (
+            "archival historical model"
+            if is_historical_gpt4_turbo(args.model, cfg)
+            else "explicit single model"
+        )
         print_single_model_plan(
             cfg=cfg,
             questions=questions,
@@ -371,6 +379,7 @@ def main() -> None:
         entity_slugs=set(selected_entities),
         max_output_tokens=max_output_tokens,
     )
+    # FINAL OUTPUT LINE
     print(f"Saved improved-protocol batch to: {batch_dir}")
 
 

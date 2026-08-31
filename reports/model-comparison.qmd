@@ -1,7 +1,9 @@
 ---
 title: "SBS Model Comparison"
-subtitle: "Frozen GPT-4 Turbo versus a newer pinned model under the same protocol"
+subtitle: "Frozen GPT-4 Turbo versus contemporary OpenAI models under the same protocol"
 editor: visual
+execute:
+  echo: false
 ---
 
 ```{r}
@@ -10,12 +12,26 @@ editor: visual
 library(dplyr)
 library(knitr)
 library(readr)
+library(tidyr)
+library(yaml)
+
+cfg <- yaml::read_yaml("config/config.yml")
+legacy_model_id <- cfg$legacy_protocol$model_alias
+comparison_models <- purrr::map_dfr(
+  cfg$comparison$comparison_models,
+  ~ tibble::as_tibble(.x)
+) |>
+  dplyr::transmute(
+    model_id = as.character(.data$model_id),
+    model = as.character(.data$label)
+  )
+expected_model_ids <- c(legacy_model_id, comparison_models$model_id)
 
 paths <- list(
   overall = "derived/sbs_model_metrics_overall.csv",
   by_pon = "derived/sbs_model_metrics_by_pon.csv",
   stability = "derived/sbs_model_stability_overall.csv",
-  coder = "derived/sbs_coder_comparison_extended.csv",
+  flips = "derived/sbs_model_flip_audit.csv",
   diagnostics = "derived/sbs_output_format_diagnostics.csv"
 )
 comparison_ready <- all(file.exists(unlist(paths)))
@@ -24,33 +40,79 @@ if (comparison_ready) {
   overall <- readr::read_csv(paths$overall, show_col_types = FALSE)
   by_pon <- readr::read_csv(paths$by_pon, show_col_types = FALSE)
   stability <- readr::read_csv(paths$stability, show_col_types = FALSE)
-  coder <- readr::read_csv(paths$coder, show_col_types = FALSE)
+  flips <- readr::read_csv(paths$flips, show_col_types = FALSE)
   diagnostics <- readr::read_csv(paths$diagnostics, show_col_types = FALSE)
+
+  comparison_ready <- setequal(overall$model_id, expected_model_ids) &&
+    all(comparison_models$model_id %in% stability$comparison_model_id) &&
+    all(comparison_models$model_id %in% flips$comparison_model_id) &&
+    all(comparison_models$model_id %in% diagnostics$model_id)
+}
+
+if (comparison_ready) {
+  legacy_accuracy <- overall |>
+    dplyr::filter(.data$model_id == legacy_model_id) |>
+    dplyr::pull(.data$accuracy)
+
+  contemporary_summary <- overall |>
+    dplyr::filter(.data$model_id %in% comparison_models$model_id) |>
+    dplyr::left_join(comparison_models, by = "model_id", suffix = c("_result", "")) |>
+    dplyr::mutate(change_pp = 100 * (.data$accuracy - legacy_accuracy))
+
+  flip_summary <- flips |>
+    dplyr::filter(.data$changed) |>
+    dplyr::count(.data$comparison_model, .data$comparison_model_id, .data$direction, name = "n")
+
+  flip_totals <- flips |>
+    dplyr::group_by(.data$comparison_model, .data$comparison_model_id) |>
+    dplyr::summarise(
+      changed = sum(.data$changed),
+      toward = sum(.data$direction == "Toward human"),
+      away = sum(.data$direction == "Away from human"),
+      .groups = "drop"
+    )
+
+  legacy_by_pon <- by_pon |>
+    dplyr::filter(.data$model_id == legacy_model_id) |>
+    dplyr::select(.data$pon, legacy_accuracy = .data$accuracy)
+
+  by_pon_display <- by_pon |>
+    dplyr::select(.data$pon, .data$model, .data$model_id, .data$accuracy) |>
+    dplyr::left_join(legacy_by_pon, by = "pon") |>
+    dplyr::mutate(
+      change_vs_legacy_pp = dplyr::if_else(
+        .data$model_id == legacy_model_id,
+        NA_real_,
+        100 * (.data$accuracy - .data$legacy_accuracy)
+      )
+    )
 }
 ```
 
 ## Design
 
-This comparison changes **model generation only**. Both arms use the same reconstructed Dec. 24, 2024 SBS protocol and the same five PONs.
+This comparison holds the **protocol, five PONs, 15 questions, and human reference fixed** while varying the model arm. The historical GPT-4 Turbo arm is preserved rather than rerun; the two contemporary arms were executed independently under the reconstructed Dec. 24, 2024 SBS protocol.
 
 | Model | Status |
 |---|---|
 | GPT-4 Turbo | Frozen 2024 `*_sbs.txt` responses; never rerun |
-| `gpt-5.4-nano-2026-03-17` | New SBS run under `output/current/` |
+| GPT-5.4 nano (`gpt-5.4-nano-2026-03-17`) | Completed SBS run under `output/current/` |
+| GPT-5.6 Luna (`gpt-5.6-luna`) | Completed SBS run under `output/current/` |
 
-The improved-protocol experiment and plain-zero-shot outputs are archival/secondary and are not pooled into this analysis. The comparison pipeline considers only newer-model run directories containing `run_manifest.json` with `status == "complete"`; a directory carrying `run_failed.json`, or lacking an explicit completed manifest, is not treated as a completed result.
+: Model sources and run status {#tbl-model-status}
+
+OpenAI's GPT-5.6 Luna model page was checked on **2026-08-31**. Its **Snapshots** section listed `gpt-5.6-luna`, with no dated snapshot identifier analogous to the pinned GPT-5.4 nano snapshot used here. Accordingly, this study treats `gpt-5.6-luna` as an **undated model ID**, not as a dated or immutable snapshot. The configuration records the documentation URL and check date, while each run preserves its UTC execution timestamp plus the requested and API-returned model identifiers in response metadata and the run manifest.
+
+The improved-protocol experiment and plain-zero-shot outputs are archival/secondary and are not pooled into this analysis. The comparison pipeline accepts only run directories containing `run_manifest.json` with `status == "complete"`; failed or incomplete directories are ignored.
 
 ```{r}
 #| label: no-results
 #| results: asis
 if (!comparison_ready) {
   cat("::: {.callout-important}\n")
-  cat("## Newer-model SBS results are not complete yet\n\n")
-  cat("Run the dry run, execute the five-request SBS batch, then rebuild derived products:\n\n")
+  cat("## Derived comparison files are unavailable or incomplete\n\n")
+  cat("The GPT-5.4 nano and GPT-5.6 Luna API runs are already completed and should be reused. Rebuild the derived comparison locally; do **not** rerun an API arm merely because derived files are missing.\n\n")
   cat("```bash\n")
-  cat("python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17\n")
-  cat("python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17 --execute\n")
-  cat("Rscript scripts/02_reconstruct_table_a5.R\n")
   cat("Rscript scripts/05_compare_scenarios.R\n")
   cat("quarto render\n")
   cat("```\n")
@@ -58,78 +120,147 @@ if (!comparison_ready) {
 }
 ```
 
-## Performance against the confirmed human reference
+## Main result
+
+```{r}
+#| label: main-result
+#| results: asis
+if (comparison_ready) {
+  cat(sprintf(
+    "Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS responses agree with the confirmed human reference in **%s** of cases.\n\n",
+    scales::percent(legacy_accuracy, accuracy = 0.1)
+  ))
+
+  for (i in seq_len(nrow(contemporary_summary))) {
+    row <- contemporary_summary[i, ]
+    flips_row <- flip_totals |>
+      dplyr::filter(.data$comparison_model_id == row$model_id)
+    cat(sprintf(
+      paste0(
+        "**%s** agrees with the human reference in **%s** of cases, a **%+.1f percentage-point** change relative to frozen GPT-4 Turbo. ",
+        "It changes **%s of 75 classifications (%s)**: **%s toward** the human reference and **%s away**.\n\n"
+      ),
+      row$model,
+      scales::percent(row$accuracy, accuracy = 0.1),
+      row$change_pp,
+      flips_row$changed,
+      scales::percent(flips_row$changed / 75, accuracy = 0.1),
+      flips_row$toward,
+      flips_row$away
+    ))
+  }
+}
+```
+
+The results are descriptive of this fixed five-PON, 15-question comparison. They do not establish that one model is generally superior across other tasks, prompts, or domains.
+
+## Agreement with the confirmed human reference
 
 ```{r}
 #| label: tbl-overall
-#| tbl-cap: "Overall SBS performance against the confirmed human reference"
+#| tbl-cap: "Overall SBS agreement and reference-based diagnostics"
 if (comparison_ready) {
   overall |>
-    dplyr::mutate(
-      accuracy = scales::percent(.data$accuracy, accuracy = 0.1),
-      disagreement_rate = scales::percent(.data$disagreement_rate, accuracy = 0.1),
-      precision = scales::percent(.data$precision, accuracy = 0.1),
-      recall = scales::percent(.data$recall, accuracy = 0.1),
-      specificity = scales::percent(.data$specificity, accuracy = 0.1),
-      f1 = scales::percent(.data$f1, accuracy = 0.1)
+    dplyr::transmute(
+      Model = .data$model,
+      Decisions = .data$n,
+      Agreement = scales::percent(.data$accuracy, accuracy = 0.1),
+      Disagreement = scales::percent(.data$disagreement_rate, accuracy = 0.1),
+      Precision = scales::percent(.data$precision, accuracy = 0.1),
+      Recall = scales::percent(.data$recall, accuracy = 0.1),
+      Specificity = scales::percent(.data$specificity, accuracy = 0.1),
+      F1 = scales::percent(.data$f1, accuracy = 0.1)
     ) |>
     knitr::kable()
 }
 ```
 
 ```{r}
-#| label: fig-by-pon
-#| fig-cap: "Share of SBS decisions disagreeing with the confirmed human reference by PON."
-#| results: asis
-if (comparison_ready) cat("![](../derived/figures/sbs_model_disagreement_by_pon.png)\n")
+#| label: tbl-by-pon
+#| tbl-cap: "Agreement with the confirmed human reference by PON and model"
+if (comparison_ready) {
+  by_pon_display |>
+    dplyr::transmute(
+      PON = .data$pon,
+      Model = .data$model,
+      Agreement = scales::percent(.data$accuracy, accuracy = 0.1),
+      `Change vs. GPT-4 Turbo` = dplyr::if_else(
+        is.na(.data$change_vs_legacy_pp),
+        "—",
+        sprintf("%+.1f pp", .data$change_vs_legacy_pp)
+      )
+    ) |>
+    knitr::kable()
+}
 ```
+
+::: {#fig-by-pon}
+![Agreement with the confirmed human reference by PON under the fixed SBS protocol.](../derived/figures/sbs_model_agreement_by_pon.png)
+:::
 
 ## Agreement with the human majority
 
-The extended coder table keeps HBM, ASC, and JNG visible and computes the human majority directly. It then reports whether each LLM agrees with that majority.
+The confirmed human reference is the majority vote of HBM, ASC, and JNG. Accordingly, the **Agreement** values above are each model's agreement rate with that three-human majority. Precision, recall, specificity, and F1 treat the human-majority TRUE/FALSE classification as the reference label; they are reference-based diagnostics, not claims that the human majority is an external ground truth.
 
 ```{r}
 #| label: tbl-majority
 #| tbl-cap: "LLM agreement with the three-human majority across the 15-question computational instrument"
 if (comparison_ready) {
-  coder |>
-    dplyr::summarise(
-      `Legacy GPT-4 Turbo SBS` = mean(.data$legacy_llm_agrees_human_majority, na.rm = TRUE),
-      `New GPT-5.4 nano SBS` = mean(.data$new_llm_agrees_human_majority, na.rm = TRUE)
+  overall |>
+    dplyr::transmute(
+      Model = .data$model,
+      `Agreement with human majority` = scales::percent(.data$accuracy, accuracy = 0.1)
     ) |>
-    tidyr::pivot_longer(dplyr::everything(), names_to = "Model", values_to = "agreement") |>
-    dplyr::mutate(agreement = scales::percent(.data$agreement, accuracy = 0.1)) |>
-    knitr::kable(col.names = c("Model", "Agreement with human majority"))
+    knitr::kable()
 }
 ```
 
-## Model-generation stability
+## Model-generation stability relative to frozen GPT-4 Turbo
 
 ```{r}
 #| label: tbl-stability
-#| tbl-cap: "Agreement between frozen GPT-4 Turbo SBS and newer-model SBS"
+#| tbl-cap: "Agreement between frozen GPT-4 Turbo SBS and each contemporary SBS model"
 if (comparison_ready) {
   stability |>
-    dplyr::mutate(agreement_rate = scales::percent(.data$agreement_rate, accuracy = 0.1)) |>
+    dplyr::transmute(
+      `Contemporary model` = .data$comparison_model,
+      Decisions = .data$decisions,
+      Same = .data$same,
+      Changed = .data$changed,
+      `Agreement with GPT-4 Turbo` = scales::percent(.data$agreement_rate, accuracy = 0.1)
+    ) |>
     knitr::kable()
 }
 ```
 
 ```{r}
-#| label: fig-question
-#| fig-cap: "Question-level disagreement with the confirmed human reference under the fixed SBS protocol."
-#| results: asis
-if (comparison_ready) cat("![](../derived/figures/sbs_model_question_disagreement.png)\n")
+#| label: tbl-flips
+#| tbl-cap: "Changed classifications and their direction relative to the human reference"
+if (comparison_ready) {
+  flip_totals |>
+    dplyr::transmute(
+      Model = .data$comparison_model,
+      Changed = .data$changed,
+      `Toward human` = .data$toward,
+      `Away from human` = .data$away
+    ) |>
+    knitr::kable()
+}
 ```
+
+::: {#fig-question}
+![Agreement with the confirmed human reference by computational question under the fixed SBS protocol.](../derived/figures/sbs_model_question_agreement.png)
+:::
 
 ## Run-integrity diagnostics
 
 ```{r}
 #| label: tbl-diagnostics
+#| tbl-cap: "Output-format diagnostics for the completed contemporary-model SBS runs"
 if (comparison_ready) {
   diagnostics |>
     knitr::kable()
 }
 ```
 
-The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.
+The comparison script enforces the expected analytical cardinality before writing results: 75 decisions per model, 15 decisions per model/PON, one row per model/PON/question key, and a common human-reference value for every paired decision. Each contemporary model is compared directly with the frozen GPT-4 Turbo outputs. Historical outputs remain untouched regardless of parsing or scoring results.

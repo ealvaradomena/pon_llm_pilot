@@ -4,19 +4,42 @@ subtitle: "Reconstructing the 2024 SBS protocol and comparing model generations"
 editor: visual
 ---
 
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(knitr)
+library(readr)
+library(yaml)
+
+cfg <- yaml::read_yaml("config/config.yml")
+summary_path <- "derived/sbs_model_metrics_overall.csv"
+summary_ready <- file.exists(summary_path)
+if (summary_ready) {
+  comparison_models <- purrr::map_dfr(
+    cfg$comparison$comparison_models,
+    ~ tibble::as_tibble(.x)
+  ) |>
+    dplyr::transmute(model_id = as.character(.data$model_id), model = as.character(.data$label))
+  expected_model_ids <- c(cfg$legacy_protocol$model_alias, comparison_models$model_id)
+  summary_metrics <- readr::read_csv(summary_path, show_col_types = FALSE)
+  summary_ready <- setequal(summary_metrics$model_id, expected_model_ids)
+}
+```
+
 ## Repository purpose
 
 This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*.
 
 The revised principal analysis asks:
 
-> **How does a newer model compare with the frozen 2024 GPT-4 Turbo responses when both are evaluated under the same reconstructed step-by-step (SBS) protocol?**
+> **How do contemporary OpenAI models compare with the frozen 2024 GPT-4 Turbo responses when all are evaluated under the same reconstructed step-by-step (SBS) protocol?**
 
-The historical benchmark is the preserved Dec. 24, 2024 `*_sbs.txt` output. The newer arm uses the pinned `gpt-5.4-nano-2026-03-17` snapshot. The original 2024 outputs are never regenerated or overwritten.
+The historical benchmark is the preserved Dec. 24, 2024 `*_sbs.txt` output. The contemporary arms are the pinned GPT-5.4 nano snapshot (`gpt-5.4-nano-2026-03-17`) and GPT-5.6 Luna (`gpt-5.6-luna`). OpenAI's Luna documentation was checked on 2026-08-31 and did not expose a dated Luna snapshot, so `gpt-5.6-luna` is recorded as an undated model ID together with execution-time provenance. The original 2024 outputs are never regenerated or overwritten.
 
 ## Study cases
 
-The strict comparison uses **IRG, EUHC, COAS, CAN, and CEER**. BEREC remains part of the archival corpus but is handled separately because its preserved Dec. 23 output predates the final Dec. 24 request implementation.
+The strict comparison uses **IRG, EUHC, cOAlition S (COAS), CAN, and CEER**. BEREC remains part of the archival corpus but is handled separately because its preserved Dec. 23 output predates the final Dec. 24 request implementation.
 
 Dedicated BEREC replication uses `BO1B.txt`, not `BO1A.txt`, and is excluded from the five-PON aggregate analysis.
 
@@ -25,15 +48,43 @@ Dedicated BEREC replication uses `BO1B.txt`, not `BO1A.txt`, and is excluded fro
 The repository separates two tasks:
 
 1. **Manuscript Table A5 replication.** HBM, ASC, JNG, and the frozen legacy SBS LLM reconstruct the historical four-coder agreement table over the manuscript's 14 prompts.
-2. **Extended SBS model comparison.** The same human data and frozen legacy SBS outputs are compared with a new `gpt-5.4-nano-2026-03-17` SBS run over the preserved 15-question computational instrument.
+2. **Extended SBS model comparison.** The same human data and frozen legacy SBS outputs are compared with GPT-5.4 nano and GPT-5.6 Luna SBS runs over the preserved 15-question computational instrument.
 
 Project-facing outputs use explicit agreement labels such as `3 TRUE / 1 FALSE`, and report directly whether each LLM agrees with the three-human majority vote.
 
+## Principal comparison result
+
+The table below is generated directly from the stored three-model evaluation outputs. It reports agreement with the confirmed three-human majority reference over the same 75 PON-question classifications for each model arm; no result is manually transcribed into this page.
+
+```{r}
+#| label: tbl-principal-summary
+#| tbl-cap: "Principal SBS agreement with the confirmed human reference"
+if (summary_ready) {
+  summary_metrics |>
+    dplyr::transmute(
+      Model = .data$model,
+      Decisions = .data$n,
+      Agreement = scales::percent(.data$accuracy, accuracy = 0.1)
+    ) |>
+    knitr::kable()
+} else {
+  tibble::tribble(
+    ~Model, ~Status,
+    "GPT-4 Turbo", "Frozen benchmark available",
+    "GPT-5.4 nano", "Completed run available",
+    "GPT-5.6 Luna", "Completed run available; rebuild derived metrics"
+  ) |>
+    knitr::kable()
+}
+```
+
+These figures describe this fixed five-PON, 15-question comparison and should not be interpreted as a general benchmark of any model family. See [SBS Model Comparison](reports/model-comparison.qmd) for the full breakdown.
+
 ## Table A5 provenance
 
-The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report `2-2` where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 errors; no underlying response is altered.
+The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report `2-2` where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 discrepancies relative to the surviving coder-level data; no underlying response is altered.
 
-See [2024 Replication](reports/results.qmd) and `provenance/TABLE_A5_REPLICATION.md`.
+See [2024 Replication](reports/results.qmd) and [Table A5 replication provenance](provenance/TABLE_A5_REPLICATION.md).
 
 ## Reproducibility architecture
 

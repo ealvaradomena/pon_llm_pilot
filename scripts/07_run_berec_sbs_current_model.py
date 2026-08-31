@@ -3,7 +3,8 @@
 # PON LLM Pilot - BEREC Current-Model SBS Runner
 #
 # Purpose
-# - Dry-run or apply the reconstructed December 24 SBS protocol to BEREC with the configured newer model
+# - Dry-run or apply the reconstructed December 24 SBS protocol to BEREC
+# - Use the configured GPT-5.4 nano current-model arm
 # - Require explicit execution confirmation and keep all outputs isolated from legacy artifacts
 #
 # Requirements
@@ -19,7 +20,7 @@
 """Safely apply the reconstructed Dec. 24 SBS protocol to BEREC BO1B.
 
 No API call occurs unless BOTH --execute and --confirm-api-call BEREC are supplied.
-This is protocol replication with the configured newer model, not reconstruction of
+This is protocol replication with configured GPT-5.4 nano, not reconstruction of
 BEREC's uncertain Dec. 23 request. Historical outputs are never modified.
 """
 
@@ -76,6 +77,7 @@ def main() -> None:
         return
 
     run_dir = run_dec24_sbs_current(ROOT / "config/config.yml")
+    # FINAL OUTPUT LINE
     print(f"Saved BEREC current-model SBS run to: {run_dir}")
 
 

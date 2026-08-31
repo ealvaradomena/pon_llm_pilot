@@ -6,7 +6,7 @@
 # Purpose:
 # - Reconstruct the historical four-coder table from HBM, ASC, JNG, and frozen legacy SBS responses
 # - Compare the reconstruction with the manuscript Table A5 transcription
-# - Extend the audit with the newer-model SBS responses when available
+# - Extend the audit with the configured GPT-5.4 nano SBS responses when available
 #
 # Requirements:
 # - Project configuration in config/config.yml
@@ -18,6 +18,7 @@
 # - Prompt used: https://github.com/ealvaradomena/my-prompts/blob/main/prompts/pretty-r-scripts.md
 #
 # ////////////////////////////////////////////////////
+
 # ////////////////////////////////////////////////////
 #
 #
@@ -138,24 +139,39 @@ legacy_llm <- purrr::pmap_dfr(
 # ////////////////////////////////////////////////////
 #
 #
-# 5. Extend with the Newer SBS Model ----
+# 5. Extend with the Configured GPT-5.4 Nano SBS Model ----
 #
 #
 # ////////////////////////////////////////////////////
 
 find_latest_current_sbs_run <- function(model_id) {
   root <- cfg$project$current_output_dir
-  if (!dir.exists(root)) return(NULL)
+
+  # Return no candidate when the configured current-output root is absent
+  if (!dir.exists(root)) {
+    return(NULL)
+  }
+
   dirs <- list.dirs(root, recursive = FALSE, full.names = TRUE)
   matches <- purrr::keep(dirs, function(run_dir) {
     manifest_path <- file.path(run_dir, "run_manifest.json")
-    if (!file.exists(manifest_path)) return(FALSE)
+
+    # Ignore incomplete directories that do not contain a completion manifest
+    if (!file.exists(manifest_path)) {
+      return(FALSE)
+    }
+
     manifest <- jsonlite::fromJSON(manifest_path)
     identical(manifest$status, "complete") &&
       identical(manifest$protocol, "2024-sbs") &&
       identical(manifest$requested_model, model_id)
   })
-  if (length(matches) == 0) return(NULL)
+
+  # Return no candidate when the configured GPT-5.4 nano arm is unavailable
+  if (length(matches) == 0) {
+    return(NULL)
+  }
+
   matches[order(file.info(matches)$mtime, decreasing = TRUE)][1]
 }
 
@@ -199,11 +215,24 @@ count_label <- function(values) {
 manuscript_code <- function(HBM, ASC, JNG, legacy) {
   values <- c(HBM, ASC, JNG, legacy)
   n_true <- sum(values == "TRUE")
-  if (n_true == 4) return("1")
-  if (n_true == 0) return("0")
-  if (n_true == 2) return("2-2")
+  if (n_true == 4) {
+    return("1")
+  }
+
+  if (n_true == 0) {
+    return("0")
+  }
+
+  if (n_true == 2) {
+    return("2-2")
+  }
+
   human_unanimous <- length(unique(c(HBM, ASC, JNG))) == 1
-  if (human_unanimous && legacy != HBM) return("3-1*")
+
+  if (human_unanimous && legacy != HBM) {
+    return("3-1*")
+  }
+
   "3-1"
 }
 
@@ -342,3 +371,4 @@ if (is.null(new_run)) {
   cat("Newer-model SBS run: ", new_run, "\n", sep = "")
 }
 cat("API calls: NONE\n")
+# FINAL OUTPUT LINE
