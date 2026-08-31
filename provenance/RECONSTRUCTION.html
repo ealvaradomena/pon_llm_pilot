@@ -137,11 +137,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reports/results.html"> 
-<span class="menu-text">2024 Results</span></a>
+<span class="menu-text">2024 Replication</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reports/model-comparison.html"> 
-<span class="menu-text">Six-Scenario Comparison</span></a>
+<span class="menu-text">SBS Model Comparison</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/berec.html"> 
+<span class="menu-text">BEREC</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -170,10 +174,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#recovered-source-corpus" id="toc-recovered-source-corpus" class="nav-link" data-scroll-target="#recovered-source-corpus">Recovered source corpus</a></li>
   <li><a href="#preserved-model-outputs" id="toc-preserved-model-outputs" class="nav-link" data-scroll-target="#preserved-model-outputs">Preserved model outputs</a></li>
+  <li><a href="#manuscript-facing-protocol" id="toc-manuscript-facing-protocol" class="nav-link" data-scroll-target="#manuscript-facing-protocol">Manuscript-facing protocol</a></li>
   <li><a href="#instrument" id="toc-instrument" class="nav-link" data-scroll-target="#instrument">Instrument</a></li>
   <li><a href="#human-reference-data" id="toc-human-reference-data" class="nav-link" data-scroll-target="#human-reference-data">Human-reference data</a></li>
-  <li><a href="#berec-caveat" id="toc-berec-caveat" class="nav-link" data-scroll-target="#berec-caveat">BEREC caveat</a></li>
+  <li><a href="#table-a5-audit" id="toc-table-a5-audit" class="nav-link" data-scroll-target="#table-a5-audit">Table A5 audit</a></li>
   <li><a href="#current-model-extension" id="toc-current-model-extension" class="nav-link" data-scroll-target="#current-model-extension">Current-model extension</a></li>
+  <li><a href="#berec-caveat-and-dedicated-workflow" id="toc-berec-caveat-and-dedicated-workflow" class="nav-link" data-scroll-target="#berec-caveat-and-dedicated-workflow">BEREC caveat and dedicated workflow</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -186,10 +192,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="reconstruction-notes" class="level1">
 <h1>Reconstruction Notes</h1>
-<p>This working directory was reconstructed from the supplied legacy PON project while preserving the analytical logic used by the manuscript-facing computational pilot.</p>
+<p>This working directory preserves the December 2024 PON governance LLM evidence while separating historical artifacts from reproducible contemporary extensions.</p>
 <section id="recovered-source-corpus" class="level2">
 <h2 class="anchored" data-anchor-id="recovered-source-corpus">Recovered source corpus</h2>
-<p>Six boundary objects were recovered and retained as <code>BO1A.txt</code> through <code>BO6A.txt</code>. <code>BO1A.txt</code> is BEREC. The remaining five map to IRG, EU Health Coalition, cOAlition S, CAN, and CEER.</p>
+<p>Six archival boundary objects are retained as <code>BO1A.txt</code> through <code>BO6A.txt</code>. The five-PON strict comparison uses IRG, EUHC, COAS, CAN, and CEER. BEREC is handled separately. A second BEREC source, <code>BO1B.txt</code>, is the required input for the dedicated BEREC replication scripts.</p>
 </section>
 <section id="preserved-model-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="preserved-model-outputs">Preserved model outputs</h2>
@@ -198,24 +204,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>one BEREC binary output from Dec.&nbsp;23, 2024; and</li>
 <li>ten Dec.&nbsp;24, 2024 final-pipeline outputs covering five PONs under zero-shot and step-by-step prompting.</li>
 </ul>
-<p>These files are historical artifacts and are not rewritten by the repository’s execution scripts.</p>
+<p>These files are historical artifacts. The repository’s execution scripts do not rewrite them.</p>
+</section>
+<section id="manuscript-facing-protocol" class="level2">
+<h2 class="anchored" data-anchor-id="manuscript-facing-protocol">Manuscript-facing protocol</h2>
+<p>The manuscript-facing Dec.&nbsp;24 condition is the recovered prompt with the clause <code>Let's think step by step</code> appended. The frozen <code>*_sbs.txt</code> files are therefore the historical benchmark for the revised principal analysis.</p>
+<p>The plain-zero-shot <code>*_z.txt</code> files remain preserved for provenance but are not the principal benchmark. The previously added <code>improved-v1</code> machinery also remains in the repository as archival/secondary material and is no longer part of the primary comparison.</p>
 </section>
 <section id="instrument" class="level2">
 <h2 class="anchored" data-anchor-id="instrument">Instrument</h2>
-<p>The legacy computational files contain 15 ordered binary questions. The manuscript later reports 14 prompts; the working-groups question is the additional computational item. The repository keeps all 15 for protocol fidelity.</p>
+<p>The computational files contain 15 ordered binary questions. The manuscript’s Table A5 contains 14 prompts because the working-groups item (computational question 10) is omitted. The project preserves both representations:</p>
+<ul>
+<li>15 questions for computational protocol fidelity; and</li>
+<li>a 14-question manuscript subset for Table A5 replication.</li>
+</ul>
 </section>
 <section id="human-reference-data" class="level2">
 <h2 class="anchored" data-anchor-id="human-reference-data">Human-reference data</h2>
-<p>The recovered computational evaluation contains one human-reference vector per organization for the five PONs in the final Dec.&nbsp;24 run. A manuscript-facing three-coder dataset was not recovered from the supplied computational workspace.</p>
+<p>The authoritative human-reference file is now <code>input/reference/legacy_human_responses_confirmed.csv</code>. It retains the three individual human coders used in the manuscript-facing validation. Project-facing labels are:</p>
+<ul>
+<li>HBM;</li>
+<li>ASC; and</li>
+<li>JNG.</li>
+</ul>
+<p>The three-human majority vote is computed explicitly, and each LLM’s agreement with that majority is reported separately.</p>
 </section>
-<section id="berec-caveat" class="level2">
-<h2 class="anchored" data-anchor-id="berec-caveat">BEREC caveat</h2>
-<p>BEREC was an early development case and is part of the source corpus. Earlier Quarto versions show a different system/user message-role layout during this stage. Because the precise code state that generated <code>BO1A-2024-12-23-55_cat.txt</code> cannot be established with confidence, BEREC’s legacy/current comparison is preserved descriptively but is not pooled into strict same-protocol aggregate statistics.</p>
+<section id="table-a5-audit" class="level2">
+<h2 class="anchored" data-anchor-id="table-a5-audit">Table A5 audit</h2>
+<p>The surviving raw human data plus the frozen legacy SBS outputs reproduce 67 of 70 manuscript Table A5 cells. IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6 reconstruct as 3-to-1 splits while Table A5 reports <code>2-2</code>. These are recorded as Table A5 errors without modifying any source response.</p>
+<p>See <code>provenance/TABLE_A5_REPLICATION.md</code>.</p>
 </section>
 <section id="current-model-extension" class="level2">
 <h2 class="anchored" data-anchor-id="current-model-extension">Current-model extension</h2>
-<p>The new execution layer asks how a different model behaves under the final 2024 protocol. It does not rerun or replace 2024 outputs. New raw responses and metadata are written only under <code>output/current/</code>, and derived comparisons are written under <code>derived/</code>.</p>
-<p>See <code>LEGACY_API_CALLS.md</code> for recovered API-call details and remaining provenance gaps.</p>
+<p>The primary contemporary extension runs <code>gpt-5.4-nano-2026-03-17</code> under the same reconstructed Dec.&nbsp;24 SBS protocol for IRG, EUHC, COAS, CAN, and CEER. The runner refuses legacy GPT-4 Turbo IDs and writes only to a new timestamped directory under <code>output/current/</code>.</p>
+</section>
+<section id="berec-caveat-and-dedicated-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="berec-caveat-and-dedicated-workflow">BEREC caveat and dedicated workflow</h2>
+<p>BEREC’s preserved Dec.&nbsp;23 response predates the final Dec.&nbsp;24 request implementation. The exact request construction cannot be proven from the surviving artifacts. BEREC therefore remains outside strict five-PON aggregate comparisons and is handled only through dedicated, dry-run-by-default scripts using <code>BO1B.txt</code>.</p>
+<p>See <code>provenance/BEREC_REPLICATION.md</code> and <code>LEGACY_API_CALLS.md</code>.</p>
 
 
 <!-- -->
@@ -677,11 +703,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reconstruction Notes</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>This working directory was reconstructed from the supplied legacy PON project while preserving the analytical logic used by the manuscript-facing computational pilot.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>This working directory preserves the December 2024 PON governance LLM evidence while separating historical artifacts from reproducible contemporary extensions.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recovered source corpus</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Six boundary objects were recovered and retained as <span class="in">`BO1A.txt`</span> through <span class="in">`BO6A.txt`</span>. <span class="in">`BO1A.txt`</span> is BEREC. The remaining five map to IRG, EU Health Coalition, cOAlition S, CAN, and CEER.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Six archival boundary objects are retained as <span class="in">`BO1A.txt`</span> through <span class="in">`BO6A.txt`</span>. The five-PON strict comparison uses IRG, EUHC, COAS, CAN, and CEER. BEREC is handled separately. A second BEREC source, <span class="in">`BO1B.txt`</span>, is the required input for the dedicated BEREC replication scripts.</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preserved model outputs</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -690,25 +716,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one BEREC binary output from Dec. 23, 2024; and</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ten Dec. 24, 2024 final-pipeline outputs covering five PONs under zero-shot and step-by-step prompting.</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>These files are historical artifacts and are not rewritten by the repository's execution scripts.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>These files are historical artifacts. The repository's execution scripts do not rewrite them.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Instrument</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Manuscript-facing protocol</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>The legacy computational files contain 15 ordered binary questions. The manuscript later reports 14 prompts; the working-groups question is the additional computational item. The repository keeps all 15 for protocol fidelity.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>The manuscript-facing Dec. 24 condition is the recovered prompt with the clause <span class="in">`Let's think step by step`</span> appended. The frozen <span class="in">`*_sbs.txt`</span> files are therefore the historical benchmark for the revised principal analysis.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Human-reference data</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The plain-zero-shot <span class="in">`*_z.txt`</span> files remain preserved for provenance but are not the principal benchmark. The previously added <span class="in">`improved-v1`</span> machinery also remains in the repository as archival/secondary material and is no longer part of the primary comparison.</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>The recovered computational evaluation contains one human-reference vector per organization for the five PONs in the final Dec. 24 run. A manuscript-facing three-coder dataset was not recovered from the supplied computational workspace.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Instrument</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## BEREC caveat</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The computational files contain 15 ordered binary questions. The manuscript's Table A5 contains 14 prompts because the working-groups item (computational question 10) is omitted. The project preserves both representations:</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>BEREC was an early development case and is part of the source corpus. Earlier Quarto versions show a different system/user message-role layout during this stage. Because the precise code state that generated <span class="in">`BO1A-2024-12-23-55_cat.txt`</span> cannot be established with confidence, BEREC's legacy/current comparison is preserved descriptively but is not pooled into strict same-protocol aggregate statistics.</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current-model extension</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>The new execution layer asks how a different model behaves under the final 2024 protocol. It does not rerun or replace 2024 outputs. New raw responses and metadata are written only under <span class="in">`output/current/`</span>, and derived comparisons are written under <span class="in">`derived/`</span>.</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>See <span class="in">`LEGACY_API_CALLS.md`</span> for recovered API-call details and remaining provenance gaps.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>15 questions for computational protocol fidelity; and</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a 14-question manuscript subset for Table A5 replication.</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Human-reference data</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>The authoritative human-reference file is now <span class="in">`input/reference/legacy_human_responses_confirmed.csv`</span>. It retains the three individual human coders used in the manuscript-facing validation. Project-facing labels are:</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HBM;</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ASC; and</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>JNG.</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>The three-human majority vote is computed explicitly, and each LLM's agreement with that majority is reported separately.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table A5 audit</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>The surviving raw human data plus the frozen legacy SBS outputs reproduce 67 of 70 manuscript Table A5 cells. IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6 reconstruct as 3-to-1 splits while Table A5 reports <span class="in">`2-2`</span>. These are recorded as Table A5 errors without modifying any source response.</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>See <span class="in">`provenance/TABLE_A5_REPLICATION.md`</span>.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current-model extension</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The primary contemporary extension runs <span class="in">`gpt-5.4-nano-2026-03-17`</span> under the same reconstructed Dec. 24 SBS protocol for IRG, EUHC, COAS, CAN, and CEER. The runner refuses legacy GPT-4 Turbo IDs and writes only to a new timestamped directory under <span class="in">`output/current/`</span>.</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## BEREC caveat and dedicated workflow</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>BEREC's preserved Dec. 23 response predates the final Dec. 24 request implementation. The exact request construction cannot be proven from the surviving artifacts. BEREC therefore remains outside strict five-PON aggregate comparisons and is handled only through dedicated, dry-run-by-default scripts using <span class="in">`BO1B.txt`</span>.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>See <span class="in">`provenance/BEREC_REPLICATION.md`</span> and <span class="in">`LEGACY_API_CALLS.md`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

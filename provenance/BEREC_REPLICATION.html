@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PON Governance LLM Pilot</title>
+<title>berec_replication – PON Governance LLM Pilot</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -137,11 +137,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reports/results.html"> 
-<span class="menu-text">2024 Results</span></a>
+<span class="menu-text">2024 Replication</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reports/model-comparison.html"> 
-<span class="menu-text">Six-Scenario Comparison</span></a>
+<span class="menu-text">SBS Model Comparison</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/berec.html"> 
+<span class="menu-text">BEREC</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -166,76 +170,103 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#repository-purpose" id="toc-repository-purpose" class="nav-link active" data-scroll-target="#repository-purpose">Repository purpose</a></li>
-  <li><a href="#corpus" id="toc-corpus" class="nav-link" data-scroll-target="#corpus">Corpus</a></li>
-  <li><a href="#reproducibility-architecture" id="toc-reproducibility-architecture" class="nav-link" data-scroll-target="#reproducibility-architecture">Reproducibility architecture</a></li>
-  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports">Reports</a></li>
+  <li><a href="#berec-replication" id="toc-berec-replication" class="nav-link active" data-scroll-target="#berec-replication">BEREC Replication</a>
+  <ul class="collapse">
+  <li><a href="#required-berec-source" id="toc-required-berec-source" class="nav-link" data-scroll-target="#required-berec-source">Required BEREC source</a></li>
+  <li><a href="#model-provenance" id="toc-model-provenance" class="nav-link" data-scroll-target="#model-provenance">Model provenance</a></li>
+  <li><a href="#replication-claims" id="toc-replication-claims" class="nav-link" data-scroll-target="#replication-claims">Replication claims</a></li>
+  <li><a href="#dedicated-scripts-and-safeguards" id="toc-dedicated-scripts-and-safeguards" class="nav-link" data-scroll-target="#dedicated-scripts-and-safeguards">Dedicated scripts and safeguards</a>
+  <ul class="collapse">
+  <li><a href="#best-evidenced-dec.-23-reconstruction" id="toc-best-evidenced-dec.-23-reconstruction" class="nav-link" data-scroll-target="#best-evidenced-dec.-23-reconstruction">Best-evidenced Dec.&nbsp;23 reconstruction</a></li>
+  <li><a href="#dec.-24-sbs-protocol-with-the-newer-model" id="toc-dec.-24-sbs-protocol-with-the-newer-model" class="nav-link" data-scroll-target="#dec.-24-sbs-protocol-with-the-newer-model">Dec.&nbsp;24 SBS protocol with the newer model</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">PON Governance LLM Pilot</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Preserved 2024 analysis and model-generation comparison</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="repository-purpose" class="level2">
-<h2 class="anchored" data-anchor-id="repository-purpose">Repository purpose</h2>
-<p>This repository contains the computational materials associated with the manuscript <em>Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks</em>. The manuscript itself is not distributed here.</p>
-<p>The project preserves the 2024 LLM outputs as historical evidence and provides a separate execution path for asking a narrowly defined follow-up question:</p>
-<blockquote class="blockquote">
-<p><strong>How does a new model perform under the old protocol?</strong></p>
-</blockquote>
-<p>The comparison changes the model identifier while retaining the final 2024 analytical protocol: the same boundary objects, ordered questions, binary classification task, message structure, and prompting conditions. No structured-output schema, few-shot examples, revised question wording, or other modernized prompting intervention is introduced.</p>
+<section id="berec-replication" class="level1">
+<h1>BEREC Replication</h1>
+<p>BEREC is kept separate from the five-PON strict comparison because its preserved Dec.&nbsp;23, 2024 output predates the final Dec.&nbsp;24 implementation and the exact request state cannot be proven from the surviving artifacts.</p>
+<section id="required-berec-source" class="level2">
+<h2 class="anchored" data-anchor-id="required-berec-source">Required BEREC source</h2>
+<p>All dedicated BEREC replication scripts are hard-guarded to:</p>
+<p><code>input/boundary_objects/BO1B.txt</code></p>
+<p>They do <strong>not</strong> use <code>BO1A.txt</code> for new BEREC replication calls.</p>
 </section>
-<section id="corpus" class="level2">
-<h2 class="anchored" data-anchor-id="corpus">Corpus</h2>
-<p>Six purpose-oriented networks are represented in the source corpus:</p>
-<ol type="1">
-<li>Body of European Regulators for Electronic Communications (BEREC)</li>
-<li>Independent Regulators Group (IRG)</li>
-<li>EU Health Coalition</li>
-<li>cOAlition S</li>
-<li>Climate Action Network (CAN)</li>
-<li>Council of European Energy Regulators (CEER)</li>
-</ol>
-<p>The recovered final Dec.&nbsp;24 analysis contains paired zero-shot and step-by-step GPT-4-Turbo outputs for IRG through CEER. A Dec.&nbsp;23 BEREC binary output is also preserved. Because surviving development reports show that BEREC predates the final message-role layout, its historical comparison is retained but flagged as non-equivalent for strict aggregate statistics.</p>
+<section id="model-provenance" class="level2">
+<h2 class="anchored" data-anchor-id="model-provenance">Model provenance</h2>
+<p>The surviving 2024 source requested the moving alias <code>gpt-4-turbo</code>. It did not save the returned model identifier, request ID, <code>system_fingerprint</code>, or other serving metadata.</p>
+<p>OpenAI’s current GPT-4 Turbo documentation lists <code>gpt-4-turbo-2024-04-09</code> as the dated GPT-4 Turbo snapshot and still lists Chat Completions support. The snapshot is marked deprecated. As of 2026-08-30, it is therefore the best-supported dated snapshot for a controlled reconstruction and is still documented as callable, but the preserved Dec.&nbsp;23 response itself does not prove that exact serving snapshot.</p>
+<p>Reference: https://developers.openai.com/api/docs/models/gpt-4-turbo</p>
 </section>
-<section id="reproducibility-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="reproducibility-architecture">Reproducibility architecture</h2>
-<p>The repository deliberately separates three layers:</p>
-<ul>
-<li><strong>preserved evidence</strong> in <code>output/</code>;</li>
-<li><strong>new API executions</strong> in timestamped directories under <code>output/current/</code>; and</li>
-<li><strong>derived comparisons</strong> in <code>derived/</code>.</li>
-</ul>
-<p>This separation makes it impossible for the normal new-model workflow to overwrite the 2024 response files.</p>
+<section id="replication-claims" class="level2">
+<h2 class="anchored" data-anchor-id="replication-claims">Replication claims</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Definition</th>
+<th>BEREC status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exact replication</td>
+<td>Same exact 2024 BEREC request protocol + same exact dated snapshot</td>
+<td><strong>Not defensible from surviving evidence.</strong> The dated snapshot is available, but the precise Dec.&nbsp;23 BEREC prompt/message state is uncertain.</td>
+</tr>
+<tr class="even">
+<td>Model-family replication</td>
+<td>Same exact BEREC protocol + GPT-4 Turbo family, different snapshot</td>
+<td>The protocol uncertainty remains, so this cannot become a strict replication merely by changing snapshots.</td>
+</tr>
+<tr class="odd">
+<td>Protocol replication</td>
+<td>Recovered Dec.&nbsp;24 SBS protocol + a currently available newer model</td>
+<td><strong>Feasible.</strong> This is explicitly a retrospective application of the recovered Dec.&nbsp;24 SBS protocol to BEREC, not a claim about the original Dec.&nbsp;23 call.</td>
+</tr>
+</tbody>
+</table>
+<p>The project therefore uses the term <strong>best-evidenced Dec.&nbsp;23 reconstruction</strong> for the historical-snapshot experiment.</p>
 </section>
-<section id="reports" class="level2">
-<h2 class="anchored" data-anchor-id="reports">Reports</h2>
-<p><a href="reports/methods.qmd">Methods</a> documents the corpus, instrument, and recovered API protocol. <a href="reports/results.qmd">Legacy Results</a> evaluates the preserved Dec.&nbsp;24 outputs against the recovered human-reference vectors. <a href="reports/model-comparison.qmd">Model Comparison</a> becomes the main report after a new-model run is completed and compared with the legacy outputs.</p>
-<p>For execution instructions, API-key setup, and provenance cautions, see <code>README.md</code>.</p>
+<section id="dedicated-scripts-and-safeguards" class="level2">
+<h2 class="anchored" data-anchor-id="dedicated-scripts-and-safeguards">Dedicated scripts and safeguards</h2>
+<section id="best-evidenced-dec.-23-reconstruction" class="level3">
+<h3 class="anchored" data-anchor-id="best-evidenced-dec.-23-reconstruction">Best-evidenced Dec.&nbsp;23 reconstruction</h3>
+<p>Dry run; no API call:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script pins <code>gpt-4-turbo-2024-04-09</code>, uses <code>BO1B.txt</code>, and reconstructs the best-evidenced early message-role layout: BEREC text as the system message and the reconstructed question prompt as the user message.</p>
+<p>Execution requires <strong>both</strong> safeguards:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="dec.-24-sbs-protocol-with-the-newer-model" class="level3">
+<h3 class="anchored" data-anchor-id="dec.-24-sbs-protocol-with-the-newer-model">Dec.&nbsp;24 SBS protocol with the newer model</h3>
+<p>Dry run; no API call:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Execute only after reviewing the dry run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Both scripts plan exactly one API request, refuse any BEREC source other than <code>BO1B.txt</code>, write only to a new timestamped directory under <code>output/berec_replication/</code>, refuse overwriting existing run directories, and never write to the preserved root-level legacy BEREC artifact.</p>
 
 
 <!-- -->
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -690,50 +721,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "PON Governance LLM Pilot"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Preserved 2024 analysis and model-generation comparison"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository purpose</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*. The manuscript itself is not distributed here.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>The project preserves the 2024 LLM outputs as historical evidence and provides a separate execution path for asking a narrowly defined follow-up question:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **How does a new model perform under the old protocol?**</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>The comparison changes the model identifier while retaining the final 2024 analytical protocol: the same boundary objects, ordered questions, binary classification task, message structure, and prompting conditions. No structured-output schema, few-shot examples, revised question wording, or other modernized prompting intervention is introduced.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Corpus</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Six purpose-oriented networks are represented in the source corpus:</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Body of European Regulators for Electronic Communications (BEREC)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Independent Regulators Group (IRG)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>EU Health Coalition</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>cOAlition S</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Climate Action Network (CAN)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Council of European Energy Regulators (CEER)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>The recovered final Dec. 24 analysis contains paired zero-shot and step-by-step GPT-4-Turbo outputs for IRG through CEER. A Dec. 23 BEREC binary output is also preserved. Because surviving development reports show that BEREC predates the final message-role layout, its historical comparison is retained but flagged as non-equivalent for strict aggregate statistics.</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducibility architecture</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>The repository deliberately separates three layers:</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**preserved evidence** in <span class="in">`output/`</span>;</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**new API executions** in timestamped directories under <span class="in">`output/current/`</span>; and</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**derived comparisons** in <span class="in">`derived/`</span>.</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>This separation makes it impossible for the normal new-model workflow to overwrite the 2024 response files.</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Methods</span><span class="co">](reports/methods.qmd)</span> documents the corpus, instrument, and recovered API protocol. <span class="co">[</span><span class="ot">Legacy Results</span><span class="co">](reports/results.qmd)</span> evaluates the preserved Dec. 24 outputs against the recovered human-reference vectors. <span class="co">[</span><span class="ot">Model Comparison</span><span class="co">](reports/model-comparison.qmd)</span> becomes the main report after a new-model run is completed and compared with the legacy outputs.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>For execution instructions, API-key setup, and provenance cautions, see <span class="in">`README.md`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># BEREC Replication</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>BEREC is kept separate from the five-PON strict comparison because its preserved Dec. 23, 2024 output predates the final Dec. 24 implementation and the exact request state cannot be proven from the surviving artifacts.</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Required BEREC source</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>All dedicated BEREC replication scripts are hard-guarded to:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">`input/boundary_objects/BO1B.txt`</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>They do **not** use <span class="in">`BO1A.txt`</span> for new BEREC replication calls.</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model provenance</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>The surviving 2024 source requested the moving alias <span class="in">`gpt-4-turbo`</span>. It did not save the returned model identifier, request ID, <span class="in">`system_fingerprint`</span>, or other serving metadata.</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>OpenAI's current GPT-4 Turbo documentation lists <span class="in">`gpt-4-turbo-2024-04-09`</span> as the dated GPT-4 Turbo snapshot and still lists Chat Completions support. The snapshot is marked deprecated. As of 2026-08-30, it is therefore the best-supported dated snapshot for a controlled reconstruction and is still documented as callable, but the preserved Dec. 23 response itself does not prove that exact serving snapshot.</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>Reference: https://developers.openai.com/api/docs/models/gpt-4-turbo</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Replication claims</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Level <span class="pp">|</span> Definition <span class="pp">|</span> BEREC status <span class="pp">|</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Exact replication <span class="pp">|</span> Same exact 2024 BEREC request protocol + same exact dated snapshot <span class="pp">|</span> **Not defensible from surviving evidence.** The dated snapshot is available, but the precise Dec. 23 BEREC prompt/message state is uncertain. <span class="pp">|</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model-family replication <span class="pp">|</span> Same exact BEREC protocol + GPT-4 Turbo family, different snapshot <span class="pp">|</span> The protocol uncertainty remains, so this cannot become a strict replication merely by changing snapshots. <span class="pp">|</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protocol replication <span class="pp">|</span> Recovered Dec. 24 SBS protocol + a currently available newer model <span class="pp">|</span> **Feasible.** This is explicitly a retrospective application of the recovered Dec. 24 SBS protocol to BEREC, not a claim about the original Dec. 23 call. <span class="pp">|</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>The project therefore uses the term **best-evidenced Dec. 23 reconstruction** for the historical-snapshot experiment.</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dedicated scripts and safeguards</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### Best-evidenced Dec. 23 reconstruction</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>Dry run; no API call:</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>The script pins <span class="in">`gpt-4-turbo-2024-04-09`</span>, uses <span class="in">`BO1B.txt`</span>, and reconstructs the best-evidenced early message-role layout: BEREC text as the system message and the reconstructed question prompt as the user message.</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>Execution requires **both** safeguards:</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py <span class="dt">\</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dec. 24 SBS protocol with the newer model</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>Dry run; no API call:</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>Execute only after reviewing the dry run:</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py <span class="dt">\</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>Both scripts plan exactly one API request, refuse any BEREC source other than <span class="in">`BO1B.txt`</span>, write only to a new timestamped directory under <span class="in">`output/berec_replication/`</span>, refuse overwriting existing run directories, and never write to the preserved root-level legacy BEREC artifact.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

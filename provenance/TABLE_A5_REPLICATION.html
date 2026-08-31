@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>legacy_api_calls – PON Governance LLM Pilot</title>
+<title>table_a5_replication – PON Governance LLM Pilot</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -170,13 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#openai-api-call-provenance" id="toc-openai-api-call-provenance" class="nav-link active" data-scroll-target="#openai-api-call-provenance">2024 OpenAI API Call Provenance</a>
+  <li><a href="#table-a5-replication" id="toc-table-a5-replication" class="nav-link active" data-scroll-target="#table-a5-replication">Table A5 Replication</a>
   <ul class="collapse">
-  <li><a href="#high-confidence-findings" id="toc-high-confidence-findings" class="nav-link" data-scroll-target="#high-confidence-findings">High-confidence findings</a></li>
-  <li><a href="#berec-provenance" id="toc-berec-provenance" class="nav-link" data-scroll-target="#berec-provenance">BEREC provenance</a></li>
-  <li><a href="#information-not-recoverable-from-the-preserved-files" id="toc-information-not-recoverable-from-the-preserved-files" class="nav-link" data-scroll-target="#information-not-recoverable-from-the-preserved-files">Information not recoverable from the preserved files</a></li>
-  <li><a href="#credential-note" id="toc-credential-note" class="nav-link" data-scroll-target="#credential-note">Credential note</a></li>
-  <li><a href="#current-snapshot-evidence" id="toc-current-snapshot-evidence" class="nav-link" data-scroll-target="#current-snapshot-evidence">Current snapshot evidence</a></li>
+  <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
+  <li><a href="#clear-agreement-terminology" id="toc-clear-agreement-terminology" class="nav-link" data-scroll-target="#clear-agreement-terminology">Clear agreement terminology</a></li>
+  <li><a href="#three-table-a5-discrepancies" id="toc-three-table-a5-discrepancies" class="nav-link" data-scroll-target="#three-table-a5-discrepancies">Three Table A5 discrepancies</a></li>
+  <li><a href="#reproduce-the-audit" id="toc-reproduce-the-audit" class="nav-link" data-scroll-target="#reproduce-the-audit">Reproduce the audit</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -187,67 +186,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="openai-api-call-provenance" class="level1">
-<h1>2024 OpenAI API Call Provenance</h1>
-<p>This note documents what can and cannot be recovered about the API calls that produced the preserved 2024 model outputs.</p>
-<section id="high-confidence-findings" class="level2">
-<h2 class="anchored" data-anchor-id="high-confidence-findings">High-confidence findings</h2>
-<p>The late-2024 Quarto source uses the OpenAI Python client with the <code>OpenAI()</code> client class and the Chat Completions endpoint:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>models,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: prompt},</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: text},</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>For the December 24 final pipeline:</p>
+<section id="table-a5-replication" class="level1">
+<h1>Table A5 Replication</h1>
+<p>This note records the reproducible reconstruction of manuscript Table A5, <em>Coder agreement per prompt across PONs</em>.</p>
+<section id="inputs" class="level2">
+<h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
+<p>The reconstruction uses:</p>
 <ul>
-<li>requested model alias: <code>gpt-4-turbo</code>;</li>
-<li>endpoint: Chat Completions (<code>/v1/chat/completions</code>);</li>
-<li>system message: the policy-analyst instruction plus the ordered binary questions;</li>
-<li>user message: the full boundary-object text;</li>
-<li>prompting conditions: zero-shot and the same prompt with <code>Let's think step by step</code> appended;</li>
-<li>explicit request arguments: <code>model</code> and <code>messages</code> only;</li>
-<li>no explicit <code>temperature</code>, <code>top_p</code>, <code>max_tokens</code>, <code>seed</code>, <code>response_format</code>, tool configuration, or other generation parameters;</li>
-<li>response text saved from <code>completion.choices[0].message.content</code>;</li>
-<li>output filenames contain local datetimes generated with Python <code>datetime.now()</code>; timezone information was not recorded.</li>
+<li>the three individual human coders in <code>input/reference/legacy_human_responses_confirmed.csv</code>, displayed as <strong>HBM</strong>, <strong>ASC</strong>, and <strong>JNG</strong>;</li>
+<li>the five frozen Dec.&nbsp;24, 2024 step-by-step (<code>*_sbs.txt</code>) GPT-4 Turbo outputs in <code>output/</code>;</li>
+<li>the 14-question manuscript subset of the 15-question computational instrument; and</li>
+<li><code>input/reference/manuscript_table_a5.csv</code>, a row-level transcription of the manuscript’s published Table A5 agreement cells.</li>
 </ul>
-<p>The preserved Dec.&nbsp;24 output set covers IRG, EU Health Coalition, cOAlition S, CAN, and CEER under both prompting conditions.</p>
+<p>The working-groups item is computational question 10 and is excluded only from the Table A5 reconstruction. It remains part of the 15-question computational protocol.</p>
 </section>
-<section id="berec-provenance" class="level2">
-<h2 class="anchored" data-anchor-id="berec-provenance">BEREC provenance</h2>
-<p><code>output/BO1A-2024-12-23-55_cat.txt</code> is the preserved BEREC binary-output file from December 23, 2024. The original source-state provenance is incomplete. For all new dedicated BEREC replication experiments, the project now requires <code>input/boundary_objects/BO1B.txt</code>; those experiments do not rewrite or replace the historical artifact.</p>
-<p>However, BEREC predates the final Dec.&nbsp;24 implementation. Earlier report versions around the BEREC development stage show a different message-role layout in which the boundary-object text was passed as the system message and the question prompt as the user message. The surviving materials do not establish with enough certainty which exact source-code state produced the Dec.&nbsp;23 BEREC file. For that reason:</p>
+<section id="clear-agreement-terminology" class="level2">
+<h2 class="anchored" data-anchor-id="clear-agreement-terminology">Clear agreement terminology</h2>
+<p>Project-facing outputs do not use the manuscript’s opaque <code>1</code>, <code>0</code>, <code>3-1</code>, and <code>2-2</code> shorthand as the primary description. Instead they report explicit counts such as:</p>
 <ul>
-<li>the BEREC file is retained as an authentic legacy output;</li>
-<li>BEREC is excluded from the main five-PON SBS pipeline and is handled only through dedicated BEREC execution workflows;</li>
-<li>all new dedicated BEREC experiments use <code>input/boundary_objects/BO1B.txt</code> and keep the best-evidenced historical reconstruction separate from contemporary Dec.&nbsp;24 SBS protocol replication;</li>
-<li>BEREC’s legacy/current classification differences are reported descriptively;</li>
-<li>BEREC is excluded from aggregate statistics labeled as a <strong>strict same-protocol comparison</strong>.</li>
+<li><code>4 TRUE / 0 FALSE</code>;</li>
+<li><code>3 TRUE / 1 FALSE</code>;</li>
+<li><code>2 TRUE / 2 FALSE</code>;</li>
+<li><code>1 TRUE / 3 FALSE</code>; and</li>
+<li><code>0 TRUE / 4 FALSE</code>.</li>
 </ul>
+<p>Human-only agreement is reported analogously across HBM, ASC, and JNG. The manuscript shorthand is retained in separate fields solely for faithful comparison. LLM agreement with the three-human majority vote is reported explicitly.</p>
 </section>
-<section id="information-not-recoverable-from-the-preserved-files" class="level2">
-<h2 class="anchored" data-anchor-id="information-not-recoverable-from-the-preserved-files">Information not recoverable from the preserved files</h2>
-<p>The following were not stored with the 2024 response text and therefore cannot be reconstructed reliably:</p>
+<section id="three-table-a5-discrepancies" class="level2">
+<h2 class="anchored" data-anchor-id="three-table-a5-discrepancies">Three Table A5 discrepancies</h2>
+<p>The surviving raw human data and frozen legacy SBS outputs reconstruct 67 of 70 Table A5 cells exactly. Three manuscript cells report <code>2-2</code> even though the surviving four responses produce a 3-to-1 split.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>PON</th>
+<th style="text-align: right;">Manuscript prompt</th>
+<th>HBM</th>
+<th>ASC</th>
+<th>JNG</th>
+<th>Legacy LLM SBS</th>
+<th>Surviving pattern</th>
+<th>Table A5</th>
+<th>Conclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IRG</td>
+<td style="text-align: right;">3</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>1 TRUE / 3 FALSE</td>
+<td><code>2-2</code></td>
+<td>Table A5 does not match the surviving raw data.</td>
+</tr>
+<tr class="even">
+<td>cOAlition S</td>
+<td style="text-align: right;">8</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>3 TRUE / 1 FALSE</td>
+<td><code>2-2</code></td>
+<td>Table A5 does not match the raw data; manuscript prose independently describes this as a 3-1 decision with a human outlier.</td>
+</tr>
+<tr class="odd">
+<td>CEER</td>
+<td style="text-align: right;">6</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>3 TRUE / 1 FALSE</td>
+<td><code>2-2</code></td>
+<td>Table A5 does not match the surviving raw data.</td>
+</tr>
+</tbody>
+</table>
+<p>These are recorded as <strong>Table A5 errors</strong>. No source response is altered to force agreement with the manuscript table.</p>
+</section>
+<section id="reproduce-the-audit" class="level2">
+<h2 class="anchored" data-anchor-id="reproduce-the-audit">Reproduce the audit</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_reconstruct_table_a5.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script makes no API calls and writes:</p>
 <ul>
-<li>the returned model snapshot actually recorded by the 2024 API response (the surviving text does not store it);</li>
-<li>OpenAI response ID and HTTP request ID;</li>
-<li><code>system_fingerprint</code>;</li>
-<li>token usage and cost per request;</li>
-<li>server-side defaults actually applied to unspecified generation parameters;</li>
-<li>exact OpenAI Python package version;</li>
-<li>request retry history;</li>
-<li>local timezone associated with the timestamps in filenames.</li>
+<li><code>derived/table_a5_replication.csv</code> — all 70 manuscript cells;</li>
+<li><code>derived/table_a5_discrepancies.csv</code> — the three discrepant cells; and</li>
+<li><code>derived/sbs_coder_comparison_extended.csv</code> — all 15 computational questions, including human majority, legacy LLM agreement, and the newer-model SBS response when a completed newer-model run is available.</li>
 </ul>
-<p>The current-model runner records these fields whenever the contemporary API returns them so that future comparisons have stronger provenance.</p>
-</section>
-<section id="credential-note" class="level2">
-<h2 class="anchored" data-anchor-id="credential-note">Credential note</h2>
-<p>One legacy Quarto source contained an API key directly in source code. That credential is intentionally <strong>not</strong> copied into this repository or this provenance note. If the historical credential has not already been revoked, it should be rotated. The reconstructed project reads credentials only from <code>OPENAI_API_KEY</code> and ignores <code>.env</code> in version control.</p>
-</section>
-<section id="current-snapshot-evidence" class="level2">
-<h2 class="anchored" data-anchor-id="current-snapshot-evidence">Current snapshot evidence</h2>
-<p>OpenAI currently documents <code>gpt-4-turbo-2024-04-09</code> as the dated GPT-4 Turbo snapshot and lists Chat Completions support. It is marked deprecated. This makes it the best-supported dated snapshot for a controlled reconstruction, but it does not retroactively prove what serving state produced a preserved 2024 response. See <code>BEREC_REPLICATION.md</code>.</p>
+<p>The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. The newer model is added only as an adjacent extension and never retroactively folded into the manuscript’s four-coder agreement pattern.</p>
 
 
 <!-- -->
@@ -707,73 +747,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 2024 OpenAI API Call Provenance</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Table A5 Replication</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>This note documents what can and cannot be recovered about the API calls that produced the preserved 2024 model outputs.</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>This note records the reproducible reconstruction of manuscript Table A5, *Coder agreement per prompt across PONs*.</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## High-confidence findings</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inputs</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>The late-2024 Quarto source uses the OpenAI Python client with the <span class="in">`OpenAI()`</span> client class and the Chat Completions endpoint:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>The reconstruction uses:</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>models,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: prompt},</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: text},</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>For the December 24 final pipeline:</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>requested model alias: <span class="in">`gpt-4-turbo`</span>;</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>endpoint: Chat Completions (<span class="in">`/v1/chat/completions`</span>);</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>system message: the policy-analyst instruction plus the ordered binary questions;</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>user message: the full boundary-object text;</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>prompting conditions: zero-shot and the same prompt with <span class="in">`Let's think step by step`</span> appended;</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>explicit request arguments: <span class="in">`model`</span> and <span class="in">`messages`</span> only;</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>no explicit <span class="in">`temperature`</span>, <span class="in">`top_p`</span>, <span class="in">`max_tokens`</span>, <span class="in">`seed`</span>, <span class="in">`response_format`</span>, tool configuration, or other generation parameters;</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>response text saved from <span class="in">`completion.choices[0].message.content`</span>;</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>output filenames contain local datetimes generated with Python <span class="in">`datetime.now()`</span>; timezone information was not recorded.</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>The preserved Dec. 24 output set covers IRG, EU Health Coalition, cOAlition S, CAN, and CEER under both prompting conditions.</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## BEREC provenance</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="in">`output/BO1A-2024-12-23-55_cat.txt`</span> is the preserved BEREC binary-output file from December 23, 2024. The original source-state provenance is incomplete. For all new dedicated BEREC replication experiments, the project now requires <span class="in">`input/boundary_objects/BO1B.txt`</span>; those experiments do not rewrite or replace the historical artifact.</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>However, BEREC predates the final Dec. 24 implementation. Earlier report versions around the BEREC development stage show a different message-role layout in which the boundary-object text was passed as the system message and the question prompt as the user message. The surviving materials do not establish with enough certainty which exact source-code state produced the Dec. 23 BEREC file. For that reason:</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the BEREC file is retained as an authentic legacy output;</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BEREC is excluded from the main five-PON SBS pipeline and is handled only through dedicated BEREC execution workflows;</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>all new dedicated BEREC experiments use <span class="in">`input/boundary_objects/BO1B.txt`</span> and keep the best-evidenced historical reconstruction separate from contemporary Dec. 24 SBS protocol replication;</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BEREC's legacy/current classification differences are reported descriptively;</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BEREC is excluded from aggregate statistics labeled as a **strict same-protocol comparison**.</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## Information not recoverable from the preserved files</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>The following were not stored with the 2024 response text and therefore cannot be reconstructed reliably:</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the returned model snapshot actually recorded by the 2024 API response (the surviving text does not store it);</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OpenAI response ID and HTTP request ID;</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`system_fingerprint`</span>;</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>token usage and cost per request;</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>server-side defaults actually applied to unspecified generation parameters;</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>exact OpenAI Python package version;</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>request retry history;</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>local timezone associated with the timestamps in filenames.</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>The current-model runner records these fields whenever the contemporary API returns them so that future comparisons have stronger provenance.</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Credential note</span></span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>One legacy Quarto source contained an API key directly in source code. That credential is intentionally **not** copied into this repository or this provenance note. If the historical credential has not already been revoked, it should be rotated. The reconstructed project reads credentials only from <span class="in">`OPENAI_API_KEY`</span> and ignores <span class="in">`.env`</span> in version control.</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current snapshot evidence</span></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>OpenAI currently documents <span class="in">`gpt-4-turbo-2024-04-09`</span> as the dated GPT-4 Turbo snapshot and lists Chat Completions support. It is marked deprecated. This makes it the best-supported dated snapshot for a controlled reconstruction, but it does not retroactively prove what serving state produced a preserved 2024 response. See <span class="in">`BEREC_REPLICATION.md`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the three individual human coders in <span class="in">`input/reference/legacy_human_responses_confirmed.csv`</span>, displayed as **HBM**, **ASC**, and **JNG**;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the five frozen Dec. 24, 2024 step-by-step (<span class="in">`*_sbs.txt`</span>) GPT-4 Turbo outputs in <span class="in">`output/`</span>;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the 14-question manuscript subset of the 15-question computational instrument; and</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`input/reference/manuscript_table_a5.csv`</span>, a row-level transcription of the manuscript's published Table A5 agreement cells.</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>The working-groups item is computational question 10 and is excluded only from the Table A5 reconstruction. It remains part of the 15-question computational protocol.</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Clear agreement terminology</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>Project-facing outputs do not use the manuscript's opaque <span class="in">`1`</span>, <span class="in">`0`</span>, <span class="in">`3-1`</span>, and <span class="in">`2-2`</span> shorthand as the primary description. Instead they report explicit counts such as:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`4 TRUE / 0 FALSE`</span>;</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`3 TRUE / 1 FALSE`</span>;</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`2 TRUE / 2 FALSE`</span>;</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`1 TRUE / 3 FALSE`</span>; and</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`0 TRUE / 4 FALSE`</span>.</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>Human-only agreement is reported analogously across HBM, ASC, and JNG. The manuscript shorthand is retained in separate fields solely for faithful comparison. LLM agreement with the three-human majority vote is reported explicitly.</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Three Table A5 discrepancies</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>The surviving raw human data and frozen legacy SBS outputs reconstruct 67 of 70 Table A5 cells exactly. Three manuscript cells report <span class="in">`2-2`</span> even though the surviving four responses produce a 3-to-1 split.</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> PON <span class="pp">|</span> Manuscript prompt <span class="pp">|</span> HBM <span class="pp">|</span> ASC <span class="pp">|</span> JNG <span class="pp">|</span> Legacy LLM SBS <span class="pp">|</span> Surviving pattern <span class="pp">|</span> Table A5 <span class="pp">|</span> Conclusion <span class="pp">|</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---|---|---|---|---|---|---|</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> IRG <span class="pp">|</span> 3 <span class="pp">|</span> FALSE <span class="pp">|</span> FALSE <span class="pp">|</span> TRUE <span class="pp">|</span> FALSE <span class="pp">|</span> 1 TRUE / 3 FALSE <span class="pp">|</span> <span class="in">`2-2`</span> <span class="pp">|</span> Table A5 does not match the surviving raw data. <span class="pp">|</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> cOAlition S <span class="pp">|</span> 8 <span class="pp">|</span> FALSE <span class="pp">|</span> TRUE <span class="pp">|</span> TRUE <span class="pp">|</span> TRUE <span class="pp">|</span> 3 TRUE / 1 FALSE <span class="pp">|</span> <span class="in">`2-2`</span> <span class="pp">|</span> Table A5 does not match the raw data; manuscript prose independently describes this as a 3-1 decision with a human outlier. <span class="pp">|</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CEER <span class="pp">|</span> 6 <span class="pp">|</span> TRUE <span class="pp">|</span> FALSE <span class="pp">|</span> TRUE <span class="pp">|</span> TRUE <span class="pp">|</span> 3 TRUE / 1 FALSE <span class="pp">|</span> <span class="in">`2-2`</span> <span class="pp">|</span> Table A5 does not match the surviving raw data. <span class="pp">|</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>These are recorded as **Table A5 errors**. No source response is altered to force agreement with the manuscript table.</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce the audit</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_reconstruct_table_a5.R</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>The script makes no API calls and writes:</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/table_a5_replication.csv`</span> — all 70 manuscript cells;</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/table_a5_discrepancies.csv`</span> — the three discrepant cells; and</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/sbs_coder_comparison_extended.csv`</span> — all 15 computational questions, including human majority, legacy LLM agreement, and the newer-model SBS response when a completed newer-model run is available.</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. The newer model is added only as an adjacent extension and never retroactively folded into the manuscript's four-coder agreement pattern.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

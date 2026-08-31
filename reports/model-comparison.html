@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Six-Scenario Comparison – PON Governance LLM Pilot</title>
+<title>SBS Model Comparison – PON Governance LLM Pilot</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,10 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-
-<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-
 
 
 </head>
@@ -141,11 +137,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../reports/results.html"> 
-<span class="menu-text">2024 Results</span></a>
+<span class="menu-text">2024 Replication</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../reports/model-comparison.html" aria-current="page"> 
-<span class="menu-text">Six-Scenario Comparison</span></a>
+<span class="menu-text">SBS Model Comparison</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/berec.html"> 
+<span class="menu-text">BEREC</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -171,13 +171,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#design" id="toc-design" class="nav-link active" data-scroll-target="#design">Design</a></li>
-  <li><a href="#why-the-improved-protocol-is-better" id="toc-why-the-improved-protocol-is-better" class="nav-link" data-scroll-target="#why-the-improved-protocol-is-better">Why the improved protocol is better</a></li>
-  <li><a href="#performance-against-the-human-reference" id="toc-performance-against-the-human-reference" class="nav-link" data-scroll-target="#performance-against-the-human-reference">Performance against the human reference</a></li>
-  <li><a href="#protocol-and-model-effects" id="toc-protocol-and-model-effects" class="nav-link" data-scroll-target="#protocol-and-model-effects">Protocol and model effects</a></li>
-  <li><a href="#question-level-behavior" id="toc-question-level-behavior" class="nav-link" data-scroll-target="#question-level-behavior">Question-level behavior</a></li>
+  <li><a href="#performance-against-the-confirmed-human-reference" id="toc-performance-against-the-confirmed-human-reference" class="nav-link" data-scroll-target="#performance-against-the-confirmed-human-reference">Performance against the confirmed human reference</a></li>
+  <li><a href="#agreement-with-the-human-majority" id="toc-agreement-with-the-human-majority" class="nav-link" data-scroll-target="#agreement-with-the-human-majority">Agreement with the human majority</a></li>
   <li><a href="#model-generation-stability" id="toc-model-generation-stability" class="nav-link" data-scroll-target="#model-generation-stability">Model-generation stability</a></li>
   <li><a href="#run-integrity-diagnostics" id="toc-run-integrity-diagnostics" class="nav-link" data-scroll-target="#run-integrity-diagnostics">Run-integrity diagnostics</a></li>
-  <li><a href="#interpretation-boundary" id="toc-interpretation-boundary" class="nav-link" data-scroll-target="#interpretation-boundary">Interpretation boundary</a></li>
   </ul>
 </nav>
     </div>
@@ -186,8 +183,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Six-Scenario Comparison</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Model generation × protocol under zero-shot governance coding</p>
+<div class="quarto-title-block"><div><h1 class="title">SBS Model Comparison</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">Frozen GPT-4 Turbo versus a newer pinned model under the same protocol</p>
 </div>
 
 
@@ -206,464 +203,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="design" class="level2">
 <h2 class="anchored" data-anchor-id="design">Design</h2>
-<p>The analysis is zero-shot only and uses a <strong>3 × 2 model-by-protocol design</strong>: three model arms under the preserved 2024 protocol and the improved protocol. The same five PONs—IRG, EUHC, COAS, CAN, and CEER—and the same 15 questions are evaluated in every cell.</p>
-<div class="cell">
-<div id="tbl-scenarios" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Six zero-shot scenarios in the model-by-protocol design
-</figcaption>
-<div aria-describedby="tbl-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<p>This comparison changes <strong>model generation only</strong>. Both arms use the same reconstructed Dec.&nbsp;24, 2024 SBS protocol and the same five PONs.</p>
+<table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Protocol</th>
-<th style="text-align: left;">Source</th>
+<th>Model</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">Preserved Dec.&nbsp;24, 2024 output</td>
+<td>GPT-4 Turbo</td>
+<td>Frozen 2024 <code>*_sbs.txt</code> responses; never rerun</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">Retained 2026 run</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">New 2026 run</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">New improved-protocol run</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">New improved-protocol run</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">New improved-protocol run</td>
+<td><code>gpt-5.4-nano-2026-03-17</code></td>
+<td>New SBS run under <code>output/current/</code></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The historical calls record the alias <code>gpt-4-turbo</code>, not the returned snapshot ID. The improved-protocol rerun uses the pinned <code>gpt-4-turbo-2024-04-09</code> snapshot as the closest reproducible counterpart. This improves reproducibility but cannot prove byte-for-byte identity with the model that served the 2024 alias.</p>
-</div>
-</div>
+<p>The improved-protocol experiment and plain-zero-shot outputs are archival/secondary and are not pooled into this analysis. The comparison pipeline considers only newer-model run directories containing <code>run_manifest.json</code> with <code>status == "complete"</code>; a directory carrying <code>run_failed.json</code>, or lacking an explicit completed manifest, is not treated as a completed result.</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>comparison_ready) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"::: {.callout-important}</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"## Newer-model SBS results are not complete yet</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Run the dry run, execute the five-request SBS batch, then rebuild derived products:</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```bash</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17 --execute</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/02_reconstruct_table_a5.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/05_compare_scenarios.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"quarto render</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">":::</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </section>
-<section id="why-the-improved-protocol-is-better" class="level2">
-<h2 class="anchored" data-anchor-id="why-the-improved-protocol-is-better">Why the improved protocol is better</h2>
-<p>The improved prompt is intentionally short. It keeps the same documents, 15 questions, zero-shot design, Chat Completions endpoint, and system/user message roles. The substantive treatment is the instruction text; the improved runs also use the same documented 500-token operational output cap.</p>
-<ul>
-<li><strong>Evidence boundary:</strong> use only the supplied document.</li>
-<li><strong>Decision rule:</strong> return TRUE only when the document explicitly supports the proposition; otherwise FALSE.</li>
-<li><strong>Inference boundary:</strong> do not import outside knowledge or infer unstated rules.</li>
-<li><strong>Output contract:</strong> return exactly one ordered <code>question_id,response</code> row per question.</li>
-</ul>
-<p>This makes the coding threshold and serialization contract explicit without adding examples, chain-of-thought instructions, or a structured-output API parameter.</p>
-</section>
-<section id="performance-against-the-human-reference" class="level2">
-<h2 class="anchored" data-anchor-id="performance-against-the-human-reference">Performance against the human reference</h2>
+<section id="performance-against-the-confirmed-human-reference" class="level2">
+<h2 class="anchored" data-anchor-id="performance-against-the-confirmed-human-reference">Performance against the confirmed human reference</h2>
 <div class="cell">
-<div id="tbl-overall-performance" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  overall <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">disagreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>disagreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-overall" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-overall-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Overall performance against the recovered human reference across six zero-shot scenarios
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Overall SBS performance against the confirmed human reference
 </figcaption>
-<div aria-describedby="tbl-overall-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 21%">
-<col style="width: 11%">
-<col style="width: 10%">
-<col style="width: 11%">
-<col style="width: 8%">
-<col style="width: 14%">
-<col style="width: 7%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Protocol</th>
-<th style="text-align: right;">Decisions</th>
-<th style="text-align: left;">Accuracy</th>
-<th style="text-align: left;">Precision</th>
-<th style="text-align: left;">Recall</th>
-<th style="text-align: left;">Specificity</th>
-<th style="text-align: left;">F1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: left;">75.7%</td>
-<td style="text-align: left;">84.3%</td>
-<td style="text-align: left;">85.7%</td>
-<td style="text-align: left;">36.0%</td>
-<td style="text-align: left;">85.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: left;">66.4%</td>
-<td style="text-align: left;">86.2%</td>
-<td style="text-align: left;">69.0%</td>
-<td style="text-align: left;">56.0%</td>
-<td style="text-align: left;">76.7%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: left;">76.8%</td>
-<td style="text-align: left;">83.8%</td>
-<td style="text-align: left;">88.0%</td>
-<td style="text-align: left;">32.0%</td>
-<td style="text-align: left;">85.9%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: left;">75.5%</td>
-<td style="text-align: left;">83.5%</td>
-<td style="text-align: left;">86.3%</td>
-<td style="text-align: left;">32.0%</td>
-<td style="text-align: left;">84.9%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: left;">69.1%</td>
-<td style="text-align: left;">82.9%</td>
-<td style="text-align: left;">77.3%</td>
-<td style="text-align: left;">36.0%</td>
-<td style="text-align: left;">80.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: right;">375</td>
-<td style="text-align: left;">61.9%</td>
-<td style="text-align: left;">83.4%</td>
-<td style="text-align: left;">65.3%</td>
-<td style="text-align: left;">48.0%</td>
-<td style="text-align: left;">73.3%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Question:</strong> Which combinations of model and protocol produce the smallest share of disagreements with the human reference, and are the gains consistent across PONs?</p>
-</div>
-</div>
-</div>
-<p><img src="../derived/figures/scenario_disagreement_by_pon.png" class="img-fluid"></p>
-<p>The disagreement rate is shown rather than a raw error count so each point conveys the <strong>relative weight of errors</strong> in the 15-question coding vector.</p>
-</section>
-<section id="protocol-and-model-effects" class="level2">
-<h2 class="anchored" data-anchor-id="protocol-and-model-effects">Protocol and model effects</h2>
-<div class="cell">
-<div id="tbl-protocol-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-protocol-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: Change in human-reference accuracy after replacing the 2024 prompt with the improved protocol
-</figcaption>
-<div aria-describedby="tbl-protocol-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">PON</th>
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">2024 protocol</th>
-<th style="text-align: left;">Improved protocol</th>
-<th style="text-align: left;">Change</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">-8.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">76.0%</td>
-<td style="text-align: left;">1.3%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">54.7%</td>
-<td style="text-align: left;">-12.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CEER</td>
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">70.7%</td>
-<td style="text-align: left;">-4.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CEER</td>
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">0.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CEER</td>
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">73.3%</td>
-<td style="text-align: left;">62.7%</td>
-<td style="text-align: left;">-10.7%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">COAS</td>
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">77.3%</td>
-<td style="text-align: left;">72.0%</td>
-<td style="text-align: left;">-5.3%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">COAS</td>
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">78.7%</td>
-<td style="text-align: left;">72.0%</td>
-<td style="text-align: left;">-6.7%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">COAS</td>
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">58.7%</td>
-<td style="text-align: left;">-8.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">EUHC</td>
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">70.7%</td>
-<td style="text-align: left;">48.0%</td>
-<td style="text-align: left;">-22.7%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">EUHC</td>
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">76.0%</td>
-<td style="text-align: left;">1.3%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">EUHC</td>
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">64.0%</td>
-<td style="text-align: left;">52.0%</td>
-<td style="text-align: left;">-12.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">IRG</td>
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">81.3%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">-6.7%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">IRG</td>
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">81.3%</td>
-<td style="text-align: left;">78.7%</td>
-<td style="text-align: left;">-2.7%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">IRG</td>
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">81.3%</td>
-<td style="text-align: left;">6.7%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<div class="cell">
-<div id="tbl-model-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4: Human-reference accuracy by model within each protocol, with pairwise changes
-</figcaption>
-<div aria-describedby="tbl-model-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 5%">
+<col style="width: 20%">
 <col style="width: 18%">
-<col style="width: 12%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 6%">
 <col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 4%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">PON</th>
-<th style="text-align: left;">Protocol</th>
-<th style="text-align: left;">GPT-4 Turbo</th>
-<th style="text-align: left;">GPT-5.4 nano</th>
-<th style="text-align: left;">GPT-5.4 mini</th>
-<th style="text-align: left;">Nano − Turbo</th>
-<th style="text-align: left;">Mini − Turbo</th>
-<th style="text-align: left;">Mini − Nano</th>
+<th style="text-align: left;">model</th>
+<th style="text-align: left;">model_id</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">tp</th>
+<th style="text-align: right;">fp</th>
+<th style="text-align: right;">fn</th>
+<th style="text-align: right;">tn</th>
+<th style="text-align: left;">accuracy</th>
+<th style="text-align: left;">disagreement_rate</th>
+<th style="text-align: left;">precision</th>
+<th style="text-align: left;">recall</th>
+<th style="text-align: left;">specificity</th>
+<th style="text-align: left;">f1</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">-8.0%</td>
-<td style="text-align: left;">0.0%</td>
-<td style="text-align: left;">8.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">54.7%</td>
-<td style="text-align: left;">76.0%</td>
-<td style="text-align: left;">-12.0%</td>
-<td style="text-align: left;">9.3%</td>
+<td style="text-align: left;">GPT-4 Turbo (2024 legacy)</td>
+<td style="text-align: left;">gpt-4-turbo</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">265</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: left;">78.7%</td>
 <td style="text-align: left;">21.3%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CEER</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">73.3%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">-1.3%</td>
-<td style="text-align: left;">0.0%</td>
-<td style="text-align: left;">1.3%</td>
+<td style="text-align: left;">84.1%</td>
+<td style="text-align: left;">89.8%</td>
+<td style="text-align: left;">37.5%</td>
+<td style="text-align: left;">86.9%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">CEER</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">70.7%</td>
-<td style="text-align: left;">62.7%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">-8.0%</td>
-<td style="text-align: left;">4.0%</td>
-<td style="text-align: left;">12.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">COAS</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">77.3%</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">78.7%</td>
-<td style="text-align: left;">-10.7%</td>
-<td style="text-align: left;">1.3%</td>
-<td style="text-align: left;">12.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">COAS</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">72.0%</td>
-<td style="text-align: left;">58.7%</td>
-<td style="text-align: left;">72.0%</td>
-<td style="text-align: left;">-13.3%</td>
-<td style="text-align: left;">0.0%</td>
-<td style="text-align: left;">13.3%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">EUHC</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">70.7%</td>
-<td style="text-align: left;">64.0%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">-6.7%</td>
-<td style="text-align: left;">4.0%</td>
-<td style="text-align: left;">10.7%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">EUHC</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">48.0%</td>
-<td style="text-align: left;">52.0%</td>
-<td style="text-align: left;">76.0%</td>
-<td style="text-align: left;">4.0%</td>
-<td style="text-align: left;">28.0%</td>
-<td style="text-align: left;">24.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">IRG</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">81.3%</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">81.3%</td>
-<td style="text-align: left;">-6.7%</td>
-<td style="text-align: left;">0.0%</td>
-<td style="text-align: left;">6.7%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">IRG</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">74.7%</td>
-<td style="text-align: left;">81.3%</td>
-<td style="text-align: left;">78.7%</td>
-<td style="text-align: left;">6.7%</td>
-<td style="text-align: left;">4.0%</td>
-<td style="text-align: left;">-2.7%</td>
+<td style="text-align: left;">GPT-5.4 nano</td>
+<td style="text-align: left;">gpt-5.4-nano-2026-03-17</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: left;">71.2%</td>
+<td style="text-align: left;">28.8%</td>
+<td style="text-align: left;">81.7%</td>
+<td style="text-align: left;">81.7%</td>
+<td style="text-align: left;">32.5%</td>
+<td style="text-align: left;">81.7%</td>
 </tr>
 </tbody>
 </table>
@@ -672,168 +336,51 @@ Table&nbsp;4: Human-reference accuracy by model within each protocol, with pairw
 </figure>
 </div>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p><img src="../derived/figures/sbs_model_disagreement_by_pon.png" class="img-fluid"></p>
 </section>
-<section id="question-level-behavior" class="level2">
-<h2 class="anchored" data-anchor-id="question-level-behavior">Question-level behavior</h2>
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Question:</strong> Which governance questions remain difficult across models and protocols, and which problems appear to be prompt-sensitive?</p>
-</div>
-</div>
-</div>
-<p><img src="../derived/figures/scenario_question_disagreement.png" class="img-fluid"></p>
+<section id="agreement-with-the-human-majority" class="level2">
+<h2 class="anchored" data-anchor-id="agreement-with-the-human-majority">Agreement with the human majority</h2>
+<p>The extended coder table keeps HBM, ASC, and JNG visible and computes the human majority directly. It then reports whether each LLM agrees with that majority.</p>
 <div class="cell">
-<div id="tbl-response-prevalence" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  coder <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Legacy GPT-4 Turbo SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>legacy_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">New GPT-5.4 nano SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>new_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"Model"</span>, <span class="at">values_to =</span> <span class="st">"agreement"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Agreement with human majority"</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-majority" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-response-prevalence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5: TRUE-response prevalence across the six zero-shot scenarios
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-majority-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: LLM agreement with the three-human majority across the 15-question computational instrument
 </figcaption>
-<div aria-describedby="tbl-response-prevalence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-majority-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Model</th>
-<th style="text-align: left;">Protocol</th>
-<th style="text-align: right;">TRUE</th>
-<th style="text-align: right;">FALSE</th>
-<th style="text-align: left;">TRUE share</th>
+<th style="text-align: left;">Agreement with human majority</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: right;">305</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: left;">81.3%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-4 Turbo</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: right;">240</td>
-<td style="text-align: right;">135</td>
-<td style="text-align: left;">64.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: right;">315</td>
-<td style="text-align: right;">60</td>
-<td style="text-align: left;">84.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-5.4 mini</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: right;">310</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: left;">82.7%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: right;">280</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: left;">74.7%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: right;">235</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: left;">62.7%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<p>A large shift in TRUE prevalence is worth checking because it can indicate that a protocol or model changes the effective evidentiary threshold rather than merely reshuffling isolated classifications.</p>
-</section>
-<section id="model-generation-stability" class="level2">
-<h2 class="anchored" data-anchor-id="model-generation-stability">Model-generation stability</h2>
-<p>With three model arms, stability is reported pairwise within each protocol. This shows whether the improved protocol makes model choice less consequential and whether GPT-5.4 mini behaves more like GPT-5.4 nano or GPT-4 Turbo.</p>
-<div class="cell">
-<div id="tbl-stability-overall" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stability-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;6: Pairwise agreement between model arms under each zero-shot protocol
-</figcaption>
-<div aria-describedby="tbl-stability-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 36%">
-<col style="width: 12%">
-<col style="width: 6%">
-<col style="width: 10%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Protocol</th>
-<th style="text-align: left;">Model pair</th>
-<th style="text-align: right;">Decisions</th>
-<th style="text-align: right;">Same</th>
-<th style="text-align: right;">Changed</th>
-<th style="text-align: left;">Agreement</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">GPT-4 Turbo vs GPT-5.4 mini</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: left;">Legacy GPT-4 Turbo SBS</td>
 <td style="text-align: left;">86.7%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">GPT-4 Turbo vs GPT-5.4 nano</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: right;">60</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: left;">80.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2024 protocol</td>
-<td style="text-align: left;">GPT-5.4 nano vs GPT-5.4 mini</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: right;">60</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: left;">80.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">GPT-4 Turbo vs GPT-5.4 mini</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: left;">76.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">GPT-4 Turbo vs GPT-5.4 nano</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: left;">64.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Improved protocol</td>
-<td style="text-align: left;">GPT-5.4 nano vs GPT-5.4 mini</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: left;">66.7%</td>
+<td style="text-align: left;">New GPT-5.4 nano SBS</td>
+<td style="text-align: left;">78.7%</td>
 </tr>
 </tbody>
 </table>
@@ -843,88 +390,39 @@ Table&nbsp;6: Pairwise agreement between model arms under each zero-shot protoco
 </div>
 </div>
 </section>
-<section id="run-integrity-diagnostics" class="level2">
-<h2 class="anchored" data-anchor-id="run-integrity-diagnostics">Run-integrity diagnostics</h2>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Output-format anomalies detected
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>6 of 25 newly generated output files contain a flagged serialization irregularity. A file is scored only when exactly 15 binary responses are recoverable.</p>
-</div>
-</div>
+<section id="model-generation-stability" class="level2">
+<h2 class="anchored" data-anchor-id="model-generation-stability">Model-generation stability</h2>
 <div class="cell">
-<div id="tbl-format-diagnostics" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  stability <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-stability" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-format-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;7: Newly generated output files with flagged formatting irregularities
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Agreement between frozen GPT-4 Turbo SBS and newer-model SBS
 </figcaption>
-<div aria-describedby="tbl-format-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 6%">
-<col style="width: 14%">
-<col style="width: 9%">
-<col style="width: 59%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">File</th>
-<th style="text-align: right;">Recovered</th>
-<th style="text-align: right;">Concatenated boundaries</th>
-<th style="text-align: left;">Standard header</th>
-<th style="text-align: left;">First line</th>
+<th style="text-align: right;">decisions</th>
+<th style="text-align: right;">same</th>
+<th style="text-align: right;">changed</th>
+<th style="text-align: left;">agreement_rate</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">BO2A_irg_z.txt</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">question,TRUE_OR_FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">BO6A_ceer_z.txt</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">Question,CEER Statutes as of 25 October 2023: Articles of Association (Consolidated 25 Oct 2023)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">BO3A_euhc_z.txt</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">header</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">BO4A_coas_z.txt</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">header</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">BO5A_can_z.txt</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">header</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">BO6A_ceer_z.txt</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">header</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">81.3%</td>
 </tr>
 </tbody>
 </table>
@@ -933,10 +431,111 @@ Table&nbsp;7: Newly generated output files with flagged formatting irregularitie
 </figure>
 </div>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p><img src="../derived/figures/sbs_model_question_disagreement.png" class="img-fluid"></p>
 </section>
-<section id="interpretation-boundary" class="level2">
-<h2 class="anchored" data-anchor-id="interpretation-boundary">Interpretation boundary</h2>
-<p>Human-reference disagreement is disagreement with the recovered computational reference, not definitive evidence that a model is substantively wrong. Likewise, higher model-generation agreement is stability, not correctness. The design is most informative when both quantities are examined together.</p>
+<section id="run-integrity-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="run-integrity-diagnostics">Run-integrity diagnostics</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-diagnostics" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4
+</figcaption>
+<div aria-describedby="tbl-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">file</th>
+<th style="text-align: right;">expected_responses</th>
+<th style="text-align: right;">recovered_responses</th>
+<th style="text-align: left;">parse_status</th>
+<th style="text-align: right;">concatenated_row_boundaries</th>
+<th style="text-align: left;">header_contains_binary_token</th>
+<th style="text-align: left;">header_standard</th>
+<th style="text-align: left;">first_line</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">BO2A_irg_sbs.txt</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">OK</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">question,answer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BO3A_euhc_sbs.txt</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">OK</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">question,answer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BO4A_coas_sbs.txt</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">OK</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">Question,Answer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BO5A_can_sbs.txt</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">OK</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">question,answer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BO6A_ceer_sbs.txt</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">OK</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">Question,Answer</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.</p>
 
 
 <!-- -->
@@ -1395,353 +994,141 @@ Table&nbsp;7: Newly generated output files with flagged formatting irregularitie
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Six-Scenario Comparison"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Model generation × protocol under zero-shot governance coding"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>scenario_metrics_path <span class="ot">&lt;-</span> <span class="st">"derived/scenario_metrics_by_pon.csv"</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>scenario_overall_path <span class="ot">&lt;-</span> <span class="st">"derived/scenario_metrics_overall.csv"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>question_path <span class="ot">&lt;-</span> <span class="st">"derived/scenario_question_performance.csv"</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>prevalence_path <span class="ot">&lt;-</span> <span class="st">"derived/scenario_response_prevalence.csv"</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>protocol_effects_path <span class="ot">&lt;-</span> <span class="st">"derived/protocol_effects.csv"</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>model_effects_path <span class="ot">&lt;-</span> <span class="st">"derived/model_effects.csv"</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>stability_path <span class="ot">&lt;-</span> <span class="st">"derived/model_stability_by_pon.csv"</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>stability_overall_path <span class="ot">&lt;-</span> <span class="st">"derived/model_stability_overall.csv"</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>format_path <span class="ot">&lt;-</span> <span class="st">"derived/output_format_diagnostics.csv"</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>required_paths <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  scenario_metrics_path,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  scenario_overall_path,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  question_path,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  prevalence_path,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  protocol_effects_path,</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  model_effects_path,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  stability_path,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  stability_overall_path,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  format_path</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>comparison_ready <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">file.exists</span>(required_paths))</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  scenario_metrics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(scenario_metrics_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  scenario_overall <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(scenario_overall_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  question_performance <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(question_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  response_prevalence <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(prevalence_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  protocol_effects <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(protocol_effects_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  model_effects <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(model_effects_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  stability <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(stability_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  stability_overall <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(stability_overall_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  format_diagnostics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(format_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Design</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>The analysis is zero-shot only and uses a **3 × 2 model-by-protocol design**: three model arms under the preserved 2024 protocol and the improved protocol. The same five PONs—IRG, EUHC, COAS, CAN, and CEER—and the same 15 questions are evaluated in every cell.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-scenarios</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Six zero-shot scenarios in the model-by-protocol design"</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Model, <span class="sc">~</span>Protocol, <span class="sc">~</span>Source,</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-4 Turbo"</span>, <span class="st">"2024 protocol"</span>, <span class="st">"Preserved Dec. 24, 2024 output"</span>,</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-5.4 nano"</span>, <span class="st">"2024 protocol"</span>, <span class="st">"Retained 2026 run"</span>,</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-5.4 mini"</span>, <span class="st">"2024 protocol"</span>, <span class="st">"New 2026 run"</span>,</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-4 Turbo"</span>, <span class="st">"Improved protocol"</span>, <span class="st">"New improved-protocol run"</span>,</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-5.4 nano"</span>, <span class="st">"Improved protocol"</span>, <span class="st">"New improved-protocol run"</span>,</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-5.4 mini"</span>, <span class="st">"Improved protocol"</span>, <span class="st">"New improved-protocol run"</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>The historical calls record the alias <span class="in">`gpt-4-turbo`</span>, not the returned snapshot ID. The improved-protocol rerun uses the pinned <span class="in">`gpt-4-turbo-2024-04-09`</span> snapshot as the closest reproducible counterpart. This improves reproducibility but cannot prove byte-for-byte identity with the model that served the 2024 alias.</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why the improved protocol is better</span></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>The improved prompt is intentionally short. It keeps the same documents, 15 questions, zero-shot design, Chat Completions endpoint, and system/user message roles. The substantive treatment is the instruction text; the improved runs also use the same documented 500-token operational output cap.</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Evidence boundary:** use only the supplied document.</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decision rule:** return TRUE only when the document explicitly supports the proposition; otherwise FALSE.</span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Inference boundary:** do not import outside knowledge or infer unstated rules.</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Output contract:** return exactly one ordered <span class="in">`question_id,response`</span> row per question.</span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>This makes the coding threshold and serialization contract explicit without adding examples, chain-of-thought instructions, or a structured-output API parameter.</span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: no-results</span></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>comparison_ready) {</span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"::: {.callout-important}</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"## Six-scenario results are not complete yet</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Run the improved-protocol stage, rebuild the comparisons, then render:</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```bash</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/04_run_improved_protocol.py</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/04_run_improved_protocol.py --execute</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/05_compare_scenarios.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"quarto render</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">":::</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance against the human reference</span></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-overall-performance</span></span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Overall performance against the recovered human reference across six zero-shot scenarios"</span></span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  scenario_overall <span class="sc">|&gt;</span></span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>model,</span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>protocol,</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>n,</span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>accuracy,</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>precision,</span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>recall,</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>specificity,</span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>f1</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Model"</span>, <span class="st">"Protocol"</span>, <span class="st">"Decisions"</span>, <span class="st">"Accuracy"</span>,</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Precision"</span>, <span class="st">"Recall"</span>, <span class="st">"Specificity"</span>, <span class="st">"F1"</span></span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple"}</span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>**Question:** Which combinations of model and protocol produce the smallest share of disagreements with the human reference, and are the gains consistent across PONs?</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-scenario-disagreement</span></span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Share of decisions disagreeing with the recovered human reference by PON. Color maps model generation; shape maps protocol. Each point summarizes 15 binary decisions."</span></span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"![](../derived/figures/scenario_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>The disagreement rate is shown rather than a raw error count so each point conveys the **relative weight of errors** in the 15-question coding vector.</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## Protocol and model effects</span></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-protocol-effects</span></span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Change in human-reference accuracy after replacing the 2024 prompt with the improved protocol"</span></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>  protocol_effects <span class="sc">|&gt;</span></span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">2024 protocol</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">2024 protocol</span><span class="st">`</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Improved protocol</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">Improved protocol</span><span class="st">`</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy_change =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy_change, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>pon,</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>model,</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span><span class="st">`</span><span class="at">2024 protocol</span><span class="st">`</span>,</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span><span class="st">`</span><span class="at">Improved protocol</span><span class="st">`</span>,</span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>accuracy_change</span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(.data<span class="sc">$</span>pon, .data<span class="sc">$</span>model) <span class="sc">|&gt;</span></span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PON"</span>, <span class="st">"Model"</span>, <span class="st">"2024 protocol"</span>, <span class="st">"Improved protocol"</span>, <span class="st">"Change"</span></span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-model-effects</span></span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Human-reference accuracy by model within each protocol, with pairwise changes"</span></span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>  model_effects <span class="sc">|&gt;</span></span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">GPT-4 Turbo</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">GPT-4 Turbo</span><span class="st">`</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">GPT-5.4 nano</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">GPT-5.4 nano</span><span class="st">`</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">GPT-5.4 mini</span><span class="st">`</span> <span class="ot">=</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">GPT-5.4 mini</span><span class="st">`</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>      <span class="at">nano_vs_turbo =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>nano_vs_turbo, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>      <span class="at">mini_vs_turbo =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>mini_vs_turbo, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>      <span class="at">mini_vs_nano =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>mini_vs_nano, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>pon,</span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>protocol,</span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span><span class="st">`</span><span class="at">GPT-4 Turbo</span><span class="st">`</span>,</span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span><span class="st">`</span><span class="at">GPT-5.4 nano</span><span class="st">`</span>,</span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span><span class="st">`</span><span class="at">GPT-5.4 mini</span><span class="st">`</span>,</span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>nano_vs_turbo,</span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>mini_vs_turbo,</span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>mini_vs_nano</span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(.data<span class="sc">$</span>pon, .data<span class="sc">$</span>protocol) <span class="sc">|&gt;</span></span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PON"</span>, <span class="st">"Protocol"</span>, <span class="st">"GPT-4 Turbo"</span>, <span class="st">"GPT-5.4 nano"</span>, <span class="st">"GPT-5.4 mini"</span>,</span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Nano − Turbo"</span>, <span class="st">"Mini − Turbo"</span>, <span class="st">"Mini − Nano"</span></span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question-level behavior</span></span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple"}</span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>**Question:** Which governance questions remain difficult across models and protocols, and which problems appear to be prompt-sensitive?</span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-question-disagreement</span></span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Question-level disagreement with the recovered human reference across the six zero-shot scenarios. Each rate pools the five study PONs."</span></span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.5</span></span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"![](../derived/figures/scenario_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-response-prevalence</span></span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "TRUE-response prevalence across the six zero-shot scenarios"</span></span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>  response_prevalence <span class="sc">|&gt;</span></span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a>      <span class="at">true_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>true_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>model,</span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>protocol,</span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>true_responses,</span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>false_responses,</span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>true_rate</span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Protocol"</span>, <span class="st">"TRUE"</span>, <span class="st">"FALSE"</span>, <span class="st">"TRUE share"</span>)</span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>A large shift in TRUE prevalence is worth checking because it can indicate that a protocol or model changes the effective evidentiary threshold rather than merely reshuffling isolated classifications.</span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model-generation stability</span></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>With three model arms, stability is reported pairwise within each protocol. This shows whether the improved protocol makes model choice less consequential and whether GPT-5.4 mini behaves more like GPT-5.4 nano or GPT-4 Turbo.</span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-stability-overall</span></span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Pairwise agreement between model arms under each zero-shot protocol"</span></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>  stability_overall <span class="sc">|&gt;</span></span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>      <span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>protocol,</span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>model_pair,</span>
-<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>decisions,</span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>same,</span>
-<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>changed,</span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>agreement_rate</span>
-<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Protocol"</span>, <span class="st">"Model pair"</span>, <span class="st">"Decisions"</span>, <span class="st">"Same"</span>, <span class="st">"Changed"</span>, <span class="st">"Agreement"</span></span>
-<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a><span class="fu">## Run-integrity diagnostics</span></span>
-<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: output-format-callout</span></span>
-<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
-<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a>  anomalies <span class="ot">&lt;-</span> format_diagnostics <span class="sc">|&gt;</span></span>
-<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>parse_status <span class="sc">!=</span> <span class="st">"OK"</span> <span class="sc">|</span></span>
-<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a>        .data<span class="sc">$</span>concatenated_row_boundaries <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span></span>
-<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>        .data<span class="sc">$</span>header_contains_binary_token <span class="sc">|</span></span>
-<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!</span>.data<span class="sc">$</span>header_standard</span>
-<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(anomalies) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"All newly generated outputs contain exactly 15 recoverable classifications and no flagged formatting irregularities.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"::: {.callout-warning}</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"## Output-format anomalies detected</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
-<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>      <span class="st">"%s of %s newly generated output files contain a flagged serialization irregularity. A file is scored only when exactly 15 binary responses are recoverable.</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nrow</span>(anomalies),</span>
-<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nrow</span>(format_diagnostics)</span>
-<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">":::</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-format-diagnostics</span></span>
-<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Newly generated output files with flagged formatting irregularities"</span></span>
-<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
-<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>  format_diagnostics <span class="sc">|&gt;</span></span>
-<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>parse_status <span class="sc">!=</span> <span class="st">"OK"</span> <span class="sc">|</span></span>
-<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>        .data<span class="sc">$</span>concatenated_row_boundaries <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span></span>
-<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a>        .data<span class="sc">$</span>header_contains_binary_token <span class="sc">|</span></span>
-<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!</span>.data<span class="sc">$</span>header_standard</span>
-<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>file,</span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>recovered_responses,</span>
-<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>concatenated_row_boundaries,</span>
-<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>header_standard,</span>
-<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>first_line</span>
-<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>        <span class="st">"File"</span>, <span class="st">"Recovered"</span>, <span class="st">"Concatenated boundaries"</span>, <span class="st">"Standard header"</span>, <span class="st">"First line"</span></span>
-<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpretation boundary</span></span>
-<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>Human-reference disagreement is disagreement with the recovered computational reference, not definitive evidence that a model is substantively wrong. Likewise, higher model-generation agreement is stability, not correctness. The design is most informative when both quantities are examined together.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "SBS Model Comparison"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Frozen GPT-4 Turbo versus a newer pinned model under the same protocol"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>paths <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">overall =</span> <span class="st">"derived/sbs_model_metrics_overall.csv"</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_pon =</span> <span class="st">"derived/sbs_model_metrics_by_pon.csv"</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">stability =</span> <span class="st">"derived/sbs_model_stability_overall.csv"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">coder =</span> <span class="st">"derived/sbs_coder_comparison_extended.csv"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">diagnostics =</span> <span class="st">"derived/sbs_output_format_diagnostics.csv"</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>comparison_ready <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">file.exists</span>(<span class="fu">unlist</span>(paths)))</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  overall <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>overall, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  by_pon <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>by_pon, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  stability <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>stability, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  coder <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>coder, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(paths<span class="sc">$</span>diagnostics, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Design</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>This comparison changes **model generation only**. Both arms use the same reconstructed Dec. 24, 2024 SBS protocol and the same five PONs.</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Status <span class="pp">|</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-4 Turbo <span class="pp">|</span> Frozen 2024 <span class="in">`*_sbs.txt`</span> responses; never rerun <span class="pp">|</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gpt-5.4-nano-2026-03-17`</span> <span class="pp">|</span> New SBS run under <span class="in">`output/current/`</span> <span class="pp">|</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>The improved-protocol experiment and plain-zero-shot outputs are archival/secondary and are not pooled into this analysis. The comparison pipeline considers only newer-model run directories containing <span class="in">`run_manifest.json`</span> with <span class="in">`status == "complete"`</span>; a directory carrying <span class="in">`run_failed.json`</span>, or lacking an explicit completed manifest, is not treated as a completed result.</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: no-results</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>comparison_ready) {</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"::: {.callout-important}</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"## Newer-model SBS results are not complete yet</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Run the dry run, execute the five-request SBS batch, then rebuild derived products:</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```bash</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"python scripts/03_run_current_model.py --model gpt-5.4-nano-2026-03-17 --execute</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/02_reconstruct_table_a5.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Rscript scripts/05_compare_scenarios.R</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"quarto render</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"```</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">":::</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance against the confirmed human reference</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-overall</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Overall SBS performance against the confirmed human reference"</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>  overall <span class="sc">|&gt;</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">disagreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>disagreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>precision, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>      <span class="at">recall =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>recall, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificity =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>specificity, <span class="at">accuracy =</span> <span class="fl">0.1</span>),</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>      <span class="at">f1 =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>f1, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-by-pon</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Share of SBS decisions disagreeing with the confirmed human reference by PON."</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_disagreement_by_pon.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agreement with the human majority</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>The extended coder table keeps HBM, ASC, and JNG visible and computes the human majority directly. It then reports whether each LLM agrees with that majority.</span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-majority</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "LLM agreement with the three-human majority across the 15-question computational instrument"</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>  coder <span class="sc">|&gt;</span></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">Legacy GPT-4 Turbo SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>legacy_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>      <span class="st">`</span><span class="at">New GPT-5.4 nano SBS</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(.data<span class="sc">$</span>new_llm_agrees_human_majority, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"Model"</span>, <span class="at">values_to =</span> <span class="st">"agreement"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Agreement with human majority"</span>))</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model-generation stability</span></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-stability</span></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Agreement between frozen GPT-4 Turbo SBS and newer-model SBS"</span></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>  stability <span class="sc">|&gt;</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">agreement_rate =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>agreement_rate, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-question</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Question-level disagreement with the confirmed human reference under the fixed SBS protocol."</span></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) <span class="fu">cat</span>(<span class="st">"![](../derived/figures/sbs_model_question_disagreement.png)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Run-integrity diagnostics</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-diagnostics</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (comparison_ready) {</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>  diagnostics <span class="sc">|&gt;</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>The new-model response is scored only when exactly 15 binary classifications are recoverable. Historical outputs remain untouched regardless of parsing or scoring results.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
