@@ -144,6 +144,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">SBS Model Comparison</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../reports/comparison-table.html"> 
+<span class="menu-text">Comparison Table</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../reports/berec.html"> 
 <span class="menu-text">BEREC</span></a>
   </li>  
@@ -178,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#dedicated-scripts-and-safeguards" id="toc-dedicated-scripts-and-safeguards" class="nav-link" data-scroll-target="#dedicated-scripts-and-safeguards">Dedicated scripts and safeguards</a>
   <ul class="collapse">
   <li><a href="#best-evidenced-dec.-23-reconstruction" id="toc-best-evidenced-dec.-23-reconstruction" class="nav-link" data-scroll-target="#best-evidenced-dec.-23-reconstruction">Best-evidenced Dec.&nbsp;23 reconstruction</a></li>
-  <li><a href="#dec.-24-sbs-protocol-with-the-newer-model" id="toc-dec.-24-sbs-protocol-with-the-newer-model" class="nav-link" data-scroll-target="#dec.-24-sbs-protocol-with-the-newer-model">Dec.&nbsp;24 SBS protocol with the newer model</a></li>
+  <li><a href="#dec.-24-sbs-protocol-with-gpt-5.4-nano" id="toc-dec.-24-sbs-protocol-with-gpt-5.4-nano" class="nav-link" data-scroll-target="#dec.-24-sbs-protocol-with-gpt-5.4-nano">Dec.&nbsp;24 SBS protocol with GPT-5.4 nano</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -207,6 +211,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="replication-claims" class="level2">
 <h2 class="anchored" data-anchor-id="replication-claims">Replication claims</h2>
+<div id="tbl-berec-replication-claims" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-berec-replication-claims-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: BEREC replication claim levels
+</figcaption>
+<div aria-describedby="tbl-berec-replication-claims-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -233,11 +243,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td>Protocol replication</td>
-<td>Recovered Dec.&nbsp;24 SBS protocol + a currently available newer model</td>
+<td>Recovered Dec.&nbsp;24 SBS protocol + GPT-5.4 nano</td>
 <td><strong>Feasible.</strong> This is explicitly a retrospective application of the recovered Dec.&nbsp;24 SBS protocol to BEREC, not a claim about the original Dec.&nbsp;23 call.</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>The project therefore uses the term <strong>best-evidenced Dec.&nbsp;23 reconstruction</strong> for the historical-snapshot experiment.</p>
 </section>
 <section id="dedicated-scripts-and-safeguards" class="level2">
@@ -252,8 +265,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="dec.-24-sbs-protocol-with-the-newer-model" class="level3">
-<h3 class="anchored" data-anchor-id="dec.-24-sbs-protocol-with-the-newer-model">Dec.&nbsp;24 SBS protocol with the newer model</h3>
+<section id="dec.-24-sbs-protocol-with-gpt-5.4-nano" class="level3">
+<h3 class="anchored" data-anchor-id="dec.-24-sbs-protocol-with-gpt-5.4-nano">Dec.&nbsp;24 SBS protocol with GPT-5.4 nano</h3>
 <p>Dry run; no API call:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Execute only after reviewing the dry run:</p>
@@ -747,47 +760,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Exact replication <span class="pp">|</span> Same exact 2024 BEREC request protocol + same exact dated snapshot <span class="pp">|</span> **Not defensible from surviving evidence.** The dated snapshot is available, but the precise Dec. 23 BEREC prompt/message state is uncertain. <span class="pp">|</span></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model-family replication <span class="pp">|</span> Same exact BEREC protocol + GPT-4 Turbo family, different snapshot <span class="pp">|</span> The protocol uncertainty remains, so this cannot become a strict replication merely by changing snapshots. <span class="pp">|</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protocol replication <span class="pp">|</span> Recovered Dec. 24 SBS protocol + a currently available newer model <span class="pp">|</span> **Feasible.** This is explicitly a retrospective application of the recovered Dec. 24 SBS protocol to BEREC, not a claim about the original Dec. 23 call. <span class="pp">|</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protocol replication <span class="pp">|</span> Recovered Dec. 24 SBS protocol + GPT-5.4 nano <span class="pp">|</span> **Feasible.** This is explicitly a retrospective application of the recovered Dec. 24 SBS protocol to BEREC, not a claim about the original Dec. 23 call. <span class="pp">|</span></span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>The project therefore uses the term **best-evidenced Dec. 23 reconstruction** for the historical-snapshot experiment.</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>: BEREC replication claim levels {#tbl-berec-replication-claims}</span>
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dedicated scripts and safeguards</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>The project therefore uses the term **best-evidenced Dec. 23 reconstruction** for the historical-snapshot experiment.</span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### Best-evidenced Dec. 23 reconstruction</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dedicated scripts and safeguards</span></span>
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>Dry run; no API call:</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Best-evidenced Dec. 23 reconstruction</span></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>The script pins <span class="in">`gpt-4-turbo-2024-04-09`</span>, uses <span class="in">`BO1B.txt`</span>, and reconstructs the best-evidenced early message-role layout: BEREC text as the system message and the reconstructed question prompt as the user message.</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>Dry run; no API call:</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>Execution requires **both** safeguards:</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>The script pins <span class="in">`gpt-4-turbo-2024-04-09`</span>, uses <span class="in">`BO1B.txt`</span>, and reconstructs the best-evidenced early message-role layout: BEREC text as the system message and the reconstructed question prompt as the user message.</span>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py <span class="dt">\</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dec. 24 SBS protocol with the newer model</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>Execution requires **both** safeguards:</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/06_run_berec_2024_reconstruction.py <span class="dt">\</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>Dry run; no API call:</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dec. 24 SBS protocol with GPT-5.4 nano</span></span>
 <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>Execute only after reviewing the dry run:</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>Dry run; no API call:</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py <span class="dt">\</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>Both scripts plan exactly one API request, refuse any BEREC source other than <span class="in">`BO1B.txt`</span>, write only to a new timestamped directory under <span class="in">`output/berec_replication/`</span>, refuse overwriting existing run directories, and never write to the preserved root-level legacy BEREC artifact.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>Execute only after reviewing the dry run:</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/07_run_berec_sbs_current_model.py <span class="dt">\</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">--execute</span> <span class="dt">\</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">--confirm-api-call</span> BEREC</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>Both scripts plan exactly one API request, refuse any BEREC source other than <span class="in">`BO1B.txt`</span>, write only to a new timestamped directory under <span class="in">`output/berec_replication/`</span>, refuse overwriting existing run directories, and never write to the preserved root-level legacy BEREC artifact.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

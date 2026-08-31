@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/TABLE_A5_REPLICATION.html</loc>
-    <lastmod>2026-08-31T02:30:59.849Z</lastmod>
+    <lastmod>2026-08-31T21:56:32.702Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/LEGACY_API_CALLS.html</loc>
-    <lastmod>2026-08-31T02:55:49.046Z</lastmod>
+    <lastmod>2026-08-31T22:25:14.764Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/berec.html</loc>
-    <lastmod>2026-08-31T04:02:36.296Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/results.html</loc>
-    <lastmod>2026-08-31T04:34:15.094Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ealvaradomena.github.io/pon_llm_pilot/index.html</loc>
-    <lastmod>2026-08-31T05:18:58.145Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/methods.html</loc>
-    <lastmod>2026-08-31T02:55:50.383Z</lastmod>
+    <lastmod>2026-08-31T21:56:33.390Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/model-comparison.html</loc>
-    <lastmod>2026-08-31T05:19:01.068Z</lastmod>
+    <lastmod>2026-08-31T21:56:35.473Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/methods.html</loc>
+    <lastmod>2026-08-31T21:56:34.795Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ealvaradomena.github.io/pon_llm_pilot/index.html</loc>
+    <lastmod>2026-08-31T21:56:30.530Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/results.html</loc>
+    <lastmod>2026-08-31T21:56:36.202Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/comparison-table.html</loc>
+    <lastmod>2026-08-31T21:56:34.123Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/BEREC_REPLICATION.html</loc>
-    <lastmod>2026-08-31T02:30:58.360Z</lastmod>
+    <lastmod>2026-08-31T21:56:31.250Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/RECONSTRUCTION.html</loc>
-    <lastmod>2026-08-31T05:18:58.886Z</lastmod>
+    <lastmod>2026-08-31T21:56:31.961Z</lastmod>
   </url>
 </urlset>

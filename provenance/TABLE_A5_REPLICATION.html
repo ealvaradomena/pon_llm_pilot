@@ -144,6 +144,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">SBS Model Comparison</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../reports/comparison-table.html"> 
+<span class="menu-text">Comparison Table</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../reports/berec.html"> 
 <span class="menu-text">BEREC</span></a>
   </li>  
@@ -215,6 +219,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="three-table-a5-discrepancies" class="level2">
 <h2 class="anchored" data-anchor-id="three-table-a5-discrepancies">Three Table A5 discrepancies</h2>
 <p>The surviving raw human data and frozen legacy SBS outputs reconstruct 67 of 70 Table A5 cells exactly. Three manuscript cells report <code>2-2</code> even though the surviving four responses produce a 3-to-1 split.</p>
+<div id="tbl-table-a5-discrepancies" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-table-a5-discrepancies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Table A5 discrepancies relative to the surviving coder-level data
+</figcaption>
+<div aria-describedby="tbl-table-a5-discrepancies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
@@ -276,7 +286,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>These are recorded as <strong>Table A5 errors</strong>. No source response is altered to force agreement with the manuscript table.</p>
+</div>
+</figure>
+</div>
+<p>These are recorded as <strong>Table A5 discrepancies relative to the surviving coder-level data</strong>. No source response is altered to force agreement with the manuscript table.</p>
 </section>
 <section id="reproduce-the-audit" class="level2">
 <h2 class="anchored" data-anchor-id="reproduce-the-audit">Reproduce the audit</h2>
@@ -285,9 +298,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>derived/table_a5_replication.csv</code> — all 70 manuscript cells;</li>
 <li><code>derived/table_a5_discrepancies.csv</code> — the three discrepant cells; and</li>
-<li><code>derived/sbs_coder_comparison_extended.csv</code> — all 15 computational questions, including human majority, legacy LLM agreement, and the newer-model SBS response when a completed newer-model run is available.</li>
+<li><code>derived/sbs_coder_comparison_extended.csv</code> — all 15 computational questions, including human majority, legacy LLM agreement, and the original completed GPT-5.4 nano contemporary extension.</li>
+<li><code>derived/sbs_model_evaluation_long.csv</code> and companion <code>sbs_model_*</code> products — the multi-model comparison layer containing the completed GPT-5.4 nano and GPT-5.6 Luna arms alongside the frozen GPT-4 Turbo benchmark.</li>
 </ul>
-<p>The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. The newer model is added only as an adjacent extension and never retroactively folded into the manuscript’s four-coder agreement pattern.</p>
+<p>The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. Contemporary models are added only as adjacent extensions and are never retroactively folded into the manuscript’s four-coder agreement pattern. GPT-5.6 Luna belongs to the multi-model SBS comparison rather than the historical Table A5 reconstruction itself.</p>
 
 
 <!-- -->
@@ -784,21 +798,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> cOAlition S <span class="pp">|</span> 8 <span class="pp">|</span> FALSE <span class="pp">|</span> TRUE <span class="pp">|</span> TRUE <span class="pp">|</span> TRUE <span class="pp">|</span> 3 TRUE / 1 FALSE <span class="pp">|</span> <span class="in">`2-2`</span> <span class="pp">|</span> Table A5 does not match the raw data; manuscript prose independently describes this as a 3-1 decision with a human outlier. <span class="pp">|</span></span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CEER <span class="pp">|</span> 6 <span class="pp">|</span> TRUE <span class="pp">|</span> FALSE <span class="pp">|</span> TRUE <span class="pp">|</span> TRUE <span class="pp">|</span> 3 TRUE / 1 FALSE <span class="pp">|</span> <span class="in">`2-2`</span> <span class="pp">|</span> Table A5 does not match the surviving raw data. <span class="pp">|</span></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>These are recorded as **Table A5 errors**. No source response is altered to force agreement with the manuscript table.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>: Table A5 discrepancies relative to the surviving coder-level data {#tbl-table-a5-discrepancies}</span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce the audit</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>These are recorded as **Table A5 discrepancies relative to the surviving coder-level data**. No source response is altered to force agreement with the manuscript table.</span>
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_reconstruct_table_a5.R</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>The script makes no API calls and writes:</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce the audit</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_reconstruct_table_a5.R</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/table_a5_replication.csv`</span> — all 70 manuscript cells;</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/table_a5_discrepancies.csv`</span> — the three discrepant cells; and</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/sbs_coder_comparison_extended.csv`</span> — all 15 computational questions, including human majority, legacy LLM agreement, and the newer-model SBS response when a completed newer-model run is available.</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. The newer model is added only as an adjacent extension and never retroactively folded into the manuscript's four-coder agreement pattern.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>The script makes no API calls and writes:</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/table_a5_replication.csv`</span> — all 70 manuscript cells;</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/table_a5_discrepancies.csv`</span> — the three discrepant cells; and</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/sbs_coder_comparison_extended.csv`</span> — all 15 computational questions, including human majority, legacy LLM agreement, and the original completed GPT-5.4 nano contemporary extension.</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`derived/sbs_model_evaluation_long.csv`</span> and companion <span class="in">`sbs_model_*`</span> products — the multi-model comparison layer containing the completed GPT-5.4 nano and GPT-5.6 Luna arms alongside the frozen GPT-4 Turbo benchmark.</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>The historical Table A5 reconstruction always remains a four-coder object: HBM + ASC + JNG + frozen 2024 LLM. Contemporary models are added only as adjacent extensions and are never retroactively folded into the manuscript's four-coder agreement pattern. GPT-5.6 Luna belongs to the multi-model SBS comparison rather than the historical Table A5 reconstruction itself.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
