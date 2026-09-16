@@ -14,6 +14,16 @@ library(yaml)
 
 cfg <- yaml::read_yaml("config/config.yml")
 questions <- readr::read_csv(cfg$project$questions_file, show_col_types = FALSE)
+publication_excluded_question_ids <- as.integer(unlist(cfg$publication$excluded_question_ids))
+published_questions <- questions |>
+  dplyr::filter(!.data$question_id %in% publication_excluded_question_ids) |>
+  dplyr::mutate(
+    publication_question_id = .data$question_id - vapply(
+      .data$question_id,
+      function(id) sum(publication_excluded_question_ids < id),
+      integer(1)
+    )
+  )
 ```
 
 ## Study objective
@@ -70,17 +80,21 @@ The manuscript-facing SBS condition appends:
 
 The project preserves the recovered string-concatenation behavior, including its whitespace quirks. `scripts/00_check_protocol.py` prints the resulting prompt hash without making an API call.
 
-## Fifteen computational questions and fourteen manuscript prompts
+## Published governance questions
 
 ```{r}
 #| label: tbl-questions
 #| tbl-cap: "Binary governance questions in the preserved computational instrument"
 
-questions |>
-  knitr::kable(col.names = c("Computational ID", "Question"))
+published_questions |>
+  dplyr::select(
+    `Question #` = .data$publication_question_id,
+    Question = .data$question
+  ) |>
+  knitr::kable()
 ```
 
-The computational instrument contains 15 questions. Manuscript Table A5 contains 14 because the working-groups item—computational question 10—is omitted. The project does not delete or renumber the historical computational instrument. Instead it defines a separate 14-question manuscript subset for Table A5 replication.
+The website presents the publication subset defined in project configuration. Repository-level computational artifacts and historical protocol materials are preserved independently of this presentation layer.
 
 ## Human coders and majority vote
 

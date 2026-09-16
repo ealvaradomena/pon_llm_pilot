@@ -14,54 +14,72 @@ library(knitr)
 library(readr)
 library(tidyr)
 library(yaml)
+source("R/analysis.R")
 
 cfg <- yaml::read_yaml("config/config.yml")
 legacy_model_id <- cfg$legacy_protocol$model_alias
+publication_excluded_question_ids <- as.integer(unlist(cfg$publication$excluded_question_ids))
 comparison_models <- purrr::map_dfr(
   cfg$comparison$comparison_models,
   ~ tibble::as_tibble(.x)
 ) |>
-  dplyr::transmute(
-    model_id = as.character(.data$model_id),
-    model = as.character(.data$label)
-  )
+  dplyr::transmute(model_id = as.character(.data$model_id), model = as.character(.data$label))
 expected_model_ids <- c(legacy_model_id, comparison_models$model_id)
 
 paths <- list(
-  overall = "derived/sbs_model_metrics_overall.csv",
-  by_pon = "derived/sbs_model_metrics_by_pon.csv",
-  stability = "derived/sbs_model_stability_overall.csv",
+  evaluation = "derived/sbs_model_evaluation_long.csv",
   flips = "derived/sbs_model_flip_audit.csv",
   diagnostics = "derived/sbs_output_format_diagnostics.csv"
 )
 comparison_ready <- all(file.exists(unlist(paths)))
 
 if (comparison_ready) {
-  overall <- readr::read_csv(paths$overall, show_col_types = FALSE)
-  by_pon <- readr::read_csv(paths$by_pon, show_col_types = FALSE)
-  stability <- readr::read_csv(paths$stability, show_col_types = FALSE)
-  flips <- readr::read_csv(paths$flips, show_col_types = FALSE)
+  full_evaluation <- readr::read_csv(paths$evaluation, show_col_types = FALSE)
+  full_flips <- readr::read_csv(paths$flips, show_col_types = FALSE)
   diagnostics <- readr::read_csv(paths$diagnostics, show_col_types = FALSE)
 
-  comparison_ready <- setequal(overall$model_id, expected_model_ids) &&
-    all(comparison_models$model_id %in% stability$comparison_model_id) &&
-    all(comparison_models$model_id %in% flips$comparison_model_id) &&
+  full_counts <- full_evaluation |> dplyr::count(.data$model_id, name = "n")
+  comparison_ready <- setequal(full_counts$model_id, expected_model_ids) &&
+    all(full_counts$n == 75L) &&
+    all(comparison_models$model_id %in% full_flips$comparison_model_id) &&
     all(comparison_models$model_id %in% diagnostics$model_id)
 }
 
 if (comparison_ready) {
+  evaluation <- full_evaluation |>
+    dplyr::filter(!.data$question_id %in% publication_excluded_question_ids)
+  flips <- full_flips |>
+    dplyr::filter(!.data$question_id %in% publication_excluded_question_ids)
+
+  overall <- evaluation |>
+    dplyr::group_by(.data$model, .data$model_id) |>
+    dplyr::group_modify(~ compute_metrics(.x)) |>
+    dplyr::ungroup()
+
+  by_pon <- evaluation |>
+    dplyr::group_by(.data$model, .data$model_id, .data$entity_slug, .data$pon) |>
+    dplyr::group_modify(~ compute_metrics(.x)) |>
+    dplyr::ungroup()
+
+  stability <- flips |>
+    dplyr::group_by(.data$comparison_model, .data$comparison_model_id) |>
+    dplyr::summarise(
+      decisions = dplyr::n(),
+      same = sum(!.data$changed),
+      changed = sum(.data$changed),
+      agreement_rate = mean(!.data$changed),
+      .groups = "drop"
+    )
+
   legacy_accuracy <- overall |>
     dplyr::filter(.data$model_id == legacy_model_id) |>
     dplyr::pull(.data$accuracy)
+  published_decisions <- overall |> dplyr::pull(.data$n) |> unique()
 
   contemporary_summary <- overall |>
     dplyr::filter(.data$model_id %in% comparison_models$model_id) |>
     dplyr::left_join(comparison_models, by = "model_id", suffix = c("_result", "")) |>
     dplyr::mutate(change_pp = 100 * (.data$accuracy - legacy_accuracy))
-
-  flip_summary <- flips |>
-    dplyr::filter(.data$changed) |>
-    dplyr::count(.data$comparison_model, .data$comparison_model_id, .data$direction, name = "n")
 
   flip_totals <- flips |>
     dplyr::group_by(.data$comparison_model, .data$comparison_model_id) |>
@@ -81,8 +99,7 @@ if (comparison_ready) {
     dplyr::left_join(legacy_by_pon, by = "pon") |>
     dplyr::mutate(
       change_vs_legacy_pp = dplyr::if_else(
-        .data$model_id == legacy_model_id,
-        NA_real_,
+        .data$model_id == legacy_model_id, NA_real_,
         100 * (.data$accuracy - .data$legacy_accuracy)
       )
     )
@@ -91,7 +108,7 @@ if (comparison_ready) {
 
 ## Design
 
-This comparison holds the **protocol, five PONs, 15 questions, and human reference fixed** while varying the model arm. The historical GPT-4 Turbo arm is preserved rather than rerun; the two contemporary arms were executed independently under the reconstructed Dec. 24, 2024 SBS protocol.
+This comparison holds the **protocol, five PONs, published question subset, and human reference fixed** while varying the model arm. The historical GPT-4 Turbo arm is preserved rather than rerun; the two contemporary arms were executed independently under the reconstructed Dec. 24, 2024 SBS protocol.
 
 | Model | Status |
 |---|---|
@@ -127,7 +144,7 @@ if (!comparison_ready) {
 #| results: asis
 if (comparison_ready) {
   cat(sprintf(
-    "Across the 75 PON-question classifications, the frozen GPT-4 Turbo SBS responses agree with the confirmed human reference in **%s** of cases.\n\n",
+    "Across the published PON-question classifications, the frozen GPT-4 Turbo SBS responses agree with the confirmed human reference in **%s** of cases.\n\n",
     scales::percent(legacy_accuracy, accuracy = 0.1)
   ))
 
@@ -138,13 +155,14 @@ if (comparison_ready) {
     cat(sprintf(
       paste0(
         "**%s** agrees with the human reference in **%s** of cases, a **%+.1f percentage-point** change relative to frozen GPT-4 Turbo. ",
-        "It changes **%s of 75 classifications (%s)**: **%s toward** the human reference and **%s away**.\n\n"
+        "It changes **%s of %s classifications (%s)**: **%s toward** the human reference and **%s away**.\n\n"
       ),
       row$model,
       scales::percent(row$accuracy, accuracy = 0.1),
       row$change_pp,
       flips_row$changed,
-      scales::percent(flips_row$changed / 75, accuracy = 0.1),
+      published_decisions,
+      scales::percent(flips_row$changed / published_decisions, accuracy = 0.1),
       flips_row$toward,
       flips_row$away
     ))
@@ -152,7 +170,7 @@ if (comparison_ready) {
 }
 ```
 
-The results are descriptive of this fixed five-PON, 15-question comparison. They do not establish that one model is generally superior across other tasks, prompts, or domains.
+The results are descriptive of this fixed five-PON published comparison. They do not establish that one model is generally superior across other tasks, prompts, or domains.
 
 ## Agreement with the confirmed human reference
 
@@ -194,9 +212,6 @@ if (comparison_ready) {
 }
 ```
 
-::: {#fig-by-pon}
-![Agreement with the confirmed human reference by PON under the fixed SBS protocol.](../derived/figures/sbs_model_agreement_by_pon.png)
-:::
 
 ## Agreement with the human majority
 
@@ -204,7 +219,7 @@ The confirmed human reference is the majority vote of HBM, ASC, and JNG. Accordi
 
 ```{r}
 #| label: tbl-majority
-#| tbl-cap: "LLM agreement with the three-human majority across the 15-question computational instrument"
+#| tbl-cap: "LLM agreement with the three-human majority across the published question subset"
 if (comparison_ready) {
   overall |>
     dplyr::transmute(
@@ -248,9 +263,6 @@ if (comparison_ready) {
 }
 ```
 
-::: {#fig-question}
-![Agreement with the confirmed human reference by computational question under the fixed SBS protocol.](../derived/figures/sbs_model_question_agreement.png)
-:::
 
 ## Run-integrity diagnostics
 
@@ -263,4 +275,4 @@ if (comparison_ready) {
 }
 ```
 
-The comparison script enforces the expected analytical cardinality before writing results: 75 decisions per model, 15 decisions per model/PON, one row per model/PON/question key, and a common human-reference value for every paired decision. Each contemporary model is compared directly with the frozen GPT-4 Turbo outputs. Historical outputs remain untouched regardless of parsing or scoring results.
+The comparison script validates the complete computational artifacts before writing results. This page then applies the centrally configured publication exclusion before calculating or displaying website statistics. Each contemporary model is compared directly with the frozen GPT-4 Turbo outputs. Historical outputs remain untouched regardless of parsing or scoring results.

@@ -77,6 +77,12 @@ comparison:
   manuscript_excluded_question_id: 10
   mini_model: gpt-5.4-mini-2026-03-17
 
+# GitHub Pages publication policy. These exclusions affect only rendered website
+# calculations, tables, plots, and prose; computational artifacts remain unchanged.
+publication:
+  excluded_question_ids:
+    - 10
+
 entities:
   - name: Body of European Regulators for Electronic Communications
     short_name: BEREC

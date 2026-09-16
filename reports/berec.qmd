@@ -25,6 +25,10 @@ The derived comparison tables below are generated locally from those artifacts. 
 #| warning: false
 #| message: false
 
+library(yaml)
+cfg <- yaml::read_yaml("config/config.yml")
+publication_excluded_question_ids <- as.integer(unlist(cfg$publication$excluded_question_ids))
+
 berec_summary <- utils::read.csv(
   "derived/berec_three_way_summary.csv",
   stringsAsFactors = FALSE,
@@ -41,6 +45,39 @@ berec_sources <- utils::read.csv(
   "derived/berec_sources.csv",
   stringsAsFactors = FALSE,
   check.names = FALSE
+)
+
+# Validate the complete artifact first, then apply the publication policy.
+if (nrow(berec_comparison) != 15L || anyDuplicated(berec_comparison$question_id)) {
+  stop("Unexpected BEREC computational comparison cardinality")
+}
+berec_comparison <- berec_comparison[
+  !berec_comparison$question_id %in% publication_excluded_question_ids,
+  ,
+  drop = FALSE
+]
+berec_comparison$publication_question_id <- berec_comparison$question_id - vapply(
+  berec_comparison$question_id,
+  function(id) sum(publication_excluded_question_ids < id),
+  integer(1)
+)
+
+pairwise_summary <- function(a, b, label) {
+  same <- sum(a == b)
+  different <- sum(a != b)
+  data.frame(
+    comparison = label, questions = length(a), same = same, different = different,
+    agreement_rate = same / length(a),
+    true_to_false = sum(a == "TRUE" & b == "FALSE"),
+    false_to_true = sum(a == "FALSE" & b == "TRUE"),
+    check.names = FALSE
+  )
+}
+
+berec_summary <- rbind(
+  pairwise_summary(berec_comparison$preserved_historical, berec_comparison$dec23_reconstructed_gpt4, "Preserved historical vs. reconstructed GPT-4 Turbo"),
+  pairwise_summary(berec_comparison$preserved_historical, berec_comparison$dec24_sbs_gpt54_nano, "Preserved historical vs. GPT-5.4 nano SBS"),
+  pairwise_summary(berec_comparison$dec23_reconstructed_gpt4, berec_comparison$dec24_sbs_gpt54_nano, "Reconstructed GPT-4 Turbo vs. GPT-5.4 nano SBS")
 )
 
 ```
@@ -75,11 +112,7 @@ knitr::kable(
 )
 ```
 
-The best-evidenced GPT-4 Turbo reconstruction reproduces **13 of the 15 classifications** in the preserved historical BEREC artifact, corresponding to **86.7% classification agreement**.
-
-The preserved historical artifact and the GPT-5.4 nano SBS run agree on **10 of 15 classifications (66.7%)**. The reconstructed GPT-4 Turbo condition and the GPT-5.4 nano SBS condition also agree on **10 of 15 classifications (66.7%)**.
-
-These percentages describe **classification agreement**, not accuracy. The preserved historical artifact is an observed historical output, not a validated ground-truth coding of BEREC.
+The table reports classification agreement across the published question subset. These percentages describe **classification agreement**, not accuracy; the preserved historical artifact is an observed historical output, not a validated ground-truth coding of BEREC.
 
 ## Question-level comparison
 
@@ -91,7 +124,7 @@ These percentages describe **classification agreement**, not accuracy. The prese
 question_display <- berec_comparison[
   ,
   c(
-    "question_id",
+    "publication_question_id",
     "question",
     "preserved_historical",
     "dec23_reconstructed_gpt4",
@@ -113,36 +146,12 @@ knitr::kable(
 )
 ```
 
-### Historical artifact versus reconstructed GPT-4 Turbo
-
-The best-evidenced December 23 reconstruction differs from the preserved historical artifact on only two questions:
-
-- **Q4:** preserved `TRUE`; reconstructed GPT-4 Turbo `FALSE`.
-- **Q12:** preserved `FALSE`; reconstructed GPT-4 Turbo `TRUE`.
-
-The two conditions therefore have the same overall response prevalence—8 `TRUE` and 7 `FALSE` classifications—but disagree on two individual classifications.
-
-### Reconstructed GPT-4 Turbo versus GPT-5.4 nano SBS
-
-Relative to the reconstructed GPT-4 Turbo condition, the GPT-5.4 nano SBS run changes five classifications:
-
-- **Q1:** `TRUE` → `FALSE`
-- **Q2:** `TRUE` → `FALSE`
-- **Q7:** `TRUE` → `FALSE`
-- **Q8:** `TRUE` → `FALSE`
-- **Q12:** `TRUE` → `FALSE`
-
-All five changes occur in the same direction. The reconstructed GPT-4 Turbo condition contains 8 `TRUE` classifications, whereas the GPT-5.4 nano SBS condition contains 3.
-
 ## Interpretation
 
-The BEREC reconstruction provides useful evidence about the recoverability of the historical classification pattern. Under the best-evidenced December 23 configuration, the pinned GPT-4 Turbo snapshot reproduces 13 of the 15 classifications present in the preserved historical artifact.
-
-That result should not be interpreted as an exact replication of the historical API interaction. The surviving evidence does not establish every element of the original BEREC request strongly enough to make that claim.
-
-Likewise, the five differences between the reconstructed GPT-4 Turbo condition and the GPT-5.4 nano SBS condition cannot be attributed exclusively to model change. Those conditions differ in both model and reconstructed protocol.
+The BEREC reconstruction provides evidence about the recoverability of the historical classification pattern across the published question subset. The comparison remains descriptive: the surviving evidence does not establish every element of the original BEREC request strongly enough to support an exact-replication claim, and differences between reconstructed conditions cannot be attributed exclusively to model change when protocol conditions also differ.
 
 For this reason, BEREC remains an **auxiliary provenance and reconstruction analysis** and is not added as a sixth organization to the principal five-PON model comparison.
+
 
 ## Provenance
 

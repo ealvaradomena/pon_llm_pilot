@@ -11,8 +11,6 @@ project:
     - reports/berec.qmd
     - provenance/BEREC_REPLICATION.md
     - provenance/LEGACY_API_CALLS.md
-    - provenance/RECONSTRUCTION.md
-    - provenance/TABLE_A5_REPLICATION.md
   resources:
     - derived/figures/**
 
