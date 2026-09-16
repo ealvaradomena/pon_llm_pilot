@@ -225,13 +225,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The repository separates two tasks:</p>
 <ol type="1">
 <li><strong>Manuscript Table A5 replication.</strong> HBM, ASC, JNG, and the frozen legacy SBS LLM reconstruct the historical four-coder agreement table over the manuscript’s 14 prompts.</li>
-<li><strong>Extended SBS model comparison.</strong> The same human data and frozen legacy SBS outputs are compared with GPT-5.4 nano and GPT-5.6 Luna SBS runs over the preserved 15-question computational instrument.</li>
+<li><strong>Extended SBS model comparison.</strong> The same human data and frozen legacy SBS outputs are compared with GPT-5.4 nano and GPT-5.6 Luna SBS runs under the reconstructed protocol. The website reports the publication subset defined in project configuration.</li>
 </ol>
 <p>Project-facing outputs use explicit agreement labels such as <code>3 TRUE / 1 FALSE</code>, and report directly whether each LLM agrees with the three-human majority vote.</p>
 </section>
 <section id="principal-comparison-result" class="level2">
 <h2 class="anchored" data-anchor-id="principal-comparison-result">Principal comparison result</h2>
-<p>The table below is generated directly from the stored three-model evaluation outputs. It reports agreement with the confirmed three-human majority reference over the same 75 PON-question classifications for each model arm; no result is manually transcribed into this page.</p>
+<p>The table below is generated directly from the stored three-model evaluation outputs. It reports agreement with the confirmed three-human majority reference over the same published PON-question classifications for each model arm; no result is manually transcribed into this page.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -271,18 +271,18 @@ Table&nbsp;1: Principal SBS agreement with the confirmed human reference
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">GPT-4 Turbo (2024 legacy)</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: left;">86.7%</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: left;">85.7%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">GPT-5.4 nano</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: left;">78.7%</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: left;">77.1%</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">GPT-5.6 Luna</td>
-<td style="text-align: right;">75</td>
-<td style="text-align: left;">81.3%</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: left;">80.0%</td>
 </tr>
 </tbody>
 </table>
@@ -291,12 +291,12 @@ Table&nbsp;1: Principal SBS agreement with the confirmed human reference
 </figure>
 </div>
 </div>
-<p>These figures describe this fixed five-PON, 15-question comparison and should not be interpreted as a general benchmark of any model family. See <a href="./reports/model-comparison.html">SBS Model Comparison</a> for the full breakdown.</p>
+<p>These figures describe this fixed five-PON published comparison and should not be interpreted as a general benchmark of any model family. See <a href="./reports/model-comparison.html">SBS Model Comparison</a> for the full breakdown.</p>
 </section>
 <section id="table-a5-provenance" class="level2">
 <h2 class="anchored" data-anchor-id="table-a5-provenance">Table A5 provenance</h2>
 <p>The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report <code>2-2</code> where the raw human + frozen LLM responses produce a 3-to-1 split: <strong>IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6</strong>. These are retained as documented Table A5 discrepancies relative to the surviving coder-level data; no underlying response is altered.</p>
-<p>See <a href="./reports/results.html">2024 Replication</a> and <a href="./provenance/TABLE_A5_REPLICATION.html">Table A5 replication provenance</a>.</p>
+<p>See <a href="./reports/results.html">2024 Replication</a> for the reconstructed manuscript-facing results.</p>
 </section>
 <section id="reproducibility-architecture" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility-architecture">Reproducibility architecture</h2>
@@ -782,90 +782,102 @@ Table&nbsp;1: Principal SBS agreement with the confirmed human reference
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yaml)</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>cfg <span class="ot">&lt;-</span> yaml<span class="sc">::</span><span class="fu">read_yaml</span>(<span class="st">"config/config.yml"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>summary_path <span class="ot">&lt;-</span> <span class="st">"derived/sbs_model_metrics_overall.csv"</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>summary_ready <span class="ot">&lt;-</span> <span class="fu">file.exists</span>(summary_path)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (summary_ready) {</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  comparison_models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    cfg<span class="sc">$</span>comparison<span class="sc">$</span>comparison_models,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(.x)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">transmute</span>(<span class="at">model_id =</span> <span class="fu">as.character</span>(.data<span class="sc">$</span>model_id), <span class="at">model =</span> <span class="fu">as.character</span>(.data<span class="sc">$</span>label))</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  expected_model_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(cfg<span class="sc">$</span>legacy_protocol<span class="sc">$</span>model_alias, comparison_models<span class="sc">$</span>model_id)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  summary_metrics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(summary_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  summary_ready <span class="ot">&lt;-</span> <span class="fu">setequal</span>(summary_metrics<span class="sc">$</span>model_id, expected_model_ids)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository purpose</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>publication_excluded_question_ids <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">unlist</span>(cfg<span class="sc">$</span>publication<span class="sc">$</span>excluded_question_ids))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>evaluation_path <span class="ot">&lt;-</span> <span class="st">"derived/sbs_model_evaluation_long.csv"</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>summary_ready <span class="ot">&lt;-</span> <span class="fu">file.exists</span>(evaluation_path)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (summary_ready) {</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  comparison_models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    cfg<span class="sc">$</span>comparison<span class="sc">$</span>comparison_models,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(.x)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">transmute</span>(<span class="at">model_id =</span> <span class="fu">as.character</span>(.data<span class="sc">$</span>model_id), <span class="at">model =</span> <span class="fu">as.character</span>(.data<span class="sc">$</span>label))</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  expected_model_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(cfg<span class="sc">$</span>legacy_protocol<span class="sc">$</span>model_alias, comparison_models<span class="sc">$</span>model_id)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  full_evaluation <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(evaluation_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  full_counts <span class="ot">&lt;-</span> full_evaluation <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(.data<span class="sc">$</span>model_id, <span class="at">name =</span> <span class="st">"n"</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  summary_ready <span class="ot">&lt;-</span> <span class="fu">setequal</span>(full_counts<span class="sc">$</span>model_id, expected_model_ids) <span class="sc">&amp;&amp;</span> <span class="fu">all</span>(full_counts<span class="sc">$</span>n <span class="sc">==</span> <span class="dv">75</span>L)</span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*.</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>The revised principal analysis asks:</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **How do contemporary OpenAI models compare with the frozen 2024 GPT-4 Turbo responses when all are evaluated under the same reconstructed step-by-step (SBS) protocol?**</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>The historical benchmark is the preserved Dec. 24, 2024 <span class="in">`*_sbs.txt`</span> output. The contemporary arms are the pinned GPT-5.4 nano snapshot (<span class="in">`gpt-5.4-nano-2026-03-17`</span>) and GPT-5.6 Luna (<span class="in">`gpt-5.6-luna`</span>). OpenAI's Luna documentation was checked on 2026-08-31 and did not expose a dated Luna snapshot, so <span class="in">`gpt-5.6-luna`</span> is recorded as an undated model ID together with execution-time provenance. The original 2024 outputs are never regenerated or overwritten.</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Study cases</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (summary_ready) {</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    public_evaluation <span class="ot">&lt;-</span> full_evaluation <span class="sc">|&gt;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>.data<span class="sc">$</span>question_id <span class="sc">%in%</span> publication_excluded_question_ids)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    summary_metrics <span class="ot">&lt;-</span> public_evaluation <span class="sc">|&gt;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">group_by</span>(.data<span class="sc">$</span>model, .data<span class="sc">$</span>model_id) <span class="sc">|&gt;</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), <span class="at">accuracy =</span> <span class="fu">mean</span>(.data<span class="sc">$</span>agreement), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>The strict comparison uses **IRG, EUHC, cOAlition S (COAS), CAN, and CEER**. BEREC remains part of the archival corpus but is handled separately because its preserved Dec. 23 output predates the final Dec. 24 request implementation.</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository purpose</span></span>
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>Dedicated BEREC replication uses <span class="in">`BO1B.txt`</span>, not <span class="in">`BO1A.txt`</span>, and is excluded from the five-PON aggregate analysis.</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>This repository contains the computational materials associated with the manuscript *Institutional Rules, Boundary Objects, and LLMs — A proof-of-concept for large-N research on the governance of purpose-oriented networks*.</span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two linked reproductions</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>The revised principal analysis asks:</span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>The repository separates two tasks:</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **How do contemporary OpenAI models compare with the frozen 2024 GPT-4 Turbo responses when all are evaluated under the same reconstructed step-by-step (SBS) protocol?**</span></span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Manuscript Table A5 replication.** HBM, ASC, JNG, and the frozen legacy SBS LLM reconstruct the historical four-coder agreement table over the manuscript's 14 prompts.</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Extended SBS model comparison.** The same human data and frozen legacy SBS outputs are compared with GPT-5.4 nano and GPT-5.6 Luna SBS runs over the preserved 15-question computational instrument.</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>Project-facing outputs use explicit agreement labels such as <span class="in">`3 TRUE / 1 FALSE`</span>, and report directly whether each LLM agrees with the three-human majority vote.</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principal comparison result</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>The table below is generated directly from the stored three-model evaluation outputs. It reports agreement with the confirmed three-human majority reference over the same 75 PON-question classifications for each model arm; no result is manually transcribed into this page.</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-principal-summary</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Principal SBS agreement with the confirmed human reference"</span></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (summary_ready) {</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  summary_metrics <span class="sc">|&gt;</span></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">transmute</span>(</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">Model =</span> .data<span class="sc">$</span>model,</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>      <span class="at">Decisions =</span> .data<span class="sc">$</span>n,</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>      <span class="at">Agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>Model, <span class="sc">~</span>Status,</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GPT-4 Turbo"</span>, <span class="st">"Frozen benchmark available"</span>,</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GPT-5.4 nano"</span>, <span class="st">"Completed run available"</span>,</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GPT-5.6 Luna"</span>, <span class="st">"Completed run available; rebuild derived metrics"</span></span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>These figures describe this fixed five-PON, 15-question comparison and should not be interpreted as a general benchmark of any model family. See <span class="co">[</span><span class="ot">SBS Model Comparison</span><span class="co">](reports/model-comparison.qmd)</span> for the full breakdown.</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table A5 provenance</span></span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report <span class="in">`2-2`</span> where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 discrepancies relative to the surviving coder-level data; no underlying response is altered.</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">2024 Replication</span><span class="co">](reports/results.qmd)</span> and <span class="co">[</span><span class="ot">Table A5 replication provenance</span><span class="co">](provenance/TABLE_A5_REPLICATION.md)</span>.</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducibility architecture</span></span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>The repository separates:</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>The historical benchmark is the preserved Dec. 24, 2024 <span class="in">`*_sbs.txt`</span> output. The contemporary arms are the pinned GPT-5.4 nano snapshot (<span class="in">`gpt-5.4-nano-2026-03-17`</span>) and GPT-5.6 Luna (<span class="in">`gpt-5.6-luna`</span>). OpenAI's Luna documentation was checked on 2026-08-31 and did not expose a dated Luna snapshot, so <span class="in">`gpt-5.6-luna`</span> is recorded as an undated model ID together with execution-time provenance. The original 2024 outputs are never regenerated or overwritten.</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Study cases</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>The strict comparison uses **IRG, EUHC, cOAlition S (COAS), CAN, and CEER**. BEREC remains part of the archival corpus but is handled separately because its preserved Dec. 23 output predates the final Dec. 24 request implementation.</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>Dedicated BEREC replication uses <span class="in">`BO1B.txt`</span>, not <span class="in">`BO1A.txt`</span>, and is excluded from the five-PON aggregate analysis.</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two linked reproductions</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>The repository separates two tasks:</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Manuscript Table A5 replication.** HBM, ASC, JNG, and the frozen legacy SBS LLM reconstruct the historical four-coder agreement table over the manuscript's 14 prompts.</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Extended SBS model comparison.** The same human data and frozen legacy SBS outputs are compared with GPT-5.4 nano and GPT-5.6 Luna SBS runs under the reconstructed protocol. The website reports the publication subset defined in project configuration.</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>Project-facing outputs use explicit agreement labels such as <span class="in">`3 TRUE / 1 FALSE`</span>, and report directly whether each LLM agrees with the three-human majority vote.</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principal comparison result</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>The table below is generated directly from the stored three-model evaluation outputs. It reports agreement with the confirmed three-human majority reference over the same published PON-question classifications for each model arm; no result is manually transcribed into this page.</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-principal-summary</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Principal SBS agreement with the confirmed human reference"</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (summary_ready) {</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  summary_metrics <span class="sc">|&gt;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">transmute</span>(</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>      <span class="at">Model =</span> .data<span class="sc">$</span>model,</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>      <span class="at">Decisions =</span> .data<span class="sc">$</span>n,</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>      <span class="at">Agreement =</span> scales<span class="sc">::</span><span class="fu">percent</span>(.data<span class="sc">$</span>accuracy, <span class="at">accuracy =</span> <span class="fl">0.1</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>Model, <span class="sc">~</span>Status,</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GPT-4 Turbo"</span>, <span class="st">"Frozen benchmark available"</span>,</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GPT-5.4 nano"</span>, <span class="st">"Completed run available"</span>,</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GPT-5.6 Luna"</span>, <span class="st">"Completed run available; rebuild derived metrics"</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>frozen 2024 evidence in root-level <span class="in">`output/`</span> files;</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>new SBS model runs in timestamped directories under <span class="in">`output/current/`</span>, with completed runs explicitly marked by <span class="in">`run_manifest.json`</span> and partial/failed runs retained as <span class="in">`run_failed.json`</span>;</span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>dedicated BEREC runs under <span class="in">`output/berec_replication/`</span>;</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>archival improved-protocol materials under <span class="in">`output/improved/`</span>; and</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>derived tables and figures under <span class="in">`derived/`</span>.</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>These figures describe this fixed five-PON published comparison and should not be interpreted as a general benchmark of any model family. See <span class="co">[</span><span class="ot">SBS Model Comparison</span><span class="co">](reports/model-comparison.qmd)</span> for the full breakdown.</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table A5 provenance</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>The surviving data reproduce 67 of 70 Table A5 cells. Three manuscript cells report <span class="in">`2-2`</span> where the raw human + frozen LLM responses produce a 3-to-1 split: **IRG prompt 3, cOAlition S prompt 8, and CEER prompt 6**. These are retained as documented Table A5 discrepancies relative to the surviving coder-level data; no underlying response is altered.</span>
 <span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>For execution instructions and API safeguards, see <span class="in">`README.md`</span>.</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">2024 Replication</span><span class="co">](reports/results.qmd)</span> for the reconstructed manuscript-facing results.</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducibility architecture</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>The repository separates:</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>frozen 2024 evidence in root-level <span class="in">`output/`</span> files;</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>new SBS model runs in timestamped directories under <span class="in">`output/current/`</span>, with completed runs explicitly marked by <span class="in">`run_manifest.json`</span> and partial/failed runs retained as <span class="in">`run_failed.json`</span>;</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>dedicated BEREC runs under <span class="in">`output/berec_replication/`</span>;</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>archival improved-protocol materials under <span class="in">`output/improved/`</span>; and</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>derived tables and figures under <span class="in">`derived/`</span>.</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>For execution instructions and API safeguards, see <span class="in">`README.md`</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

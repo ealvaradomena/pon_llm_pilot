@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#study-objective" id="toc-study-objective" class="nav-link active" data-scroll-target="#study-objective">Study objective</a></li>
   <li><a href="#cases-and-source-documents" id="toc-cases-and-source-documents" class="nav-link" data-scroll-target="#cases-and-source-documents">Cases and source documents</a></li>
   <li><a href="#reconstructed-2024-sbs-protocol" id="toc-reconstructed-2024-sbs-protocol" class="nav-link" data-scroll-target="#reconstructed-2024-sbs-protocol">Reconstructed 2024 SBS protocol</a></li>
-  <li><a href="#fifteen-computational-questions-and-fourteen-manuscript-prompts" id="toc-fifteen-computational-questions-and-fourteen-manuscript-prompts" class="nav-link" data-scroll-target="#fifteen-computational-questions-and-fourteen-manuscript-prompts">Fifteen computational questions and fourteen manuscript prompts</a></li>
+  <li><a href="#published-governance-questions" id="toc-published-governance-questions" class="nav-link" data-scroll-target="#published-governance-questions">Published governance questions</a></li>
   <li><a href="#human-coders-and-majority-vote" id="toc-human-coders-and-majority-vote" class="nav-link" data-scroll-target="#human-coders-and-majority-vote">Human coders and majority vote</a></li>
   <li><a href="#frozen-historical-benchmark" id="toc-frozen-historical-benchmark" class="nav-link" data-scroll-target="#frozen-historical-benchmark">Frozen historical benchmark</a></li>
   <li><a href="#contemporary-model-runs" id="toc-contemporary-model-runs" class="nav-link" data-scroll-target="#contemporary-model-runs">Contemporary-model runs</a></li>
@@ -331,14 +331,27 @@ Table&nbsp;2: PONs in the strict SBS comparison
 </blockquote>
 <p>The project preserves the recovered string-concatenation behavior, including its whitespace quirks. <code>scripts/00_check_protocol.py</code> prints the resulting prompt hash without making an API call.</p>
 </section>
-<section id="fifteen-computational-questions-and-fourteen-manuscript-prompts" class="level2">
-<h2 class="anchored" data-anchor-id="fifteen-computational-questions-and-fourteen-manuscript-prompts">Fifteen computational questions and fourteen manuscript prompts</h2>
+<section id="published-governance-questions" class="level2">
+<h2 class="anchored" data-anchor-id="published-governance-questions">Published governance questions</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>questions <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Computational ID"</span>, <span class="st">"Question"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>published_questions <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Question #</span><span class="st">`</span> <span class="ot">=</span> .data<span class="sc">$</span>publication_question_id,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Question =</span> .data<span class="sc">$</span>question</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+ℹ Please use `"publication_question_id"` instead of
+  `.data$publication_question_id`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+ℹ Please use `"question"` instead of `.data$question`</code></pre>
+</div>
 <div id="tbl-questions" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-questions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -348,12 +361,12 @@ Table&nbsp;3: Binary governance questions in the preserved computational instrum
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 91%">
+<col style="width: 5%">
+<col style="width: 94%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Computational ID</th>
+<th style="text-align: right;">Question #</th>
 <th style="text-align: left;">Question</th>
 </tr>
 </thead>
@@ -396,26 +409,22 @@ Table&nbsp;3: Binary governance questions in the preserved computational instrum
 </tr>
 <tr class="even">
 <td style="text-align: right;">10</td>
-<td style="text-align: left;">Does the PON have working groups where member organizations can participate in?</td>
+<td style="text-align: left;">Does accession into the PON depend on a decision by the incumbent member organizations?</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">11</td>
-<td style="text-align: left;">Does accession into the PON depend on a decision by the incumbent member organizations?</td>
+<td style="text-align: left;">Does the PON clearly specify which types of organisations can become members?</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">12</td>
-<td style="text-align: left;">Does the PON clearly specify which types of organisations can become members?</td>
+<td style="text-align: left;">Do potential member organizations have to fullful certain conditions to become members?</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">13</td>
-<td style="text-align: left;">Do potential member organizations have to fullful certain conditions to become members?</td>
+<td style="text-align: left;">Is there a process for membership suspension from the PON?</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">14</td>
-<td style="text-align: left;">Is there a process for membership suspension from the PON?</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
 <td style="text-align: left;">Are there members which have no voting power, such as observer members?</td>
 </tr>
 </tbody>
@@ -425,7 +434,7 @@ Table&nbsp;3: Binary governance questions in the preserved computational instrum
 </figure>
 </div>
 </div>
-<p>The computational instrument contains 15 questions. Manuscript Table A5 contains 14 because the working-groups item—computational question 10—is omitted. The project does not delete or renumber the historical computational instrument. Instead it defines a separate 14-question manuscript subset for Table A5 replication.</p>
+<p>The website presents the publication subset defined in project configuration. Repository-level computational artifacts and historical protocol materials are preserved independently of this presentation layer.</p>
 </section>
 <section id="human-coders-and-majority-vote" class="level2">
 <h2 class="anchored" data-anchor-id="human-coders-and-majority-vote">Human coders and majority vote</h2>
@@ -915,122 +924,136 @@ Table&nbsp;3: Binary governance questions in the preserved computational instrum
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Methods"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A fixed-protocol SBS model-generation comparison"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yaml)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>cfg <span class="ot">&lt;-</span> yaml<span class="sc">::</span><span class="fu">read_yaml</span>(<span class="st">"config/config.yml"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>questions <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(cfg<span class="sc">$</span>project<span class="sc">$</span>questions_file, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Study objective</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>The pilot asks whether LLMs can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). The revised comparison holds the recovered manuscript-facing **step-by-step (SBS) protocol** fixed and varies model generation only.</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>The principal comparison is:</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Protocol <span class="pp">|</span> Source <span class="pp">|</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-4 Turbo <span class="pp">|</span> Reconstructed Dec. 24, 2024 SBS <span class="pp">|</span> Frozen legacy output <span class="pp">|</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-5.4 nano (<span class="in">`gpt-5.4-nano-2026-03-17`</span>) <span class="pp">|</span> Same reconstructed SBS protocol <span class="pp">|</span> Completed timestamped API run <span class="pp">|</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-5.6 Luna (<span class="in">`gpt-5.6-luna`</span>) <span class="pp">|</span> Same reconstructed SBS protocol <span class="pp">|</span> Completed timestamped API run <span class="pp">|</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>: Principal SBS model-generation comparison {#tbl-principal-model-comparison}</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>Plain-zero-shot and <span class="in">`improved-v1`</span> artifacts remain preserved but are not part of the principal design. The archival <span class="in">`improved-v1`</span> runner is dry-run by default, runs the current-model arm independently unless another arm is explicitly selected, and requires a separate <span class="in">`ARCHIVAL-GPT4`</span> confirmation token before any GPT-4 Turbo API call. Such archival reruns write only to new run-specific directories and never replace frozen 2024 outputs.</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cases and source documents</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-cases</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "PONs in the strict SBS comparison"</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>PON, <span class="sc">~</span>File,</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"IRG"</span>, <span class="st">"BO2A.txt"</span>,</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"EUHC"</span>, <span class="st">"BO3A.txt"</span>,</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"COAS"</span>, <span class="st">"BO4A.txt"</span>,</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CAN"</span>, <span class="st">"BO5A.txt"</span>,</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CEER"</span>, <span class="st">"BO6A.txt"</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>BEREC is not pooled into this comparison. Dedicated BEREC replication uses <span class="in">`BO1B.txt`</span> and separate guarded scripts.</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reconstructed 2024 SBS protocol</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>The final Dec. 24 implementation used Chat Completions with:</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a **system message** containing the policy-analyst instruction, the SBS suffix, and the ordered questions; and</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>a **user message** containing the complete boundary-object text.</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>The request supplied <span class="in">`model`</span> and <span class="in">`messages`</span> explicitly. No temperature, top-p, token limit, seed, response format, or tools were explicitly supplied in the historical code.</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>The recovered base instruction is:</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; You are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.</span></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>The manuscript-facing SBS condition appends:</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Let's think step by step</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>The project preserves the recovered string-concatenation behavior, including its whitespace quirks. <span class="in">`scripts/00_check_protocol.py`</span> prints the resulting prompt hash without making an API call.</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fifteen computational questions and fourteen manuscript prompts</span></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-questions</span></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Binary governance questions in the preserved computational instrument"</span></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>questions <span class="sc">|&gt;</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Computational ID"</span>, <span class="st">"Question"</span>))</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>The computational instrument contains 15 questions. Manuscript Table A5 contains 14 because the working-groups item—computational question 10—is omitted. The project does not delete or renumber the historical computational instrument. Instead it defines a separate 14-question manuscript subset for Table A5 replication.</span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Human coders and majority vote</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>The authoritative human file is <span class="in">`input/reference/legacy_human_responses_confirmed.csv`</span>. The individual coders are displayed as **HBM**, **ASC**, and **JNG**.</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>For each question/PON combination, the pipeline records:</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>each individual human response;</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the three-human majority vote, used as the confirmed human reference;</span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether the human coders are unanimous; and</span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>each model classification and whether it agrees with that human majority.</span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>Historical four-coder agreement is expressed with explicit counts such as <span class="in">`3 TRUE / 1 FALSE`</span> rather than the manuscript's shorthand. The original <span class="in">`1`</span>, <span class="in">`0`</span>, <span class="in">`3-1`</span>, <span class="in">`2-2`</span>, and <span class="in">`3-1*`</span> values are retained only as manuscript-reference fields.</span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frozen historical benchmark</span></span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>The five <span class="in">`*_sbs.txt`</span> files from Dec. 24, 2024 are treated as immutable research artifacts. The principal runner refuses <span class="in">`gpt-4-turbo`</span> and <span class="in">`gpt-4-turbo-2024-04-09`</span>, preventing accidental regeneration through the contemporary-model workflow.</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contemporary-model runs</span></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>The principal comparison registers two contemporary arms: the pinned GPT-5.4 nano snapshot <span class="in">`gpt-5.4-nano-2026-03-17`</span> and GPT-5.6 Luna using the currently exposed API model ID <span class="in">`gpt-5.6-luna`</span>. Each arm was executed independently with <span class="in">`scripts/03_run_current_model.py`</span>, using five requests—one per strict-comparison PON—and writing only to its own timestamped directory under <span class="in">`output/current/`</span>. Completed runs are discovered and reused, so the current comparison does **not** rerun GPT-5.4 nano, GPT-5.6 Luna, or any historical output.</span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>Each response receives a JSON metadata sidecar. A fully successful run receives <span class="in">`run_manifest.json`</span> with <span class="in">`status: complete`</span>; if execution fails after the run directory is created, partial outputs are retained and <span class="in">`run_failed.json`</span> records the failure. Downstream comparison scripts accept only runs whose completion manifest explicitly reports <span class="in">`status == "complete"`</span> and require one completed run for every model registered in <span class="in">`comparison.comparison_models`</span>. OpenAI's GPT-5.6 Luna model page was checked on **2026-08-31**: its **Snapshots** section listed `gpt-5.6-luna` but no dated snapshot identifier. The project therefore treats `gpt-5.6-luna` as an **undated model ID**, records the documentation URL and check date in configuration, and preserves the UTC execution time plus requested and API-returned model IDs in response metadata and the run manifest. It is not described as a dated or immutable snapshot.</span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## BEREC replication boundary</span></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>The original BEREC Dec. 23 request state is not recoverable with enough certainty to support an exact-replication claim. The project therefore distinguishes:</span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>exact replication: not defensible from surviving request provenance;</span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>model-family replication: still limited by protocol uncertainty; and</span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>protocol replication: feasible as a retrospective application of the recovered Dec. 24 SBS protocol to BEREC with GPT-5.4 nano.</span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>The best-supported dated GPT-4 Turbo snapshot is <span class="in">`gpt-4-turbo-2024-04-09`</span>. Dedicated BEREC scripts use <span class="in">`BO1B.txt`</span>, default to dry-run, require both <span class="in">`--execute`</span> and <span class="in">`--confirm-api-call BEREC`</span>, plan one API request, and write only under <span class="in">`output/berec_replication/`</span>.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Methods"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A fixed-protocol SBS model-generation comparison"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yaml)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>cfg <span class="ot">&lt;-</span> yaml<span class="sc">::</span><span class="fu">read_yaml</span>(<span class="st">"config/config.yml"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>questions <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(cfg<span class="sc">$</span>project<span class="sc">$</span>questions_file, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>publication_excluded_question_ids <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">unlist</span>(cfg<span class="sc">$</span>publication<span class="sc">$</span>excluded_question_ids))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>published_questions <span class="ot">&lt;-</span> questions <span class="sc">|&gt;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>.data<span class="sc">$</span>question_id <span class="sc">%in%</span> publication_excluded_question_ids) <span class="sc">|&gt;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">publication_question_id =</span> .data<span class="sc">$</span>question_id <span class="sc">-</span> <span class="fu">vapply</span>(</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>      .data<span class="sc">$</span>question_id,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">function</span>(id) <span class="fu">sum</span>(publication_excluded_question_ids <span class="sc">&lt;</span> id),</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">integer</span>(<span class="dv">1</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Study objective</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>The pilot asks whether LLMs can extract governance features from textual boundary objects associated with purpose-oriented networks (PONs). The revised comparison holds the recovered manuscript-facing **step-by-step (SBS) protocol** fixed and varies model generation only.</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>The principal comparison is:</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Protocol <span class="pp">|</span> Source <span class="pp">|</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-4 Turbo <span class="pp">|</span> Reconstructed Dec. 24, 2024 SBS <span class="pp">|</span> Frozen legacy output <span class="pp">|</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-5.4 nano (<span class="in">`gpt-5.4-nano-2026-03-17`</span>) <span class="pp">|</span> Same reconstructed SBS protocol <span class="pp">|</span> Completed timestamped API run <span class="pp">|</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPT-5.6 Luna (<span class="in">`gpt-5.6-luna`</span>) <span class="pp">|</span> Same reconstructed SBS protocol <span class="pp">|</span> Completed timestamped API run <span class="pp">|</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>: Principal SBS model-generation comparison {#tbl-principal-model-comparison}</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>Plain-zero-shot and <span class="in">`improved-v1`</span> artifacts remain preserved but are not part of the principal design. The archival <span class="in">`improved-v1`</span> runner is dry-run by default, runs the current-model arm independently unless another arm is explicitly selected, and requires a separate <span class="in">`ARCHIVAL-GPT4`</span> confirmation token before any GPT-4 Turbo API call. Such archival reruns write only to new run-specific directories and never replace frozen 2024 outputs.</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cases and source documents</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-cases</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "PONs in the strict SBS comparison"</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>PON, <span class="sc">~</span>File,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"IRG"</span>, <span class="st">"BO2A.txt"</span>,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>  <span class="st">"EUHC"</span>, <span class="st">"BO3A.txt"</span>,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">"COAS"</span>, <span class="st">"BO4A.txt"</span>,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CAN"</span>, <span class="st">"BO5A.txt"</span>,</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CEER"</span>, <span class="st">"BO6A.txt"</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>BEREC is not pooled into this comparison. Dedicated BEREC replication uses <span class="in">`BO1B.txt`</span> and separate guarded scripts.</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reconstructed 2024 SBS protocol</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>The final Dec. 24 implementation used Chat Completions with:</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a **system message** containing the policy-analyst instruction, the SBS suffix, and the ordered questions; and</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>a **user message** containing the complete boundary-object text.</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>The request supplied <span class="in">`model`</span> and <span class="in">`messages`</span> explicitly. No temperature, top-p, token limit, seed, response format, or tools were explicitly supplied in the historical code.</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>The recovered base instruction is:</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; You are a policy analyst focused on extracting organizational features from documents that regulate the organization and functioning of specific organizations. I will provide the documents and a list of yes-no questions. You will only return TRUE or FALSE responses according to the list of yes-no questions, including a row with the question itself. The output must be in CSV format.</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>The manuscript-facing SBS condition appends:</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Let's think step by step</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>The project preserves the recovered string-concatenation behavior, including its whitespace quirks. <span class="in">`scripts/00_check_protocol.py`</span> prints the resulting prompt hash without making an API call.</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Published governance questions</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-questions</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Binary governance questions in the preserved computational instrument"</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>published_questions <span class="sc">|&gt;</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Question #</span><span class="st">`</span> <span class="ot">=</span> .data<span class="sc">$</span>publication_question_id,</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">Question =</span> .data<span class="sc">$</span>question</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>The website presents the publication subset defined in project configuration. Repository-level computational artifacts and historical protocol materials are preserved independently of this presentation layer.</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Human coders and majority vote</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>The authoritative human file is <span class="in">`input/reference/legacy_human_responses_confirmed.csv`</span>. The individual coders are displayed as **HBM**, **ASC**, and **JNG**.</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>For each question/PON combination, the pipeline records:</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>each individual human response;</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the three-human majority vote, used as the confirmed human reference;</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether the human coders are unanimous; and</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>each model classification and whether it agrees with that human majority.</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>Historical four-coder agreement is expressed with explicit counts such as <span class="in">`3 TRUE / 1 FALSE`</span> rather than the manuscript's shorthand. The original <span class="in">`1`</span>, <span class="in">`0`</span>, <span class="in">`3-1`</span>, <span class="in">`2-2`</span>, and <span class="in">`3-1*`</span> values are retained only as manuscript-reference fields.</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frozen historical benchmark</span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>The five <span class="in">`*_sbs.txt`</span> files from Dec. 24, 2024 are treated as immutable research artifacts. The principal runner refuses <span class="in">`gpt-4-turbo`</span> and <span class="in">`gpt-4-turbo-2024-04-09`</span>, preventing accidental regeneration through the contemporary-model workflow.</span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contemporary-model runs</span></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>The principal comparison registers two contemporary arms: the pinned GPT-5.4 nano snapshot <span class="in">`gpt-5.4-nano-2026-03-17`</span> and GPT-5.6 Luna using the currently exposed API model ID <span class="in">`gpt-5.6-luna`</span>. Each arm was executed independently with <span class="in">`scripts/03_run_current_model.py`</span>, using five requests—one per strict-comparison PON—and writing only to its own timestamped directory under <span class="in">`output/current/`</span>. Completed runs are discovered and reused, so the current comparison does **not** rerun GPT-5.4 nano, GPT-5.6 Luna, or any historical output.</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>Each response receives a JSON metadata sidecar. A fully successful run receives <span class="in">`run_manifest.json`</span> with <span class="in">`status: complete`</span>; if execution fails after the run directory is created, partial outputs are retained and <span class="in">`run_failed.json`</span> records the failure. Downstream comparison scripts accept only runs whose completion manifest explicitly reports <span class="in">`status == "complete"`</span> and require one completed run for every model registered in <span class="in">`comparison.comparison_models`</span>. OpenAI's GPT-5.6 Luna model page was checked on **2026-08-31**: its **Snapshots** section listed `gpt-5.6-luna` but no dated snapshot identifier. The project therefore treats `gpt-5.6-luna` as an **undated model ID**, records the documentation URL and check date in configuration, and preserves the UTC execution time plus requested and API-returned model IDs in response metadata and the run manifest. It is not described as a dated or immutable snapshot.</span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## BEREC replication boundary</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>The original BEREC Dec. 23 request state is not recoverable with enough certainty to support an exact-replication claim. The project therefore distinguishes:</span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>exact replication: not defensible from surviving request provenance;</span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>model-family replication: still limited by protocol uncertainty; and</span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>protocol replication: feasible as a retrospective application of the recovered Dec. 24 SBS protocol to BEREC with GPT-5.4 nano.</span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>The best-supported dated GPT-4 Turbo snapshot is <span class="in">`gpt-4-turbo-2024-04-09`</span>. Dedicated BEREC scripts use <span class="in">`BO1B.txt`</span>, default to dry-run, require both <span class="in">`--execute`</span> and <span class="in">`--confirm-api-call BEREC`</span>, plan one API request, and write only under <span class="in">`output/berec_replication/`</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

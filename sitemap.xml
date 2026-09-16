@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/TABLE_A5_REPLICATION.html</loc>
-    <lastmod>2026-08-31T21:56:32.702Z</lastmod>
-  </url>
-  <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/LEGACY_API_CALLS.html</loc>
     <lastmod>2026-08-31T22:25:14.764Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/berec.html</loc>
-    <lastmod>2026-08-31T21:56:33.390Z</lastmod>
+    <lastmod>2026-09-16T23:14:25.714Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/model-comparison.html</loc>
-    <lastmod>2026-08-31T21:56:35.473Z</lastmod>
+    <lastmod>2026-09-16T23:07:10.333Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/methods.html</loc>
-    <lastmod>2026-08-31T21:56:34.795Z</lastmod>
+    <lastmod>2026-09-16T23:14:27.090Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/index.html</loc>
-    <lastmod>2026-08-31T21:56:30.530Z</lastmod>
+    <lastmod>2026-09-16T23:07:07.657Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/results.html</loc>
@@ -30,14 +26,10 @@
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/reports/comparison-table.html</loc>
-    <lastmod>2026-08-31T21:56:34.123Z</lastmod>
+    <lastmod>2026-09-16T23:14:26.362Z</lastmod>
   </url>
   <url>
     <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/BEREC_REPLICATION.html</loc>
     <lastmod>2026-08-31T21:56:31.250Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ealvaradomena.github.io/pon_llm_pilot/provenance/RECONSTRUCTION.html</loc>
-    <lastmod>2026-08-31T21:56:31.961Z</lastmod>
   </url>
 </urlset>
